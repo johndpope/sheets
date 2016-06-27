@@ -14,7 +14,7 @@
 		BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9561D213948008B1135 /* LaunchScreen.storyboard */; };
 		BB00B9631D213948008B1135 /* SheetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B9621D213948008B1135 /* SheetsTests.swift */; };
 		BB00B96E1D213948008B1135 /* SheetsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B96D1D213948008B1135 /* SheetsUITests.swift */; };
-		BB00B97C1D213BF6008B1135 /* Reader-master in Resources */ = {isa = PBXBuildFile; fileRef = BB00B97B1D213BF6008B1135 /* Reader-master */; };
+		BB00B97C1D213BF6008B1135 /* PDFReader in Resources */ = {isa = PBXBuildFile; fileRef = BB00B97B1D213BF6008B1135 /* PDFReader */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +48,7 @@
 		BB00B9691D213948008B1135 /* SheetsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SheetsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00B96D1D213948008B1135 /* SheetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsUITests.swift; sourceTree = "<group>"; };
 		BB00B96F1D213948008B1135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB00B97B1D213BF6008B1135 /* Reader-master */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Reader-master"; sourceTree = "<group>"; };
+		BB00B97B1D213BF6008B1135 /* PDFReader */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PDFReader; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,7 @@
 		BB00B94C1D213948008B1135 /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
-				BB00B97B1D213BF6008B1135 /* Reader-master */,
+				BB00B97B1D213BF6008B1135 /* PDFReader */,
 				BB00B94D1D213948008B1135 /* AppDelegate.swift */,
 				BB00B94F1D213948008B1135 /* ViewController.swift */,
 				BB00B9511D213948008B1135 /* Main.storyboard */,
@@ -236,7 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */,
-				BB00B97C1D213BF6008B1135 /* Reader-master in Resources */,
+				BB00B97C1D213BF6008B1135 /* PDFReader in Resources */,
 				BB00B9551D213948008B1135 /* Assets.xcassets in Resources */,
 				BB00B9531D213948008B1135 /* Main.storyboard in Resources */,
 			);
@@ -493,6 +493,7 @@
 				BB00B9741D213948008B1135 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BB00B9751D213948008B1135 /* Build configuration list for PBXNativeTarget "SheetsTests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +502,7 @@
 				BB00B9771D213948008B1135 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BB00B9781D213948008B1135 /* Build configuration list for PBXNativeTarget "SheetsUITests" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +511,7 @@
 				BB00B97A1D213948008B1135 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
