@@ -9,8 +9,8 @@
 #ifndef Sheets_Bridging_Header_h
 #define Sheets_Bridging_Header_h
 
-#import "ReaderViewController.h"
-
 #endif /* Sheets_Bridging_Header_h */
+
+#import "PDFReader/Sources/ReaderViewController.h"
 
 

@@ -14,7 +14,6 @@
 		BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9561D213948008B1135 /* LaunchScreen.storyboard */; };
 		BB00B9631D213948008B1135 /* SheetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B9621D213948008B1135 /* SheetsTests.swift */; };
 		BB00B96E1D213948008B1135 /* SheetsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B96D1D213948008B1135 /* SheetsUITests.swift */; };
-		BB00B97C1D213BF6008B1135 /* PDFReader in Resources */ = {isa = PBXBuildFile; fileRef = BB00B97B1D213BF6008B1135 /* PDFReader */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,8 +47,6 @@
 		BB00B9691D213948008B1135 /* SheetsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SheetsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00B96D1D213948008B1135 /* SheetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsUITests.swift; sourceTree = "<group>"; };
 		BB00B96F1D213948008B1135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB00B97B1D213BF6008B1135 /* PDFReader */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PDFReader; sourceTree = "<group>"; };
-		BBEEACE61D2172E70046AEA8 /* Sheets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sheets-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,14 +97,12 @@
 		BB00B94C1D213948008B1135 /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
-				BB00B97B1D213BF6008B1135 /* PDFReader */,
 				BB00B94D1D213948008B1135 /* AppDelegate.swift */,
 				BB00B94F1D213948008B1135 /* ViewController.swift */,
 				BB00B9511D213948008B1135 /* Main.storyboard */,
 				BB00B9541D213948008B1135 /* Assets.xcassets */,
 				BB00B9561D213948008B1135 /* LaunchScreen.storyboard */,
 				BB00B9591D213948008B1135 /* Info.plist */,
-				BBEEACE61D2172E70046AEA8 /* Sheets-Bridging-Header.h */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -238,7 +233,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */,
-				BB00B97C1D213BF6008B1135 /* PDFReader in Resources */,
 				BB00B9551D213948008B1135 /* Assets.xcassets in Resources */,
 				BB00B9531D213948008B1135 /* Main.storyboard in Resources */,
 			);
@@ -398,6 +392,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
