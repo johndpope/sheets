@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6C59967F15F990740FF639F4 /* Pods_SheetsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E37FB41D9750B6A429F06F /* Pods_SheetsUITests.framework */; };
 		BB00B94E1D213948008B1135 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B94D1D213948008B1135 /* AppDelegate.swift */; };
 		BB00B9501D213948008B1135 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B94F1D213948008B1135 /* ViewController.swift */; };
 		BB00B9531D213948008B1135 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9511D213948008B1135 /* Main.storyboard */; };
@@ -15,8 +14,8 @@
 		BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9561D213948008B1135 /* LaunchScreen.storyboard */; };
 		BB00B9631D213948008B1135 /* SheetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B9621D213948008B1135 /* SheetsTests.swift */; };
 		BB00B96E1D213948008B1135 /* SheetsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B96D1D213948008B1135 /* SheetsUITests.swift */; };
+		BBF4D0521D22740600C85784 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBF4D0511D22740600C85784 /* GTMOAuth2ViewTouch.xib */; };
 		F335D8FB3930858798FEE27F /* Pods_Sheets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED0341CC43A387ABAC40C75 /* Pods_Sheets.framework */; };
-		F4A29C703E4336A287772476 /* Pods_SheetsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 725D855FDE3954F9DDD27E1D /* Pods_SheetsTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,13 +37,9 @@
 
 /* Begin PBXFileReference section */
 		0ED0341CC43A387ABAC40C75 /* Pods_Sheets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sheets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B85FBD2E053368A6680077E /* Pods-SheetsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SheetsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SheetsTests/Pods-SheetsTests.release.xcconfig"; sourceTree = "<group>"; };
-		26A76F1CF6BA0D004F1BD1FF /* Pods-SheetsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SheetsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SheetsUITests/Pods-SheetsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		29E37FB41D9750B6A429F06F /* Pods_SheetsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SheetsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		365C94C1BF6EEC7830FC1B14 /* Pods-SheetsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SheetsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SheetsTests/Pods-SheetsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		725D855FDE3954F9DDD27E1D /* Pods_SheetsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SheetsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82B72E7257CF88C3C81CC597 /* Pods-Sheets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sheets.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sheets/Pods-Sheets.release.xcconfig"; sourceTree = "<group>"; };
-		838FBE78C1679CACDBD755A0 /* Pods-SheetsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SheetsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SheetsUITests/Pods-SheetsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BB00B94A1D213948008B1135 /* Sheets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sheets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00B94D1D213948008B1135 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB00B94F1D213948008B1135 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +54,7 @@
 		BB00B96D1D213948008B1135 /* SheetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsUITests.swift; sourceTree = "<group>"; };
 		BB00B96F1D213948008B1135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBF3BAEA1D21ABAF00A287A5 /* Sheets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sheets-Bridging-Header.h"; sourceTree = "<group>"; };
+		BBF4D0511D22740600C85784 /* GTMOAuth2ViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTMOAuth2ViewTouch.xib; sourceTree = "<group>"; };
 		DB8C99F99D13F66371AE4635 /* Pods-Sheets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sheets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sheets/Pods-Sheets.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,7 +71,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4A29C703E4336A287772476 /* Pods_SheetsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +78,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C59967F15F990740FF639F4 /* Pods_SheetsUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,10 +99,6 @@
 			children = (
 				DB8C99F99D13F66371AE4635 /* Pods-Sheets.debug.xcconfig */,
 				82B72E7257CF88C3C81CC597 /* Pods-Sheets.release.xcconfig */,
-				365C94C1BF6EEC7830FC1B14 /* Pods-SheetsTests.debug.xcconfig */,
-				1B85FBD2E053368A6680077E /* Pods-SheetsTests.release.xcconfig */,
-				26A76F1CF6BA0D004F1BD1FF /* Pods-SheetsUITests.debug.xcconfig */,
-				838FBE78C1679CACDBD755A0 /* Pods-SheetsUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -144,6 +134,7 @@
 				BB00B9511D213948008B1135 /* Main.storyboard */,
 				BB00B9541D213948008B1135 /* Assets.xcassets */,
 				BB00B9561D213948008B1135 /* LaunchScreen.storyboard */,
+				BBF4D0511D22740600C85784 /* GTMOAuth2ViewTouch.xib */,
 				BB00B9591D213948008B1135 /* Info.plist */,
 			);
 			path = Sheets;
@@ -282,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBF4D0521D22740600C85784 /* GTMOAuth2ViewTouch.xib in Resources */,
 				BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */,
 				BB00B9551D213948008B1135 /* Assets.xcassets in Resources */,
 				BB00B9531D213948008B1135 /* Main.storyboard in Resources */,
@@ -605,7 +597,6 @@
 		};
 		BB00B9761D213948008B1135 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 365C94C1BF6EEC7830FC1B14 /* Pods-SheetsTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SheetsTests/Info.plist;
@@ -618,7 +609,6 @@
 		};
 		BB00B9771D213948008B1135 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B85FBD2E053368A6680077E /* Pods-SheetsTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SheetsTests/Info.plist;
@@ -631,7 +621,6 @@
 		};
 		BB00B9791D213948008B1135 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 26A76F1CF6BA0D004F1BD1FF /* Pods-SheetsUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = SheetsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -644,7 +633,6 @@
 		};
 		BB00B97A1D213948008B1135 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 838FBE78C1679CACDBD755A0 /* Pods-SheetsUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = SheetsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

@@ -1,0 +1,29 @@
+PODS:
+  - GoogleAPIClient/Core (1.0.4):
+    - GTMSessionFetcher (~> 1.1)
+  - GoogleAPIClient/Drive (1.0.4):
+    - GoogleAPIClient/Core
+    - GTMSessionFetcher (~> 1.1)
+  - GTMOAuth2 (1.1.1):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.4):
+    - GTMSessionFetcher/Full (= 1.1.4)
+  - GTMSessionFetcher/Core (1.1.4)
+  - GTMSessionFetcher/Full (1.1.4):
+    - GTMSessionFetcher/Core (= 1.1.4)
+  - vfrReader (2.8.6)
+
+DEPENDENCIES:
+  - GoogleAPIClient/Drive (~> 1.0.2)
+  - GTMOAuth2 (~> 1.1.0)
+  - vfrReader (= 2.8.6)
+
+SPEC CHECKSUMS:
+  GoogleAPIClient: 4dedb6af613eb7d171814c343f8a82ee5411e13b
+  GTMOAuth2: bdb12f3e0d2110bfe585f6151230b883beb4d042
+  GTMSessionFetcher: 174bc61d5238f81f9ddb807b0b0170420f67de85
+  vfrReader: 94ea739a545e39093c93802ca1c5b203a5df46b1
+
+PODFILE CHECKSUM: 73406035175ff3e4fb4b6f303be13b30474c447c
+
+COCOAPODS: 1.0.1

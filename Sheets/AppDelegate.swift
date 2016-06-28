@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import vfrReader
+import GoogleAPIClient
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
