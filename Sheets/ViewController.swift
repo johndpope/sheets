@@ -9,17 +9,21 @@
 import GoogleAPIClient
 import GTMOAuth2
 import UIKit
+import Foundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UIAlertViewDelegate {
     
     private let kKeychainItemName = "Drive API"
     private let kClientID = "451075181287-raoeoh0i74mq51vqv9tk6dhgi9qs26q7.apps.googleusercontent.com"
     
     // If modifying these scopes, delete your previously saved credentials by
     // resetting the iOS simulator or uninstall the app.
-    private let scopes = [kGTLAuthScopeDriveMetadataReadonly]
+    private let scopes = [kGTLAuthScopeDrive]
     
     private let service = GTLServiceDrive()
+    
+    private var mainFolderName: String!
+    let userDefaults = NSUserDefaults()
     let output = UITextView()
     
     // When the view loads, create necessary subviews
@@ -48,7 +52,8 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         if let authorizer = service.authorizer,
             canAuth = authorizer.canAuthorize where canAuth {
-                fetchFiles()
+                generalSetup()
+                //fetchFiles()
         } else {
             presentViewController(
                 createAuthController(),
@@ -58,11 +63,119 @@ class ViewController: UIViewController {
         }
     }
     
+    //Check if specific folder exists
+    func folderWithNameExists(foldername: String) -> Bool {
+        return true
+    }
+    
+    func generalSetup(){
+        //check if first time launch
+        if (userDefaults.valueForKey("firstTime") == nil) {
+            userDefaults.setBool(false, forKey: "firstTime")
+            setupSheetFolder()
+        }else{
+            self.mainFolderName = userDefaults.valueForKey("mainFolderName") as? String
+            fetchFiles()
+        }
+    }
+    
+    //Setup SheetFolder (Create if not existing)
+    func setupSheetFolder(wrongInput: Bool = false){
+        //prompt user to input folder name
+        var message = "Please choose a folder name for your sheet music\n (Sheets will only operate in this folder)"
+        if wrongInput {
+            message = "Invalid Input!\n" + message
+        }
+        
+        let alert = UIAlertController(
+            title: "Folder name",
+            message: message,
+            preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addTextFieldWithConfigurationHandler(nil)
+        
+        let alertAction = UIAlertAction(
+            title: "Choose",
+            style: UIAlertActionStyle.Default,
+            handler: {(action: UIAlertAction) in
+                self.mainFolderName = alert.textFields![0].text!
+                if self.mainFolderName == "" {
+                    self.setupSheetFolder(true)
+                }else{
+                    //save folder name in user Preferences
+                    self.userDefaults.setValue(self.mainFolderName, forKey: "mainFolderName")
+                    
+                    //search for the folder and if it doesn't exist create it
+                    self.searchForFolder(self.mainFolderName!)
+                }
+            })
+        alert.addAction(alertAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
+        
+        
+    }
+    
+    func searchForFolder(foldername: String){
+        service.shouldFetchNextPages = true
+        
+        let query = GTLQueryDrive.queryForFilesList()
+        query.q = "name = \'\(foldername)\'"
+        service.executeQuery(
+            query,
+            delegate: self,
+            didFinishSelector: "checkFolderSearchQuery:finishedWithObject:error:")
+    }
+    
+    func checkFolderSearchQuery(ticket : GTLServiceTicket,
+        finishedWithObject response : GTLDriveFileList,
+        error : NSError?){
+            
+            if let error = error {
+                showAlert("Error", message: error.localizedDescription)
+                return
+            }
+            
+            if let files = response.files where !files.isEmpty {
+                //folder was found
+            } else {
+                createSheetFolder(mainFolderName!)
+                output.text = "No files found."
+            }
+            
+    }
+    
+    
+    //Create an empty folder
+    func createSheetFolder(filename: String) {
+        
+        let folder = GTLDriveFile()
+        folder.name = filename
+        folder.mimeType = "application/vnd.google-apps.folder"
+        
+        let query = GTLQueryDrive.queryForFilesCreateWithObject(folder, uploadParameters: nil)
+        service.executeQuery(
+            query,
+            delegate: self,
+            didFinishSelector: "displayFinishedCreatingFolder:updatedFile:error:"
+        )
+    }
+    
+    func displayFinishedCreatingFolder(ticket: GTLServiceTicket,
+        updatedFile file:GTLDriveFile,
+        error: NSError?){
+            
+            if let error = error {
+                showAlert("Error", message: error.localizedDescription)
+                return
+            }
+            output.text = "Finished creating Folder!"
+    }
+    
     // Construct a query to get names and IDs of 10 files using the Google Drive API
     func fetchFiles() {
         output.text = "Getting files..."
         let query = GTLQueryDrive.queryForFilesList()
-        query.pageSize = 10
+        query.pageSize = 15
         query.fields = "nextPageToken, files(id, name)"
         service.executeQuery(
             query,
@@ -86,7 +199,7 @@ class ViewController: UIViewController {
             if let files = response.files where !files.isEmpty {
                 filesString += "Files:\n"
                 for file in files as! [GTLDriveFile] {
-                    filesString += "\(file.name) (\(file.identifier))\n"
+                    filesString += "\(file.name)\n" //(\(file.identifier))\n"
                 }
             } else {
                 filesString = "No files found."
