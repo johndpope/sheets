@@ -25,8 +25,8 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
     private var mainFolderName: String!
     private var mainFolderID: String?
     let userDefaults = NSUserDefaults()
-    let output = UITextView()
-    let webView: UIWebView? = nil
+    @IBOutlet var output: UITextView!
+    @IBOutlet var webView: UIWebView?
     
     // When the view loads, create necessary subviews
     // and initialize the Drive API service
@@ -35,7 +35,7 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         
         output.frame = view.bounds
         output.editable = false
-        output.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        output.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 400, right: 0)
         output.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         
         view.addSubview(output);
@@ -319,6 +319,8 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
             return
         }
         
+        saveFileToDocumentsDirectory(data)
+        
         output.text = "Finished Download"
     }
     
@@ -334,11 +336,11 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         let url = NSURL(fileURLWithPath: filePath)
         let requestObj = NSURLRequest(URL: url)
         
-        webView.userInteractionEnabled = true
-        webView.delegate = self
-        webView.loadRequest(requestObj)
+        self.webView!.userInteractionEnabled = true
+        self.webView!.delegate = self
+        webView!.loadRequest(requestObj)
         
-        self.view.addSubview(webView)
+        self.view.addSubview(webView!)
     }
     
     

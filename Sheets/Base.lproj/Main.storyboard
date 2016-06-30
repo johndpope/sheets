@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,13 +18,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ln-ct-qc3">
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ln-ct-qc3">
                                 <rect key="frame" x="65" y="108" width="470" height="458"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.82718422774869116" green="0.58563363685710357" blue="0.34991946504204968" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2YB-bt-QwG">
+                                <rect key="frame" x="65" y="20" width="470" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="26"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.94022005890052351" green="0.67222470063142048" blue="0.41366539623146176" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="2YB-bt-QwG" firstAttribute="leading" secondItem="1ln-ct-qc3" secondAttribute="leading" id="3Td-29-2Kp"/>
+                            <constraint firstItem="1ln-ct-qc3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FWU-HE-So2"/>
+                            <constraint firstItem="2YB-bt-QwG" firstAttribute="trailing" secondItem="1ln-ct-qc3" secondAttribute="trailing" id="H0T-yL-b80"/>
+                            <constraint firstItem="2YB-bt-QwG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="HTF-w4-yiN"/>
+                            <constraint firstItem="1ln-ct-qc3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="45" id="UWK-jD-nom"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1ln-ct-qc3" secondAttribute="bottom" constant="34" id="ggv-sX-mDs"/>
+                            <constraint firstItem="1ln-ct-qc3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="88" id="pNh-XE-GtV"/>
+                            <constraint firstItem="1ln-ct-qc3" firstAttribute="top" secondItem="2YB-bt-QwG" secondAttribute="bottom" constant="8" symbolic="YES" id="qsU-MR-lfe"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="output" destination="2YB-bt-QwG" id="sQa-kf-ttY"/>
+                        <outlet property="webView" destination="1ln-ct-qc3" id="gcn-f7-5w7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
