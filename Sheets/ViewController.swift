@@ -11,7 +11,7 @@ import GTMOAuth2
 import UIKit
 import Foundation
 
-class ViewController: UIViewController,UIAlertViewDelegate {
+class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
     
     private let kKeychainItemName = "Drive API"
     private let kClientID = "451075181287-raoeoh0i74mq51vqv9tk6dhgi9qs26q7.apps.googleusercontent.com"
@@ -23,8 +23,10 @@ class ViewController: UIViewController,UIAlertViewDelegate {
     private let service = GTLServiceDrive()
     
     private var mainFolderName: String!
+    private var mainFolderID: String?
     let userDefaults = NSUserDefaults()
     let output = UITextView()
+    let webView: UIWebView? = nil
     
     // When the view loads, create necessary subviews
     // and initialize the Drive API service
@@ -75,7 +77,9 @@ class ViewController: UIViewController,UIAlertViewDelegate {
             setupSheetFolder()
         }else{
             self.mainFolderName = userDefaults.valueForKey("mainFolderName") as? String
-            fetchFiles()
+            self.searchForFolder(self.mainFolderName)
+            //fetchAllFiles()
+            fetchFilesInFolder()
         }
     }
     
@@ -97,7 +101,9 @@ class ViewController: UIViewController,UIAlertViewDelegate {
             title: "Choose",
             style: UIAlertActionStyle.Default,
             handler: {(action: UIAlertAction) in
+                
                 self.mainFolderName = alert.textFields![0].text!
+                
                 if self.mainFolderName == "" {
                     self.setupSheetFolder(true)
                 }else{
@@ -105,25 +111,30 @@ class ViewController: UIViewController,UIAlertViewDelegate {
                     self.userDefaults.setValue(self.mainFolderName, forKey: "mainFolderName")
                     
                     //search for the folder and if it doesn't exist create it
-                    self.searchForFolder(self.mainFolderName!)
+                    self.searchForFolder(self.mainFolderName)
                 }
             })
         alert.addAction(alertAction)
         
         presentViewController(alert, animated: true, completion: nil)
-        
-        
     }
     
-    func searchForFolder(foldername: String){
+    func searchForFolder(foldername: String, toGetID: Bool = false){
+        
         service.shouldFetchNextPages = true
+        
+        var sel = Selector("checkFolderSearchQuery:finishedWithObject:error:")
+        if toGetID {
+           sel = Selector("checkFolderSearchQueryForID:finishedWithObject:error:")
+        }
         
         let query = GTLQueryDrive.queryForFilesList()
         query.q = "name = \'\(foldername)\'"
+        
         service.executeQuery(
             query,
             delegate: self,
-            didFinishSelector: "checkFolderSearchQuery:finishedWithObject:error:")
+            didFinishSelector: sel)
     }
     
     func checkFolderSearchQuery(ticket : GTLServiceTicket,
@@ -139,9 +150,33 @@ class ViewController: UIViewController,UIAlertViewDelegate {
                 //folder was found
             } else {
                 createSheetFolder(mainFolderName!)
+                //searchForFolder(mainFolderName)
                 output.text = "No files found."
             }
             
+    }
+    
+    func checkFolderSearchQueryForID(ticket : GTLServiceTicket,
+        finishedWithObject response : GTLDriveFileList,
+        error : NSError?){
+            
+            if let error = error {
+                showAlert("Error", message: error.localizedDescription)
+                return
+            }
+            
+            if let files = response.files where !files.isEmpty {
+                //folder was found -> save folder iD
+                let file = files[0] as! GTLDriveFile
+                self.mainFolderID = file.identifier
+                self.userDefaults.setValue(mainFolderID!, forKey: "mainFolderID")
+            }
+            fetchFilesInFolder()
+            
+    }
+    
+    func getFolderID(){
+        searchForFolder(mainFolderName,toGetID: true)
     }
     
     
@@ -172,7 +207,7 @@ class ViewController: UIViewController,UIAlertViewDelegate {
     }
     
     // Construct a query to get names and IDs of 10 files using the Google Drive API
-    func fetchFiles() {
+    func fetchAllFiles() {
         output.text = "Getting files..."
         let query = GTLQueryDrive.queryForFilesList()
         query.pageSize = 15
@@ -180,8 +215,51 @@ class ViewController: UIViewController,UIAlertViewDelegate {
         service.executeQuery(
             query,
             delegate: self,
-            didFinishSelector: "displayResultWithTicket:finishedWithObject:error:"
+            didFinishSelector: "finishedFetchingAllFiles:finishedWithObject:error:"
         )
+    }
+    
+    func finishedFetchingAllFiles(ticket: GTLServiceTicket,
+        finishedWithObject response: GTLDriveFileList,
+        error: NSError?){
+            
+        if let error = error {
+            showAlert("Error", message: error.localizedDescription)
+            return
+        }
+            
+        displayFiles(response.files)
+    }
+    
+    //Fetches all PDF files in the main Folder
+    func fetchFilesInFolder(){
+        output.text = "Getting sheets"
+        let query = GTLQueryDrive.queryForFilesList()
+        if let folderID = mainFolderID {
+            query.q = "\'\(folderID)\' in parents and (mimeType = \'application/pdf\')"
+            service.executeQuery(
+                query,
+                delegate: self,
+                didFinishSelector: "finishedFetchingFilesInFolder:finishedWithObject:error:"
+            )
+        }else{
+            getFolderID()
+        }
+    }
+    
+    func finishedFetchingFilesInFolder(ticket: GTLServiceTicket,
+        finishedWithObject response: GTLDriveFileList,
+        error: NSError?){
+            
+        if let error = error {
+            showAlert("Error", message: error.localizedDescription)
+            return
+        }
+        
+        displayFiles(response.files)
+        for file in response.files {
+            downloadFile(file as! GTLDriveFile)
+        }
     }
     
     // Parse results and display
@@ -199,13 +277,68 @@ class ViewController: UIViewController,UIAlertViewDelegate {
             if let files = response.files where !files.isEmpty {
                 filesString += "Files:\n"
                 for file in files as! [GTLDriveFile] {
-                    filesString += "\(file.name)\n" //(\(file.identifier))\n"
+                    filesString += "\(file.name)\n" // (\(file.identifier))\n"
                 }
             } else {
                 filesString = "No files found."
             }
             
             output.text = filesString
+    }
+    
+    func displayFiles(files: [AnyObject]?){
+        var filesString = ""
+        
+        if let files = files where !files.isEmpty {
+            filesString += "Files:\n"
+            for file in files as! [GTLDriveFile] {
+                filesString += "\(file.name)\n" // (\(file.identifier))\n"
+            }
+        } else {
+            filesString = "No files found."
+        }
+        
+        output.text = filesString
+    }
+    
+    func downloadFile(file: GTLDriveFile){
+        output.text = "Downloading"
+        let url = "https://www.googleapis.com/drive/v3/files/\(file.identifier)?alt=media"
+        
+        let fetcher = service.fetcherService.fetcherWithURLString(url)
+        
+        fetcher.beginFetchWithDelegate(
+            self,
+            didFinishSelector: "finishedFileDownload:finishedWithData:error:")
+        
+    }
+    
+    func finishedFileDownload(fetcher: GTMSessionFetcher, finishedWithData data: NSData, error: NSError?){
+        if let error = error {
+            showAlert("Error", message: error.localizedDescription)
+            return
+        }
+        
+        output.text = "Finished Download"
+    }
+    
+    func saveFileToDocumentsDirectory(data: NSData){
+        let writePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent("Rach.pdf")
+        data.writeToFile(writePath.path!, atomically: true)
+        
+        displayPDFInWebView(writePath.path!)
+    }
+    
+    func displayPDFInWebView(filePath: String){
+        //let webView = UIWebView(frame: CGRectMake(10,10,200,200))
+        let url = NSURL(fileURLWithPath: filePath)
+        let requestObj = NSURLRequest(URL: url)
+        
+        webView.userInteractionEnabled = true
+        webView.delegate = self
+        webView.loadRequest(requestObj)
+        
+        self.view.addSubview(webView)
     }
     
     
@@ -251,6 +384,10 @@ class ViewController: UIViewController,UIAlertViewDelegate {
         )
         alert.addAction(ok)
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func applicationDocumentDirectory() -> String {
+        return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
     }
     
     override func didReceiveMemoryWarning() {
