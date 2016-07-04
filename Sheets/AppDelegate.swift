@@ -15,14 +15,27 @@ import GoogleAPIClient
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    var navigationController: UINavigationController?
-    var readerViewController: ReaderViewController?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let finalURL = NSURL(fileURLWithPath: documentsDirectory)
+        self.addSkipBackupAttributeToItemAtURL(finalURL.path!)
+        
+        
         return true
+    }
+    
+    //Handler for opening PDFs from outside the application
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        //url contains a URL to the file this app shall open
+        let viewController = self.window?.rootViewController as? ViewController
+        
+        viewController!.downloadAndDisplayFile(url)
+        return true
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -45,6 +58,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func addSkipBackupAttributeToItemAtURL(filePath:String) -> Bool {
+        
+        let URL:NSURL = NSURL.fileURLWithPath(filePath)
+        
+        assert(NSFileManager.defaultManager().fileExistsAtPath(filePath), "File \(filePath) does not exist")
+        
+        var success: Bool
+        do {
+            try URL.setResourceValue(true, forKey:NSURLIsExcludedFromBackupKey)
+            success = true
+        } catch let error as NSError {
+            success = false
+            print("Error excluding \(URL.lastPathComponent) from backup \(error)");
+        }
+        
+        return success
     }
 
 

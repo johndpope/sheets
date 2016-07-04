@@ -10,8 +10,11 @@ import GoogleAPIClient
 import GTMOAuth2
 import UIKit
 import Foundation
+import vfrReader
 
-class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
+class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, ReaderViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+    private let metadataFileName = "Metadata.txt"
     
     private let kKeychainItemName = "Drive API"
     private let kClientID = "451075181287-raoeoh0i74mq51vqv9tk6dhgi9qs26q7.apps.googleusercontent.com"
@@ -25,8 +28,12 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
     private var mainFolderName: String!
     private var mainFolderID: String?
     let userDefaults = NSUserDefaults()
+    
     @IBOutlet var output: UITextView!
     @IBOutlet var webView: UIWebView?
+    @IBOutlet var tableView: UITableView!
+    
+    var files: [File]!
     
     // When the view loads, create necessary subviews
     // and initialize the Drive API service
@@ -52,6 +59,7 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
     // When the view appears, ensure that the Drive API service is authorized
     // and perform API calls
     override func viewDidAppear(animated: Bool) {
+        
         if let authorizer = service.authorizer,
             canAuth = authorizer.canAuthorize where canAuth {
                 generalSetup()
@@ -65,12 +73,25 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         }
     }
     
-    //Check if specific folder exists
-    func folderWithNameExists(foldername: String) -> Bool {
-        return true
+    func showPDFInReader(filename: String){
+        let filePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename).path
+        let readerDocument = ReaderDocument(filePath: filePath!, password: "")
+        let readerViewController = ReaderViewController(readerDocument: readerDocument)
+        
+        presentViewController(readerViewController, animated: true, completion: nil)
+        readerViewController.delegate = self
+        
+    }
+    
+    func dismissReaderViewController(readerVC: ReaderViewController){
+        readerVC.dismissViewControllerAnimated(false, completion: nil)
     }
     
     func generalSetup(){
+        files = [File]()
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         //check if first time launch
         if (userDefaults.valueForKey("firstTime") == nil) {
             userDefaults.setBool(false, forKey: "firstTime")
@@ -78,8 +99,49 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         }else{
             self.mainFolderName = userDefaults.valueForKey("mainFolderName") as? String
             self.searchForFolder(self.mainFolderName)
+            
+            //deleteDocumentsDirectory()
+            //resetMetaDataFile()
+            setupFiles()
             //fetchAllFiles()
-            fetchFilesInFolder()
+            //fetchFilesInFolder()
+            listAllLocalFiles()
+            printMetaDataFile()
+        }
+    }
+    
+    //sets up all of the files
+    //includes loading from Documents directory and 
+    //syncing with Google drive (not implemented yet)
+    func setupFiles(){
+        loadLocalFiles()
+        
+        //print("Number of Files: \(files.count)")
+    }
+    
+    func loadLocalFiles(){
+        /*// Get the document directory url
+        let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+         */
+        
+        //create File objects from Metadata file
+        let mFilePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(metadataFileName)
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(mFilePath.path!) {
+            do {
+                let fileContent = try String(contentsOfFile: mFilePath.path!, encoding: NSUTF8StringEncoding)
+                
+                let lines = fileContent.componentsSeparatedByString("\n")
+                for line in lines {
+                    if line != "" {
+                        let file = File(data: line)
+                        files.append(file)
+                    }
+                }
+                
+            } catch {
+                print("Error! Could not read from metadata file")
+            }
         }
     }
     
@@ -123,9 +185,9 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         
         service.shouldFetchNextPages = true
         
-        var sel = Selector("checkFolderSearchQuery:finishedWithObject:error:")
+        var sel = #selector(ViewController.checkFolderSearchQuery(_:finishedWithObject:error:))
         if toGetID {
-           sel = Selector("checkFolderSearchQueryForID:finishedWithObject:error:")
+           sel = #selector(ViewController.checkFolderSearchQueryForID(_:finishedWithObject:error:))
         }
         
         let query = GTLQueryDrive.queryForFilesList()
@@ -191,7 +253,7 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         service.executeQuery(
             query,
             delegate: self,
-            didFinishSelector: "displayFinishedCreatingFolder:updatedFile:error:"
+            didFinishSelector: #selector(ViewController.displayFinishedCreatingFolder(_:updatedFile:error:))
         )
     }
     
@@ -215,7 +277,7 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         service.executeQuery(
             query,
             delegate: self,
-            didFinishSelector: "finishedFetchingAllFiles:finishedWithObject:error:"
+            didFinishSelector: #selector(ViewController.finishedFetchingAllFiles(_:finishedWithObject:error:))
         )
     }
     
@@ -240,7 +302,7 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
             service.executeQuery(
                 query,
                 delegate: self,
-                didFinishSelector: "finishedFetchingFilesInFolder:finishedWithObject:error:"
+                didFinishSelector: #selector(ViewController.finishedFetchingFilesInFolder(_:finishedWithObject:error:))
             )
         }else{
             getFolderID()
@@ -301,6 +363,13 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         output.text = filesString
     }
     
+    func downloadAndDisplayFile(url: NSURL){
+        let fileData = NSData(contentsOfURL: url)
+        let filename = url.lastPathComponent!
+        saveFileToDocumentsDirectory(fileData!, filename: filename)
+        showPDFInReader(filename)
+    }
+    
     func downloadFile(file: GTLDriveFile){
         output.text = "Downloading"
         let url = "https://www.googleapis.com/drive/v3/files/\(file.identifier)?alt=media"
@@ -309,7 +378,7 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         
         fetcher.beginFetchWithDelegate(
             self,
-            didFinishSelector: "finishedFileDownload:finishedWithData:error:")
+            didFinishSelector: #selector(ViewController.finishedFileDownload(_:finishedWithData:error:)))
         
     }
     
@@ -319,16 +388,122 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
             return
         }
         
-        saveFileToDocumentsDirectory(data)
+        let filename = "Rach.pdf"
+        
+        saveFileToDocumentsDirectory(data,filename: filename)
+        
+        showPDFInReader(filename)
         
         output.text = "Finished Download"
     }
     
-    func saveFileToDocumentsDirectory(data: NSData){
-        let writePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent("Rach.pdf")
-        data.writeToFile(writePath.path!, atomically: true)
+    func saveFileToDocumentsDirectory(data: NSData,filename: String){
+        let writePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename)
         
-        displayPDFInWebView(writePath.path!)
+        let file = createFileObject(writePath, title: filename)
+        data.writeToFile(file.url.path!, atomically: true)
+        tableView.reloadData()
+        
+    }
+    
+    func createFileObject(url: NSURL, title: String) -> File {
+        let file = File(url: url, title: title, dict: nil)
+        
+        //append file data to metadata file and file list
+        //first check to see if it already exists or not
+        let dataString = file.getFileNameAsString()
+        for document in files {
+            if document.getFileNameAsString() == dataString {
+                print("File already exists in metadata")
+                return document
+            }
+        }
+        
+        updateMetadataFile(file)
+        files.append(file)
+        return file
+    }
+    
+    //appends the data of file to Metadata file
+    func updateMetadataFile(file: File){
+        let metadataFileUrl = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(metadataFileName)
+        
+        let dataAsString = file.getDataAsString()
+        let data = dataAsString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(metadataFileUrl.path!) {
+            do {
+                let fileHandle = try NSFileHandle(forWritingToURL: metadataFileUrl)
+                fileHandle.seekToEndOfFile()
+                fileHandle.writeData(data)
+                fileHandle.closeFile()
+            }catch{
+                print("Can't open fileHandler")
+            }
+        }else{
+            //File doesn't exist
+            do{
+                try data.writeToURL(metadataFileUrl, options: .DataWritingAtomic)
+            }catch{
+                print("Couldn't create and write to file")
+            }
+            
+        }
+    }
+    
+    func resetMetaDataFile(){
+        let metadataFileUrl = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(metadataFileName)
+        
+        do {
+            try "".writeToURL(metadataFileUrl, atomically: true, encoding: NSUTF8StringEncoding)
+        } catch {
+            print("Couldn't reset metadata file")
+        }
+        
+    }
+    
+    func printMetaDataFile(){
+        let mFilePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(metadataFileName)
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(mFilePath.path!) {
+            do {
+                let fileContent = try String(contentsOfFile: mFilePath.path!, encoding: NSUTF8StringEncoding)
+                
+                let lines = fileContent.componentsSeparatedByString("\n")
+                for line in lines {
+                    print(line)
+                }
+                
+            } catch {
+                print("Error! Could not read from metadata file")
+            }
+        } else {
+            print("Metadata file does not exist.")
+        }
+    }
+    
+    func listAllLocalFiles(){
+        var fileString = ""
+        // Get the document directory url
+        let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+        
+        do {
+            // Get the directory contents urls (including subfolders urls)
+            let directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtURL( documentsUrl, includingPropertiesForKeys: nil, options: [])
+            
+            // filter out pdf files
+            let files = directoryContents.filter{ $0.pathExtension == "pdf" }
+            let fileNames = files.flatMap({$0.URLByDeletingPathExtension?.lastPathComponent})
+            
+            for filename in fileNames {
+                fileString += filename + "\n"
+            }
+            
+            output.text = fileString
+            
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
     }
     
     func displayPDFInWebView(filePath: String){
@@ -343,6 +518,24 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         self.view.addSubview(webView!)
     }
     
+    //TableView Delegate and DataSource functions
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //number of cells
+        return files.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell()
+        cell.textLabel?.text = files[indexPath.row].title
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // cell selected code here
+        showPDFInReader(files[indexPath.row].title)
+    }
+    
     
     // Creates the auth controller for authorizing access to Drive API
     private func createAuthController() -> GTMOAuth2ViewControllerTouch {
@@ -353,7 +546,7 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
             clientSecret: nil,
             keychainItemName: kKeychainItemName,
             delegate: self,
-            finishedSelector: "viewController:finishedWithAuth:error:"
+            finishedSelector: #selector(ViewController.viewController(_:finishedWithAuth:error:))
         )
     }
     
@@ -392,9 +585,28 @@ class ViewController: UIViewController,UIAlertViewDelegate,UIWebViewDelegate {
         return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
     }
     
+    //deletes all of the content of the Document Directory
+    func deleteDocumentsDirectory(){
+        let fileManager = NSFileManager.defaultManager()
+        let directoryURL = NSURL(fileURLWithPath: applicationDocumentDirectory())
+        let enumerator = fileManager.enumeratorAtPath(applicationDocumentDirectory())
+        while let file = enumerator?.nextObject() as? String {
+            do {
+                try fileManager.removeItemAtURL(directoryURL.URLByAppendingPathComponent(file))
+            } catch {
+                print("Could not remove \(file)")
+            }
+            
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController{
+        return self
     }
     
 }
