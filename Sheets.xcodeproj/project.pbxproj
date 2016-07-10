@@ -14,6 +14,8 @@
 		BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9561D213948008B1135 /* LaunchScreen.storyboard */; };
 		BB00B9631D213948008B1135 /* SheetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B9621D213948008B1135 /* SheetsTests.swift */; };
 		BB00B96E1D213948008B1135 /* SheetsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B96D1D213948008B1135 /* SheetsUITests.swift */; };
+		BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41187F1D2D1A7100168B76 /* RenameViewController.swift */; };
+		BB4118821D2D9D4300168B76 /* SheetReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */; };
 		BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEFA78A1D2A5863007DA3A7 /* File.swift */; };
 		BBEFA78F1D2A5DFE007DA3A7 /* NameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEFA78E1D2A5DFE007DA3A7 /* NameConstants.swift */; };
 		BBF4D0521D22740600C85784 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBF4D0511D22740600C85784 /* GTMOAuth2ViewTouch.xib */; };
@@ -55,6 +57,8 @@
 		BB00B9691D213948008B1135 /* SheetsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SheetsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00B96D1D213948008B1135 /* SheetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsUITests.swift; sourceTree = "<group>"; };
 		BB00B96F1D213948008B1135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB41187F1D2D1A7100168B76 /* RenameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenameViewController.swift; sourceTree = "<group>"; };
+		BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetReaderViewController.swift; sourceTree = "<group>"; };
 		BBEFA78A1D2A5863007DA3A7 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BBEFA78E1D2A5DFE007DA3A7 /* NameConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameConstants.swift; sourceTree = "<group>"; };
 		BBF3BAEA1D21ABAF00A287A5 /* Sheets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sheets-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 				BBEFA78A1D2A5863007DA3A7 /* File.swift */,
 				BB00B94D1D213948008B1135 /* AppDelegate.swift */,
 				BB00B94F1D213948008B1135 /* ViewController.swift */,
+				BB41187F1D2D1A7100168B76 /* RenameViewController.swift */,
+				BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */,
 				BB00B9511D213948008B1135 /* Main.storyboard */,
 				BB00B9541D213948008B1135 /* Assets.xcassets */,
 				BB00B9561D213948008B1135 /* LaunchScreen.storyboard */,
@@ -430,6 +436,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */,
+				BB4118821D2D9D4300168B76 /* SheetReaderViewController.swift in Sources */,
 				BBEFA78F1D2A5DFE007DA3A7 /* NameConstants.swift in Sources */,
 				BB00B9501D213948008B1135 /* ViewController.swift in Sources */,
 				BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */,

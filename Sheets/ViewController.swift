@@ -76,7 +76,8 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
     func showPDFInReader(filename: String){
         let filePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename).path
         let readerDocument = ReaderDocument(filePath: filePath!, password: "")
-        let readerViewController = ReaderViewController(readerDocument: readerDocument)
+        let readerViewController = SheetReaderViewController(readerDocument: readerDocument,
+            name: (filename as NSString).stringByDeletingPathExtension)
         
         presentViewController(readerViewController, animated: true, completion: nil)
         readerViewController.delegate = self
@@ -108,6 +109,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
             listAllLocalFiles()
             printMetaDataFile()
         }
+        tableView.reloadData()
     }
     
     //sets up all of the files
