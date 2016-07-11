@@ -10,174 +10,182 @@
 		00B6E5C3536F5FF072AE4A528A5B16CC /* GTLDriveUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D74671FB33EBD65E9CB8BBEF9C0204D /* GTLDriveUser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0160116E871437E52CFFFCE387283F99 /* GTLDriveFileList.h in Headers */ = {isa = PBXBuildFile; fileRef = 148F1915FD7071ACC6D01BA60475BEF9 /* GTLDriveFileList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		055FC3AE81EFC27A3DF827A2F44FD94F /* GTMReadMonitorInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABC9AEF710F9098A2ACDB6D344F0C89 /* GTMReadMonitorInputStream.m */; };
-		059311A24B66E08FCADFEDBFCA076F63 /* ReaderDocumentOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D0D1E1473F09B4825ED6794F948ED65 /* ReaderDocumentOutline.m */; };
-		05C52849B155CA50501A47AF0DDAC6EF /* ReaderMainPagebar.h in Headers */ = {isa = PBXBuildFile; fileRef = 33BBB55770D196D81C22857DB086AC3E /* ReaderMainPagebar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		059311A24B66E08FCADFEDBFCA076F63 /* ReaderDocumentOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = A34533BA46C1BF1024D971ADF3FC2DC2 /* ReaderDocumentOutline.m */; };
+		05C52849B155CA50501A47AF0DDAC6EF /* ReaderMainPagebar.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DB682CD92A00606864241762B4A5C56 /* ReaderMainPagebar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0798E9ED242529B91B566AA7EF7028B2 /* Reader-Button-H.png in Resources */ = {isa = PBXBuildFile; fileRef = 11647DECDAD46C2E6E68BF751142820C /* Reader-Button-H.png */; };
 		0A542C34999CC25B34B5E3D1B48E6311 /* GTLQueryDrive.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6D219191720F9FB5D3E3EDAA9FABE8 /* GTLQueryDrive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		0B5DBA098A9225DEDDF742615A57B6E7 /* ThumbsMainToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6C05BDADBDD6AEE03C55BF7F6D97B9 /* ThumbsMainToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0B7B09993E66AE0CB8C35328FABC60B6 /* ReaderThumbQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7624A3CD495E9DF06BB3492C0FEFE /* ReaderThumbQueue.m */; };
+		0B5DBA098A9225DEDDF742615A57B6E7 /* ThumbsMainToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = FBB46EB318160E242499E653E5FF7B16 /* ThumbsMainToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B7B09993E66AE0CB8C35328FABC60B6 /* ReaderThumbQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FB196E73B83F8488D1A484C84B365A /* ReaderThumbQueue.m */; };
 		0D57F7463834A541528D5AC6D69ACB51 /* GTMOAuth2SignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8FFBE90A09DC0889B7B8751877B0A8 /* GTMOAuth2SignIn.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		0E4801B2941CF7D3F32A22831EE5905D /* Reader-Export@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A6F31DF7A6DB61D42062EA4C291531D /* Reader-Export@2x.png */; };
-		0E831AAFAF9FA24F6F91E1DDD4485E69 /* CGPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C8960328E5AD67DDD879CC57D24FFF4 /* CGPDFDocument.m */; };
-		111C7517361BA662AF207D3EA039DCC2 /* ReaderContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EC3331956DBDE1326282F65547FF4FB /* ReaderContentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		11BF0C633F2A292EAB33E2F1D8807586 /* Reader-Thumbs.png in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED663A8F76A4C8695A41DB8B2B3CB /* Reader-Thumbs.png */; };
+		0E831AAFAF9FA24F6F91E1DDD4485E69 /* CGPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E80FE97E3C447AE43D55446AB875AAC /* CGPDFDocument.m */; };
+		111C7517361BA662AF207D3EA039DCC2 /* ReaderContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3BBF4D484808956AB694822A00BC52 /* ReaderContentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		139E22261B61B910C5DE80C552BD2219 /* GTLBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 58CAFD3954364E142E9B8C1F289BA3E8 /* GTLBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		14135D4902E80A958D9AE0662B8157AD /* GTLDriveFileList.m in Sources */ = {isa = PBXBuildFile; fileRef = 151B7E2AB4A16AEDAEC18F43D16B8210 /* GTLDriveFileList.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		143345E0D2BE1142E129C399B5AF926B /* Reader-Button-H@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0355F9CBC19E17C4A17F75974BA9F95F /* Reader-Button-H@3x.png */; };
 		15796B78FCDBD1CB3A8CC3B3137672B4 /* GTLBatchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D3539F3BDC931113EDA17B81150775E9 /* GTLBatchQuery.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		16D5A1942F4B2238A71A48BCC1422678 /* GTLFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = D154D35F2BD732CC96C2C695B37D4624 /* GTLFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		175BC482C0D609F26E7B56E89A044FF5 /* GTLDrivePermission.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0DB244828933A41EC7A2CCA1CE7705 /* GTLDrivePermission.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18197F3408C2378D2658A012B3A35B3D /* GTLUploadParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 17D9F98F8E915C706832F917B0A59A8B /* GTLUploadParameters.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		189FDBCFCEF139866741E3C885CF1C1C /* ReaderMainPagebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9EBDE0104C32272C8026020C3D871D /* ReaderMainPagebar.m */; };
+		189FDBCFCEF139866741E3C885CF1C1C /* ReaderMainPagebar.m in Sources */ = {isa = PBXBuildFile; fileRef = C3FF632BA4C263E2ADAC8CD99A2D7179 /* ReaderMainPagebar.m */; };
 		1A262AD3FB11C7AADD814179C55AF610 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7550FDB6A76C31272488671D9795037 /* Foundation.framework */; };
 		1A867B934489B833F2A90E18395D46DA /* GTMGatherInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EFC020DFCC7AC95A7CA80DF35F6EA8 /* GTMGatherInputStream.m */; };
-		1AC3291280ABD8FE5DDFFD7E40558B15 /* Reader-Mark-N.png in Resources */ = {isa = PBXBuildFile; fileRef = 50064B8551FD48C3B24B74204C156A2B /* Reader-Mark-N.png */; };
 		1D6C54E7F45B61562F83AE2265CDE16D /* GTMSessionFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537CEB4583275DF526C28158B910C13C /* GTMSessionFetcher.framework */; };
 		1E6413A49993395DF5B7D94733803936 /* GTMOAuth2SignIn.h in Headers */ = {isa = PBXBuildFile; fileRef = A9404B4A0409A6842547EFA688D58455 /* GTMOAuth2SignIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		214A898A0D5B3C76C1373F18C70E4E5E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6D9653FF637771C2000BFD99CF7B60 /* Security.framework */; };
 		21C1C76D2938344E74584C1D0A913D5B /* GTLDriveFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E18462811A34D31AEDB17BEB94F49B9 /* GTLDriveFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		244B4B06A759F1402038D781C13A84CD /* ReaderThumbRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5009AC44F879215DF04383AC8F170394 /* ReaderThumbRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		28047DA99FFB4C84702ED1A198C83A58 /* ReaderThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A468B3170F7A7BD9A09703C621559463 /* ReaderThumbsView.m */; };
+		244B4B06A759F1402038D781C13A84CD /* ReaderThumbRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = A3D5B4DEDF874FEA0129536FAD5E868B /* ReaderThumbRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		28047DA99FFB4C84702ED1A198C83A58 /* ReaderThumbsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 129A099B6095157F16ED53A094F0EB12 /* ReaderThumbsView.m */; };
 		2831395EB5E652CA390191CE4CA440BD /* GTLUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = BC98EA97849EE014CE100EC1976E20EF /* GTLUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		28484DAB7F359AAEBAF0180CB9F5C1D6 /* GTLTargetNamespace.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A96A6724AC39C3F80E886FA2DA0E1F /* GTLTargetNamespace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		287016DFB82A6938B2D4496FC20D8D00 /* GTLDriveReplyList.h in Headers */ = {isa = PBXBuildFile; fileRef = C373E9F40CADFF92B70AF17C5A6AC9CC /* GTLDriveReplyList.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		297A766FF9C7F54E7583A2E65C634C72 /* vfrReader-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0726D8C4763D1C490ADD8E0EA910F090 /* vfrReader-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		29F618607743934C611F67AE7E216A7E /* ReaderThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42BBCC5999531F512722408A75BB4DF6 /* ReaderThumbView.m */; };
-		2C9D2B5B58729835297FA9643603495A /* ReaderThumbFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = D0EF41C0DA955EBF616F9EBE69398446 /* ReaderThumbFetch.m */; };
-		2CAD5844B0C0CDC19CF09110D027AC3C /* ThumbsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EC4CDB99C778E0A6043DDE70606ABBE /* ThumbsViewController.m */; };
+		297A766FF9C7F54E7583A2E65C634C72 /* vfrReader-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A8C0EE8FEA9112032DF79739FB19C8EA /* vfrReader-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		29F618607743934C611F67AE7E216A7E /* ReaderThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 678A765041F5BD1BC84106195918BC1C /* ReaderThumbView.m */; };
+		2C9D2B5B58729835297FA9643603495A /* ReaderThumbFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = FB95AA94435C9DD27541F11429055D6E /* ReaderThumbFetch.m */; };
+		2CAD5844B0C0CDC19CF09110D027AC3C /* ThumbsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 002868BFDB25D9AC9C714E9A0A6C119E /* ThumbsViewController.m */; };
 		2CB3BF515BAB22E66C058317F7501F77 /* GTLDrivePermissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = F798968E06C7A112C005A31A59A7BF12 /* GTLDrivePermissionList.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		2DC10BB31A82D7D1125EFDF6887B40C9 /* ReaderThumbsView.h in Headers */ = {isa = PBXBuildFile; fileRef = A5DFD99748B4750FB4CB56F1465A4359 /* ReaderThumbsView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2F32424256F0B6EAD6B91EA2C2B2838E /* Reader-Print@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E25BC6F90B92826DFEEEB9F783394E53 /* Reader-Print@2x.png */; };
+		2DC10BB31A82D7D1125EFDF6887B40C9 /* ReaderThumbsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 541FDE5C861B10F56C8D688F5F3DED16 /* ReaderThumbsView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F750700BF7DCE08B3AE2EB43D98A7A9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD11516B0CECB9B4D4EC049ED4377329 /* CoreGraphics.framework */; };
-		2FAF85EF45373C6EC19E005CC18D5F3B /* ReaderThumbView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BDAC9FCF989F0BDF8AB6C939B4D4CB4 /* ReaderThumbView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2FAF85EF45373C6EC19E005CC18D5F3B /* ReaderThumbView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E3D269914DD7B51473939506A237DC0 /* ReaderThumbView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33B761E4E3C263F312F5AC914A333A65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7550FDB6A76C31272488671D9795037 /* Foundation.framework */; };
 		344B1D7BF9AF5230570CB9B901F4BF54 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FDE780AD86725667489FF5AC092441A /* MessageUI.framework */; };
-		34A0D1CBC4EE4195471DE909FCD8B606 /* Reader-Thumbs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56E4B30C704734309B735C1C9B5CF602 /* Reader-Thumbs@2x.png */; };
 		36893609A977244712B2F95214481CF2 /* GTMSessionFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = DE350D8F10693F179A9B90FCC976B2FB /* GTMSessionFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		37738008BF33B2796E3624557B54917C /* Reader-Button-N.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A67E482F0C671AF6456A51375262A97 /* Reader-Button-N.png */; };
+		37AB9CC21BD97F5851D6D939985C62CB /* Reader-Print.png in Resources */ = {isa = PBXBuildFile; fileRef = C549CE249F18EB6D615FA59243F1DF7E /* Reader-Print.png */; };
 		37C7C3FD8F2C8B82CC2CD1FA97E3254D /* GTLDriveConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 0DAC6CEAA77BCE41A7EF68DF930F4C06 /* GTLDriveConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3B0E70F3A63365FD53EE9AC3B88E0EAA /* GTLDriveChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA07DB8035F1355C79BC7D492E84A6F0 /* GTLDriveChannel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3DA62FDE23BA04A6E5C1CFCBD9F1C750 /* GTMSessionFetcherLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FC6BEFA8ED6A840B17AAB54B1A8BFA /* GTMSessionFetcherLogging.m */; };
-		402EC1188032C53A5EDBE368D94E960B /* ReaderThumbRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F607FDCB037C670AE0946ABCBFB98286 /* ReaderThumbRequest.m */; };
-		47B9655943E1535626AEEB6E02FB7B05 /* ReaderThumbCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D6CF5B211809F7188B5333509566D16 /* ReaderThumbCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		402EC1188032C53A5EDBE368D94E960B /* ReaderThumbRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0C7E2D74014F014D0E131DE643137E /* ReaderThumbRequest.m */; };
+		47B9655943E1535626AEEB6E02FB7B05 /* ReaderThumbCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F45786FF67961D40367169521984F01F /* ReaderThumbCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48ED2861842210A3C8A1F33CCC3C43D2 /* GTMReadMonitorInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = D9133C8B477A264F5E5095886F45094F /* GTMReadMonitorInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		494B0285608C06C4B5009164C081F3AB /* Reader-Email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3368F388B2FB1F9D1B0CB1A2B2AB125 /* Reader-Email@2x.png */; };
 		4A6E81B36A3F9AAB06DE9597B4CD99DB /* GTLDriveGeneratedIds.m in Sources */ = {isa = PBXBuildFile; fileRef = C0775B2EF0E7467BC1A07E644A24D05E /* GTLDriveGeneratedIds.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4A8E724145797C0EF1CC0D61CE9632FD /* ReaderDocumentOutline.h in Headers */ = {isa = PBXBuildFile; fileRef = D5DCB33F8DB0727584B0739685904757 /* ReaderDocumentOutline.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4DF2580B6BCA91E09061DD311BE901A0 /* vfrReader-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F24C6DDF9BA74C081B352090DBBDAB1 /* vfrReader-dummy.m */; };
+		4A8E724145797C0EF1CC0D61CE9632FD /* ReaderDocumentOutline.h in Headers */ = {isa = PBXBuildFile; fileRef = 97CA7062C0D455AA8FF0BBFDBF012888 /* ReaderDocumentOutline.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DF2580B6BCA91E09061DD311BE901A0 /* vfrReader-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7787CD8D7A13AA887D8296E527FB4745 /* vfrReader-dummy.m */; };
 		4EE6B231B05763F21D31AB3BF0DEDD96 /* GTMSessionFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537CEB4583275DF526C28158B910C13C /* GTMSessionFetcher.framework */; };
+		507BF28DAB2731CEA40E2B512060C0A4 /* Reader-Export@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 90B3756C183D08C1274522F79D6B3416 /* Reader-Export@2x.png */; };
 		5426137B13D102E0F5CD7A5A9207B919 /* GTLObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ED54467AEA67365D8E945F268070D9A /* GTLObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		54C99215F1B2D4AB571EDD7C5A30A73B /* GTLDriveConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 59C4909CDDF8C5AE14030915B1F29CCE /* GTLDriveConstants.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		558A62EC902A3B20BAC1D26AF6D7E071 /* Reader-Thumbs@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F2CB32D8170A7532D89207C7FEC4F1 /* Reader-Thumbs@3x.png */; };
 		578BD388F9EE271F874E842319664D8F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B35C16A000F235E510D1FC08727D4904 /* UIKit.framework */; };
 		58400AF841E713406AB94E641CB700FE /* GTLBatchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = CBCC4174416B4DEA1742F5403009B7FD /* GTLBatchQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D83EB069FE84AE506FE05C320D60AA3 /* Reader-Button-N@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 307D6C54FE95AF893B99B9CFFE1ACC00 /* Reader-Button-N@2x.png */; };
 		5E31BCFA2956D5ED2847FC19851C80CC /* GTLDriveCommentList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A270067E7FA8C8FFF01A5D007D22E4F /* GTLDriveCommentList.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5E8F0DFD1935F7A9200EE2B0211D118A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B79972947EF4E764829DFC4C127A397 /* ImageIO.framework */; };
-		607087CD8606BBEFBAF37444EC601514 /* UIXToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E7F92CF2F1101BA4A92A022D6AEAA4 /* UIXToolbarView.m */; };
+		5F3437094B9FF805A4FAA0F766842948 /* Reader-Button-H@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 453D3718B75F097C174E8C527481D895 /* Reader-Button-H@2x.png */; };
+		607087CD8606BBEFBAF37444EC601514 /* UIXToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B89F1BCF5C647BD9C0E4FD78723811 /* UIXToolbarView.m */; };
 		616065CCD15D61B9E211BB028BBC884C /* GTLDriveStartPageToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7DB7302FEF27D9DD9CA2E5512BAC65 /* GTLDriveStartPageToken.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		62A2123C512CD87EF488FAE3B840E484 /* GTMSessionFetcherService.h in Headers */ = {isa = PBXBuildFile; fileRef = FDD49870F1AF7DEF9EE912C57C103371 /* GTMSessionFetcherService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6367C5DB29761EBC6E07AD079884C44A /* Pods-Sheets-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B9B65E0E4EF32DA3AC50A3B1B2E8CD /* Pods-Sheets-dummy.m */; };
-		665BCCAEEA1EBA7EEE7F300B52E5C405 /* ReaderDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C9360AC25465B11F26FF54A8E32A3F3 /* ReaderDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		665BCCAEEA1EBA7EEE7F300B52E5C405 /* ReaderDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E0FE7D377C47A5FC142A6B85302B686 /* ReaderDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		67ECA8A42B21A0F2C3FE6C0B948FF9E5 /* GTLJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B7287EC6D2B83B06AE2368CDB73B9BC6 /* GTLJSONParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		68EA1BEC46C679E1D9B4F3826A351F7A /* Reader-Mark-Y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C732E15827A9B3DCA080B3A66D0CE59E /* Reader-Mark-Y@2x.png */; };
 		6A97C7F8E1099A1B893A98A9D536E96E /* GTLDriveReply.m in Sources */ = {isa = PBXBuildFile; fileRef = 75426C3348A075630007F84E3F6908BA /* GTLDriveReply.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6B19083D7A764FCD08FDD0D6352625B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7550FDB6A76C31272488671D9795037 /* Foundation.framework */; };
-		6BD7B6C47CC7039EC5D62E4BE53EA9EF /* ReaderThumbRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 87C500CD10A822BD05ADBFE54DD760AB /* ReaderThumbRender.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6BD7B6C47CC7039EC5D62E4BE53EA9EF /* ReaderThumbRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F0562A1DBC2431B498B4186FD195A42 /* ReaderThumbRender.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BEBC58745770AA5BAF853201BE1707D /* GTLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B9773F836D40735FF2B52F3607C322D5 /* GTLUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E72CF3F89CE2234C28507283A901D26 /* ReaderThumbRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0324B829D634CF6AAAE7EE3A7311C /* ReaderThumbRender.m */; };
-		6FC05D3B45F4085101E806A1A992BEDC /* ReaderConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 70CF1B0F158C35E0ED2091930DA1E1B7 /* ReaderConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		718985A2A45D6BFCB8BCDE36B0123E88 /* Reader-Print.png in Resources */ = {isa = PBXBuildFile; fileRef = 793AFBE163BB1AB55311B66D47355C70 /* Reader-Print.png */; };
+		6BFD33D88D010385934673ED08395601 /* Reader-Export@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41B1B3163C7D1054C52200010BE9B706 /* Reader-Export@3x.png */; };
+		6E72CF3F89CE2234C28507283A901D26 /* ReaderThumbRender.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF32A813B0E534D8367AEC412E07FD2 /* ReaderThumbRender.m */; };
+		6FC05D3B45F4085101E806A1A992BEDC /* ReaderConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F88B81B154AE8C839B359F64CAAA3113 /* ReaderConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6FE80D531F3109AD40568BBB985EA178 /* Reader-Button-N.png in Resources */ = {isa = PBXBuildFile; fileRef = D05737A7E0B6F1B5F0FC2AEB1EB8A250 /* Reader-Button-N.png */; };
 		722CF8BD308E17E4B15986B74EB83513 /* GTMSessionUploadFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AE16DD305F3FC930C020A5831FE1879F /* GTMSessionUploadFetcher.m */; };
 		72E21B5F8D66D7A7428D74E90715A925 /* GTLDriveRevision.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CC1BA5BD0F7DA685A00E8BF9A264146 /* GTLDriveRevision.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		74E3AE860335D3FCA08938DF9F48A42C /* ReaderContentPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCFD7EAA8E090F16D90AA265C2A5FE1 /* ReaderContentPage.m */; };
+		73254F20A10F48FCCE20F7FB0B3AC0BB /* Reader-Print@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E2607879C117C93AA975DBFB80C3979F /* Reader-Print@3x.png */; };
+		74E3AE860335D3FCA08938DF9F48A42C /* ReaderContentPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618060A61F12B4AC2689DB3CC503882 /* ReaderContentPage.m */; };
 		75941BF5F3A9279DC796355E392066F8 /* GTLDriveRevisionList.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F45E4DF8821AF407229DA1E8137FDF1 /* GTLDriveRevisionList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		75F02B523BD1C93479190768DE33CA51 /* GTLQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 63B223DC062094527439C91BC1717486 /* GTLQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		75F5E02C546A2B9433DDFDAAC31D84DB /* Reader-Print@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A8E7ACA7CEC886839898913542DF880D /* Reader-Print@2x.png */; };
 		761234AC074E4A0BB5E0597E725FFC6E /* GTLService.h in Headers */ = {isa = PBXBuildFile; fileRef = 68276CCC0A991965FED0F8C97854C82B /* GTLService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7A83C0B0B5505E1A8E5D4534F76F7755 /* Pods-Sheets-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6048BD9F6C5A35D092BAEEFF9A072022 /* Pods-Sheets-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7D4DB101AFB57AB2FC3FA2E9816DB521 /* ThumbsMainToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2292A93EE17EA9A97C7575A8BC1895C6 /* ThumbsMainToolbar.m */; };
+		7D4DB101AFB57AB2FC3FA2E9816DB521 /* ThumbsMainToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = F32DE95FBA234DA0BC701B59C3E7EC1B /* ThumbsMainToolbar.m */; };
 		7F38A4E3EAF5E3A56F8A6D687DF87C30 /* GTLDriveAbout.m in Sources */ = {isa = PBXBuildFile; fileRef = 69677D5CC08DD7C88BA53A55B9EB36EA /* GTLDriveAbout.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		80E012F58BCB9B8416DDE14FBE437AEB /* GTLDriveChangeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7639F7CE796352F9896B525700745F69 /* GTLDriveChangeList.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		83D9A7737E392D3D756422913AD43BFF /* GTLObject.h in Headers */ = {isa = PBXBuildFile; fileRef = BA69169BAA7B930D2663817F5E5CF198 /* GTLObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		845D48773480AD995DD59310907F4C11 /* GTLDriveGeneratedIds.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB5B89E993AB94C4B30E0A773A43851 /* GTLDriveGeneratedIds.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8581D5DBB3C760BDA0DA56F544944EDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7550FDB6A76C31272488671D9795037 /* Foundation.framework */; };
 		85D02C2E762FCA04833E16B795EA40AF /* GTMOAuth2-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E3E278955DFA5DFD7433974D140708 /* GTMOAuth2-dummy.m */; };
-		85F04B9D646DA42A0EECF407B668CF32 /* ReaderDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A32208B8681D56C1160148C27FC0C23 /* ReaderDocument.m */; };
+		85F04B9D646DA42A0EECF407B668CF32 /* ReaderDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 36D2EAFA50DDF67239E927CE1F5EB480 /* ReaderDocument.m */; };
 		891CE377E7784610CEA17FFE7E22D936 /* GTLFramework.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3D0E0FEE7D009C0C8644F0EA85EFEC /* GTLFramework.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8BA790021812B7D3EDDEC3F02F125E28 /* GTLUploadParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DDBA76142B85E49A61994FBDF1E79C /* GTLUploadParameters.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D7D4F18277BE65EB4CBA9FCBAAC2D40 /* GoogleAPIClient-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BF857A357DC22F3570538E741F0C9FA8 /* GoogleAPIClient-dummy.m */; };
-		8ED05E46C48A9709EF19A3A06E2E718B /* ReaderMainToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 543194CEA3A1C8A18DA81A42F214C6F1 /* ReaderMainToolbar.m */; };
+		8ED05E46C48A9709EF19A3A06E2E718B /* ReaderMainToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED1FEC0E920593C24874DBD1E872A9F /* ReaderMainToolbar.m */; };
 		8EEE0713570A1A376DBBE659D0D17AF3 /* GTLQueryDrive.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F8DE28F903AF865235F1D9B27F55042 /* GTLQueryDrive.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		902DC154EC95A17493146C1878DBF8B2 /* Reader-Mark-Y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F37EE192D38B32D54A311990E1ACC950 /* Reader-Mark-Y@2x.png */; };
 		905B24609E91D39D24D24A745CA35269 /* GTLDriveRevisionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6ADC173D6EA23FC7AB877F9F271019 /* GTLDriveRevisionList.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9060A2C3A72B80C3802589B0BADC9459 /* GTMOAuth2ViewControllerTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A1018A9A47A74D1843472556D517CC3 /* GTMOAuth2ViewControllerTouch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9146FF37F7BC79247129C3CF8FDBB28D /* GTLErrorObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BE842ADA7A61634CEDBB9B6BDAD1370 /* GTLErrorObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		97ED9E6E203E3A573CAF33590B17D8B7 /* Reader-Button-N@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50BFD23958AB5B85E39207162836C0D3 /* Reader-Button-N@2x.png */; };
-		99CB8EAC7782A69D88E47BA34B32897D /* ReaderConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A2777A4176A28706F9B92F5B6A492F /* ReaderConstants.m */; };
+		99CB8EAC7782A69D88E47BA34B32897D /* ReaderConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A81A6D0A26050CEA24382C75826E357 /* ReaderConstants.m */; };
 		9AF20A255D55BD9F6FCD0E418C53413C /* GTMSessionFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D48EBCDBC87EEC2E7D3A332F7FE5A16D /* GTMSessionFetcher.m */; };
 		9B7C75BF845EC6AAE5E077803EC8D37F /* GTMOAuth2Authentication.h in Headers */ = {isa = PBXBuildFile; fileRef = AFE99B278EBCE9E8726D4BBB8724E035 /* GTMOAuth2Authentication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CE99118D32A95CF0BDA01EE541935DC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD14A589AB51368C19F63CDA2098E8F9 /* SystemConfiguration.framework */; };
 		9E571CB0646D94CCADA23E243AD32406 /* GTLJSONParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B034FB8770EA707380C262550AFCF4F /* GTLJSONParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9EFEAB11BE90177EDF2272455CFBA63A /* GTLService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8147A3D64EAE25C129E132D3C5885BEB /* GTLService.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A40B7F6734A40E08B46CD68CD197E97B /* Reader-Mark-Y.png in Resources */ = {isa = PBXBuildFile; fileRef = 7241FB2AAF3243F034CC0B73A67563D1 /* Reader-Mark-Y.png */; };
 		A510F030A4396CB6F677BBC0AE04D4BB /* GTLErrorObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9687CF639C260314A5A60F48FB948ADF /* GTLErrorObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A7D6760668289D34694BB655D75424F7 /* Reader-Email.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BF526281CDAE5AFF7DEC806BB46B54B /* Reader-Email.png */; };
 		A8253D666CF80B1DD35C3C8A5FED4399 /* GoogleAPIClient-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A42FA04360315D8A7EC76BBDE184059B /* GoogleAPIClient-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB95DE21728F51E0870169C198DCAD80 /* GTMSessionFetcherLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = EA68336697947EF73DC163C6D64DB030 /* GTMSessionFetcherLogging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AC60426D3D2541DB4D58B220B30D44D9 /* GTLBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = CEDDD2627E054B687A1FFDEAB04A5E11 /* GTLBase64.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD09158AF1D6B5A6FAD0E1B0D3C987C5 /* GTMMIMEDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CA7AA92D22D6562165C77C0282C29C1 /* GTMMIMEDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AD94A130655ED95B3C55D987B9F80659 /* ReaderThumbFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ADDEA24145C63DF21E4F4CEBE39BED1 /* ReaderThumbFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD6925B2CC7FACB9113DF394BE690A82 /* Reader-Mark-Y@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBB81245052410E5D85F177EBA50FF58 /* Reader-Mark-Y@3x.png */; };
+		AD94A130655ED95B3C55D987B9F80659 /* ReaderThumbFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FFDE24A2C30D62CF2AA62C912E5A4F /* ReaderThumbFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AFE028300BC88CE5479F6288AF6DB79B /* GTLDriveComment.h in Headers */ = {isa = PBXBuildFile; fileRef = 4ED9EB800C04C6756B239BB55058498C /* GTLDriveComment.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1FAC6D3C4204C978ECB9BCF766D3F3F /* GTLBatchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 37B638ED48E3E984A759630824E215CB /* GTLBatchResult.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B27FC14F5C02327AAAE7E47719360400 /* GTLDriveReplyList.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F4533CD96F8B08375C72FEE7165634 /* GTLDriveReplyList.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B5240FD6188C88BD9D2A947D70EAFE92 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7550FDB6A76C31272488671D9795037 /* Foundation.framework */; };
 		B6BDF8B2C41870C2B13C95CFF0F17DFC /* GTLDriveComment.m in Sources */ = {isa = PBXBuildFile; fileRef = D22CB7719BB3685D2E22796E994E0B4E /* GTLDriveComment.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAB761A209A0563F70B0D60B36847FD5 /* GTMGatherInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = FA59DBE44DCFCC6688E8896EF11EB274 /* GTMGatherInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BB196ACEBE32716195395890C32B053A /* ReaderContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B8A7C2A2E33CF9627314AE2874DB76 /* ReaderContentView.m */; };
+		BB196ACEBE32716195395890C32B053A /* ReaderContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4267B5F7264571ECC212D19CFD5EA0 /* ReaderContentView.m */; };
 		BBF763BD02ED3A82165CE7437C51F215 /* GTLDriveCommentList.h in Headers */ = {isa = PBXBuildFile; fileRef = 994A1B0AA158988D7967E44DE3739CFF /* GTLDriveCommentList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC6F91FF07D7F8A9FAF65EF3006AF44D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FF2C41858C22359EAAC540071422CA6 /* QuartzCore.framework */; };
-		BC76AA8760F062702B2DD246FE4835B2 /* ReaderContentTile.h in Headers */ = {isa = PBXBuildFile; fileRef = A6A05F6A9088E4FB0A35BFEFAF9E1517 /* ReaderContentTile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC76AA8760F062702B2DD246FE4835B2 /* ReaderContentTile.h in Headers */ = {isa = PBXBuildFile; fileRef = BE63AA1A4A453DA0816C492AAFD066BC /* ReaderContentTile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BF107E8F007F14AC6FF79165C06C450B /* GTLDriveChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BEEBCC70E2D74E4C8FB7BD04CBD23C /* GTLDriveChange.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		BF47F6409DD3AD670EDA5F6EB3AA9FC8 /* Reader-Export.png in Resources */ = {isa = PBXBuildFile; fileRef = E97CDD6E3B7585663D24CFAFBD5790F3 /* Reader-Export.png */; };
 		C0FC05241B5FF31D23D2DE14A1084DF3 /* GTLDrivePermissionList.h in Headers */ = {isa = PBXBuildFile; fileRef = E1D058BCAC6FFF160AF216F501AC175E /* GTLDrivePermissionList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4B67E785B0153C8410E750B942BD273 /* GTMMIMEDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3C04C2B4D291429E9897C73D2FF2A6 /* GTMMIMEDocument.m */; };
 		C599BD9D90AC1FE50985E0B836FEECB1 /* GTLDriveChangeList.h in Headers */ = {isa = PBXBuildFile; fileRef = 98027881DE1E0593ECB1A86D7099C447 /* GTLDriveChangeList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5C9F1913E7C05DD1BD10CFA3756BD22 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6D9653FF637771C2000BFD99CF7B60 /* Security.framework */; };
 		C789BB78617E905721A41F1ADBB80564 /* GTLDriveChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4153DDBC360276A2EDE1765A718BAD29 /* GTLDriveChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8822AE6F5606927086DC820694A35DB /* ReaderMainToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 059A9377DDB03CE30D316C5322A637DD /* ReaderMainToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CAB420713D4B849E22F50F1C77D7D0E7 /* ReaderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CED26A95BA5BECACF9042188C2E54AD6 /* ReaderViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C8822AE6F5606927086DC820694A35DB /* ReaderMainToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F19066F2047029A37763CF81E873AFB /* ReaderMainToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C965C31F22B193AC6DBEA298ED009546 /* Reader-Thumbs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 511FC36A28C58B539F5228A947FC24A4 /* Reader-Thumbs@2x.png */; };
+		CAB420713D4B849E22F50F1C77D7D0E7 /* ReaderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C183D858996B66D11D89CDD68EF15F4 /* ReaderViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC4301A32FB3A4B8D17A1746463DF762 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07EDFFC2FA6563E391C25DF403248AE /* GTMOAuth2ViewTouch.xib */; };
-		D00266DC222A816F47C7FB992DC54F72 /* Reader-Button-H@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6168AC4C4BAFD64415B4F45E2AD974 /* Reader-Button-H@2x.png */; };
+		CFF1EDA6C84F3753DF9C5A16E4571AD1 /* Reader-Email@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0539BF44D95B5CD71259A815F99BBFD /* Reader-Email@3x.png */; };
+		D074ADB4D4973DF74CB6BCE1D1413A54 /* Reader-Mark-N@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 142A30170B0FF896B7D34211FEF9CD53 /* Reader-Mark-N@2x.png */; };
 		D2082F04DF78E0B51E50406395EEBFCF /* GTMSessionFetcher-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 75FDCECB775361B728BE8D77DDE82291 /* GTMSessionFetcher-dummy.m */; };
-		D24E4AA771DC7973EEC3553F9CD231E6 /* Reader-Email.png in Resources */ = {isa = PBXBuildFile; fileRef = D8BCB6D2EABD3AA6BF4BAFEEE20D8BAD /* Reader-Email.png */; };
 		D30A69D06CE96F233349BDACBEBEF11F /* GTLDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 71BCA7A24C16FE0DC3764020320A953A /* GTLDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3802433ED124082A778779DA4CA6A48 /* GTLDriveStartPageToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 15071A224476F506593BF2A2E26E8AD0 /* GTLDriveStartPageToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3BE84591198F1D31787BAAA52C60CFA /* GTMSessionUploadFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B39BF7496BE2B6EE058BC188FD54531 /* GTMSessionUploadFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D51899A324ED2F483DBF959A23A8F1CB /* ReaderContentPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0DF149333D1E0491EE12DD70B3D5B4 /* ReaderContentPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D51899A324ED2F483DBF959A23A8F1CB /* ReaderContentPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A21B59FA3016C8DE39BFF0E36D3414F /* ReaderContentPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D66D57F2F2B80994C267D49B9F227521 /* GTLQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 812408C42C52DE0381C82F7645597E69 /* GTLQuery.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D789E3ED469B69880A3C1514793590D5 /* UIXToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ACE69B4C9B1A5B8EF4F2FC189271877 /* UIXToolbarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D789E3ED469B69880A3C1514793590D5 /* UIXToolbarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8614A40ECE154C67F60F15F1353D7B03 /* UIXToolbarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D7C353E6F3F153AD46060567ECB8417C /* Reader-Email@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911F17A7FF67FD92CBF3347E983E8B91 /* Reader-Email@2x.png */; };
+		D7D1413D9755DF4A9718D2C6B4B8F751 /* Reader-Mark-N@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C21F77AC160F904FB195F8CFFDFC4074 /* Reader-Mark-N@3x.png */; };
 		D7FAB0F10DA9C927F796FD25D1C16620 /* GTLRuntimeCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = F0DDBD137B1D77990DEE5C6DC14FA6C2 /* GTLRuntimeCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA3B53F1841808F066951100A2983D47 /* GTLDriveChange.h in Headers */ = {isa = PBXBuildFile; fileRef = 05D1FB5F3291D5583270D54B0F3039DE /* GTLDriveChange.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB5B3A1FC88FFA6407B94A004D068F90 /* GTLDriveAbout.h in Headers */ = {isa = PBXBuildFile; fileRef = 555D0F9A5274BE79F6EBD805F5D7675B /* GTLDriveAbout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DD74D7ECF1B6638FF6470783071F91F4 /* Reader-Mark-Y.png in Resources */ = {isa = PBXBuildFile; fileRef = ECA8FDC99C4B888E4BA5C65BA68C8AAE /* Reader-Mark-Y.png */; };
 		DE706A41B96F3438A7D8D5C07CEE3906 /* GTLDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EBDB80F1660ED9288156891C06B08BC /* GTLDateTime.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DE89893049E54FBA9D13A2E6B580FA3D /* GTLRuntimeCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 81131FFD7BBBC17BD7A6EFA15377CF8A /* GTLRuntimeCommon.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		DF61DB10CAD00C6E4048C14A3FA2D5AC /* CGPDFDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C3BD0C34F7E05C6AD0F62CA644EAB6 /* CGPDFDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DF76899183EA13CF3A2B2F569A7520BB /* Reader-Button-H.png in Resources */ = {isa = PBXBuildFile; fileRef = F78F1288A57808F43F819C4333BE0C14 /* Reader-Button-H.png */; };
+		DF61DB10CAD00C6E4048C14A3FA2D5AC /* CGPDFDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 40B0E5F179DC97AD16D4B4FFE1D9E6FD /* CGPDFDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E19067A4337B6CACF37FE58AC835F479 /* GTLDriveUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 72ACECC500806B93C2199A9EE26C6A28 /* GTLDriveUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E2F9DF48D347962EB8E50D73F5F4CF36 /* GTMSessionFetcherService.m in Sources */ = {isa = PBXBuildFile; fileRef = 159C77AA0271208D150AFF21B229451A /* GTMSessionFetcherService.m */; };
+		E417441AD05B6E93EAFAC38A931F4250 /* Reader-Button-N@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCB760CC09832217F7D52F82EFDD2A7C /* Reader-Button-N@3x.png */; };
 		E43D00019157C99C018AFE2CB775E98D /* GTMOAuth2Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C14CFD38FBC9E51A50E4917ABF674 /* GTMOAuth2Authentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E55981B3836C875A8A5540B72541FBBC /* GTLServiceDrive.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEEADBFB7F18827DA55CAF9C2BD3981 /* GTLServiceDrive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E796B651A25AE2ECB7DFDC1A8423B9D8 /* GTLDateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = A68FFCDACADF03B8C7DB060C0292EC5D /* GTLDateTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E84FC08E74CBEC8A32DC627ADC12E9C7 /* ReaderThumbCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 54C9758E8BC8F527DA5D2BC9B96B123E /* ReaderThumbCache.m */; };
-		E850F58AD70A78C53838A7A76164C322 /* ReaderThumbQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = F3A4CDB7A3EB9499259C8436D6C3E5C6 /* ReaderThumbQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E8589FA64A76E86F31CB6E655B7D5FC0 /* Reader-Mark-N@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F86E310D70A63FF032CA94A8F117FCFE /* Reader-Mark-N@2x.png */; };
+		E84FC08E74CBEC8A32DC627ADC12E9C7 /* ReaderThumbCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F80A52F663F86DA97F4C7005E6B710B7 /* ReaderThumbCache.m */; };
+		E850F58AD70A78C53838A7A76164C322 /* ReaderThumbQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = C8C729E1C4252086009B927D342FBC74 /* ReaderThumbQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E8BD55836A2DF88AC954C41D0702EDF6 /* GTMOAuth2ViewControllerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = D0130F63EA45DA59885DF21999734932 /* GTMOAuth2ViewControllerTouch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		EAA4AEC1D9D816BC41BB14BC8249FDA5 /* Reader-Export.png in Resources */ = {isa = PBXBuildFile; fileRef = ED2792062064DEC0B1255B9E756FC73B /* Reader-Export.png */; };
 		EC5D526C4B285893AEAD7F6E6E81C307 /* GTLDrivePermission.h in Headers */ = {isa = PBXBuildFile; fileRef = E483B0727E5F5A210A3512E7D4BD0B56 /* GTLDrivePermission.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EC97E7D5377BBA7B2F5C0DF8B157A8A9 /* ThumbsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = BA7DB26DD87CC69C4ED41C3882B0F4DB /* ThumbsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EC97E7D5377BBA7B2F5C0DF8B157A8A9 /* ThumbsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FD9D8B1CB672F6DEA22EDF8492CC55A1 /* ThumbsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F188EEBEF60C539BFF04FCCCA5A6567E /* GTLDriveRevision.h in Headers */ = {isa = PBXBuildFile; fileRef = 15E34016CB1509ACCAD164766B306693 /* GTLDriveRevision.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F3212DE7D4E79294543A5425593A6737 /* Reader-Thumbs.png in Resources */ = {isa = PBXBuildFile; fileRef = 33AA2272C8837B05AC44D7A93631DD90 /* Reader-Thumbs.png */; };
 		F3D58F3F8A0C79F76F4895D9D2A4E528 /* GTLDrive.h in Headers */ = {isa = PBXBuildFile; fileRef = 68C01C2FCE962E5638B2B2236DE14EC4 /* GTLDrive.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F59DC0BE5974B8DA156E3567239F6E58 /* Reader-Mark-N.png in Resources */ = {isa = PBXBuildFile; fileRef = 17CCD5E2573E7EBE382C22ACB44003EA /* Reader-Mark-N.png */; };
 		F5DC2878D3907BA44A9FE4123DEFC3EE /* GTLDriveReply.h in Headers */ = {isa = PBXBuildFile; fileRef = C79F004983A18223A887C317C7D50B1A /* GTLDriveReply.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F69C5685A534447AA30AB208B0B78205 /* GTLDriveFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0EDD810DD244F591DD8C5EE629615D /* GTLDriveFile.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		F7551AB3E92F992EE68D6E4AAB5D91F6 /* ReaderContentTile.m in Sources */ = {isa = PBXBuildFile; fileRef = CC41B32FC0D54C23E378D5F9E52E87CC /* ReaderContentTile.m */; };
+		F7551AB3E92F992EE68D6E4AAB5D91F6 /* ReaderContentTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CABCC548B2DACA4F2B6446BB9F2F206 /* ReaderContentTile.m */; };
 		FA30E5212A822600C9EC471D0AC99C67 /* GTMSessionFetcher-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ECA9DBCEF60BF425E4F7DB4E27E56C2E /* GTMSessionFetcher-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAAF3BF53732E225E3764AE2607C2BDD /* GTLServiceDrive.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FFCA1052A057C67D930E05AF7CB5881 /* GTLServiceDrive.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAD5F2468CD420C534421A01AFC2E250 /* GTLBatchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = C0F31A935591A70D4CA4C1A39852F4A2 /* GTLBatchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FDF680D83AD5F31FEE82D8C6FD230BF6 /* GTMOAuth2-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A8F9EEF0B3E68C7D66F992951172772 /* GTMOAuth2-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF3AA662CB970D606F05AB546B5847DC /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6405925DC4B70108FEDEDEF8A6CF2388 /* ReaderViewController.m */; };
+		FF3AA662CB970D606F05AB546B5847DC /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FBA98977A3175E858575FA97D1E00B /* ReaderViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,15 +234,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		002868BFDB25D9AC9C714E9A0A6C119E /* ThumbsViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ThumbsViewController.m; path = Sources/ThumbsViewController.m; sourceTree = "<group>"; };
 		0196845AC2AEFDA862ED399BAE67214A /* GTMOAuth2.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = GTMOAuth2.modulemap; sourceTree = "<group>"; };
-		059A9377DDB03CE30D316C5322A637DD /* ReaderMainToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderMainToolbar.h; path = Sources/ReaderMainToolbar.h; sourceTree = "<group>"; };
+		02F2CB32D8170A7532D89207C7FEC4F1 /* Reader-Thumbs@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Thumbs@3x.png"; path = "Graphics/Reader-Thumbs@3x.png"; sourceTree = "<group>"; };
+		0355F9CBC19E17C4A17F75974BA9F95F /* Reader-Button-H@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-H@3x.png"; path = "Graphics/Reader-Button-H@3x.png"; sourceTree = "<group>"; };
 		05D1FB5F3291D5583270D54B0F3039DE /* GTLDriveChange.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveChange.h; path = Source/Services/Drive/Generated/GTLDriveChange.h; sourceTree = "<group>"; };
-		0726D8C4763D1C490ADD8E0EA910F090 /* vfrReader-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "vfrReader-umbrella.h"; sourceTree = "<group>"; };
 		0C10BA61448AA7730D8A46158ED87195 /* GTMSessionFetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GTMSessionFetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DAC6CEAA77BCE41A7EF68DF930F4C06 /* GTLDriveConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveConstants.h; path = Source/Services/Drive/Generated/GTLDriveConstants.h; sourceTree = "<group>"; };
-		0E6168AC4C4BAFD64415B4F45E2AD974 /* Reader-Button-H@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-H@2x.png"; path = "Graphics/Reader-Button-H@2x.png"; sourceTree = "<group>"; };
 		0F93EB9317FE8F38BCD7CC73200F4550 /* Pods-Sheets-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Sheets-acknowledgements.plist"; sourceTree = "<group>"; };
 		0FF2C41858C22359EAAC540071422CA6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		11647DECDAD46C2E6E68BF751142820C /* Reader-Button-H.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-H.png"; path = "Graphics/Reader-Button-H.png"; sourceTree = "<group>"; };
+		129A099B6095157F16ED53A094F0EB12 /* ReaderThumbsView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbsView.m; path = Sources/ReaderThumbsView.m; sourceTree = "<group>"; };
+		142A30170B0FF896B7D34211FEF9CD53 /* Reader-Mark-N@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-N@2x.png"; path = "Graphics/Reader-Mark-N@2x.png"; sourceTree = "<group>"; };
 		148F1915FD7071ACC6D01BA60475BEF9 /* GTLDriveFileList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveFileList.h; path = Source/Services/Drive/Generated/GTLDriveFileList.h; sourceTree = "<group>"; };
 		14FC6BEFA8ED6A840B17AAB54B1A8BFA /* GTMSessionFetcherLogging.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMSessionFetcherLogging.m; path = Source/GTMSessionFetcherLogging.m; sourceTree = "<group>"; };
 		15071A224476F506593BF2A2E26E8AD0 /* GTLDriveStartPageToken.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveStartPageToken.h; path = Source/Services/Drive/Generated/GTLDriveStartPageToken.h; sourceTree = "<group>"; };
@@ -242,121 +253,125 @@
 		159C77AA0271208D150AFF21B229451A /* GTMSessionFetcherService.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMSessionFetcherService.m; path = Source/GTMSessionFetcherService.m; sourceTree = "<group>"; };
 		15E34016CB1509ACCAD164766B306693 /* GTLDriveRevision.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveRevision.h; path = Source/Services/Drive/Generated/GTLDriveRevision.h; sourceTree = "<group>"; };
 		16AFC976B32D4A8CC46A307F7F807A63 /* vfrReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = vfrReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		17CCD5E2573E7EBE382C22ACB44003EA /* Reader-Mark-N.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-N.png"; path = "Graphics/Reader-Mark-N.png"; sourceTree = "<group>"; };
 		17D9F98F8E915C706832F917B0A59A8B /* GTLUploadParameters.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLUploadParameters.m; path = Source/Objects/GTLUploadParameters.m; sourceTree = "<group>"; };
+		17DFF2EB9A9A025F8250EF317CA0E6E9 /* vfrReader.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = vfrReader.xcconfig; sourceTree = "<group>"; };
 		19F4533CD96F8B08375C72FEE7165634 /* GTLDriveReplyList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveReplyList.m; path = Source/Services/Drive/Generated/GTLDriveReplyList.m; sourceTree = "<group>"; };
 		1A084DBE160F51D90C9C8EF471DAB72D /* GTMSessionFetcher.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = GTMSessionFetcher.modulemap; sourceTree = "<group>"; };
+		1B13E85C02A0134E9541C5FC9CD73E87 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CB5B89E993AB94C4B30E0A773A43851 /* GTLDriveGeneratedIds.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveGeneratedIds.h; path = Source/Services/Drive/Generated/GTLDriveGeneratedIds.h; sourceTree = "<group>"; };
-		1EC4CDB99C778E0A6043DDE70606ABBE /* ThumbsViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ThumbsViewController.m; path = Sources/ThumbsViewController.m; sourceTree = "<group>"; };
+		1E3D269914DD7B51473939506A237DC0 /* ReaderThumbView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbView.h; path = Sources/ReaderThumbView.h; sourceTree = "<group>"; };
 		1EF9FC2DCD9C55EBC968CA5BEE57B079 /* GoogleAPIClient.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleAPIClient.xcconfig; sourceTree = "<group>"; };
 		201D69B453C7CC4D7D3E5C1993652F92 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2292A93EE17EA9A97C7575A8BC1895C6 /* ThumbsMainToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ThumbsMainToolbar.m; path = Sources/ThumbsMainToolbar.m; sourceTree = "<group>"; };
 		252EEE57ED8746ED32E784E121F4515C /* GoogleAPIClient-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleAPIClient-prefix.pch"; sourceTree = "<group>"; };
 		26666E0C93BCF1827E40132594D21C9A /* GTMSessionFetcher.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GTMSessionFetcher.xcconfig; sourceTree = "<group>"; };
-		2681910337B05C6B561B5032FE1BE2A3 /* vfrReader-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "vfrReader-prefix.pch"; sourceTree = "<group>"; };
-		2833E9D517CA38E3EC1D5ED7D9B9D70F /* vfrReader.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = vfrReader.xcconfig; sourceTree = "<group>"; };
+		2864A1B6165FAE8B39DF34A7C5121112 /* vfrReader-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "vfrReader-prefix.pch"; sourceTree = "<group>"; };
 		286BE11DCD0092ED02ECDAD412BFCD69 /* Pods-Sheets.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Sheets.modulemap"; sourceTree = "<group>"; };
+		2A21B59FA3016C8DE39BFF0E36D3414F /* ReaderContentPage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderContentPage.h; path = Sources/ReaderContentPage.h; sourceTree = "<group>"; };
 		2A270067E7FA8C8FFF01A5D007D22E4F /* GTLDriveCommentList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveCommentList.m; path = Source/Services/Drive/Generated/GTLDriveCommentList.m; sourceTree = "<group>"; };
-		2A6F31DF7A6DB61D42062EA4C291531D /* Reader-Export@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Export@2x.png"; path = "Graphics/Reader-Export@2x.png"; sourceTree = "<group>"; };
 		2B33043FFA7C549652B46AB8EB87A195 /* GoogleAPIClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleAPIClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B39BF7496BE2B6EE058BC188FD54531 /* GTMSessionUploadFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMSessionUploadFetcher.h; path = Source/GTMSessionUploadFetcher.h; sourceTree = "<group>"; };
-		2D0D1E1473F09B4825ED6794F948ED65 /* ReaderDocumentOutline.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderDocumentOutline.m; path = Sources/ReaderDocumentOutline.m; sourceTree = "<group>"; };
 		2D74671FB33EBD65E9CB8BBEF9C0204D /* GTLDriveUser.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveUser.m; path = Source/Services/Drive/Generated/GTLDriveUser.m; sourceTree = "<group>"; };
-		33BBB55770D196D81C22857DB086AC3E /* ReaderMainPagebar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderMainPagebar.h; path = Sources/ReaderMainPagebar.h; sourceTree = "<group>"; };
+		2F0562A1DBC2431B498B4186FD195A42 /* ReaderThumbRender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbRender.h; path = Sources/ReaderThumbRender.h; sourceTree = "<group>"; };
+		307D6C54FE95AF893B99B9CFFE1ACC00 /* Reader-Button-N@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-N@2x.png"; path = "Graphics/Reader-Button-N@2x.png"; sourceTree = "<group>"; };
+		31FB196E73B83F8488D1A484C84B365A /* ReaderThumbQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbQueue.m; path = Sources/ReaderThumbQueue.m; sourceTree = "<group>"; };
+		33AA2272C8837B05AC44D7A93631DD90 /* Reader-Thumbs.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Thumbs.png"; path = "Graphics/Reader-Thumbs.png"; sourceTree = "<group>"; };
+		36D2EAFA50DDF67239E927CE1F5EB480 /* ReaderDocument.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderDocument.m; path = Sources/ReaderDocument.m; sourceTree = "<group>"; };
 		37B638ED48E3E984A759630824E215CB /* GTLBatchResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLBatchResult.m; path = Source/Objects/GTLBatchResult.m; sourceTree = "<group>"; };
-		38E7F92CF2F1101BA4A92A022D6AEAA4 /* UIXToolbarView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = UIXToolbarView.m; path = Sources/UIXToolbarView.m; sourceTree = "<group>"; };
-		3A67E482F0C671AF6456A51375262A97 /* Reader-Button-N.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-N.png"; path = "Graphics/Reader-Button-N.png"; sourceTree = "<group>"; };
 		3ABC9AEF710F9098A2ACDB6D344F0C89 /* GTMReadMonitorInputStream.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMReadMonitorInputStream.m; path = Source/GTMReadMonitorInputStream.m; sourceTree = "<group>"; };
-		3ADDEA24145C63DF21E4F4CEBE39BED1 /* ReaderThumbFetch.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbFetch.h; path = Sources/ReaderThumbFetch.h; sourceTree = "<group>"; };
-		3C8960328E5AD67DDD879CC57D24FFF4 /* CGPDFDocument.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CGPDFDocument.m; path = Sources/CGPDFDocument.m; sourceTree = "<group>"; };
 		3CA7AA92D22D6562165C77C0282C29C1 /* GTMMIMEDocument.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMMIMEDocument.h; path = Source/GTMMIMEDocument.h; sourceTree = "<group>"; };
+		40B0E5F179DC97AD16D4B4FFE1D9E6FD /* CGPDFDocument.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CGPDFDocument.h; path = Sources/CGPDFDocument.h; sourceTree = "<group>"; };
 		40E0B8A8EC2313029896A9B02AA1C79D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4153DDBC360276A2EDE1765A718BAD29 /* GTLDriveChannel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveChannel.h; path = Source/Services/Drive/Generated/GTLDriveChannel.h; sourceTree = "<group>"; };
+		41B1B3163C7D1054C52200010BE9B706 /* Reader-Export@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Export@3x.png"; path = "Graphics/Reader-Export@3x.png"; sourceTree = "<group>"; };
 		420479EAB2793CBA063C4166F6E99DBD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		42BBCC5999531F512722408A75BB4DF6 /* ReaderThumbView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbView.m; path = Sources/ReaderThumbView.m; sourceTree = "<group>"; };
-		46C3BD0C34F7E05C6AD0F62CA644EAB6 /* CGPDFDocument.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CGPDFDocument.h; path = Sources/CGPDFDocument.h; sourceTree = "<group>"; };
+		43FFDE24A2C30D62CF2AA62C912E5A4F /* ReaderThumbFetch.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbFetch.h; path = Sources/ReaderThumbFetch.h; sourceTree = "<group>"; };
+		453D3718B75F097C174E8C527481D895 /* Reader-Button-H@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-H@2x.png"; path = "Graphics/Reader-Button-H@2x.png"; sourceTree = "<group>"; };
+		4618060A61F12B4AC2689DB3CC503882 /* ReaderContentPage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderContentPage.m; path = Sources/ReaderContentPage.m; sourceTree = "<group>"; };
 		4A1018A9A47A74D1843472556D517CC3 /* GTMOAuth2ViewControllerTouch.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMOAuth2ViewControllerTouch.h; path = Source/Touch/GTMOAuth2ViewControllerTouch.h; sourceTree = "<group>"; };
 		4A6ADC173D6EA23FC7AB877F9F271019 /* GTLDriveRevisionList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveRevisionList.m; path = Source/Services/Drive/Generated/GTLDriveRevisionList.m; sourceTree = "<group>"; };
-		4E0DF149333D1E0491EE12DD70B3D5B4 /* ReaderContentPage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderContentPage.h; path = Sources/ReaderContentPage.h; sourceTree = "<group>"; };
+		4A81A6D0A26050CEA24382C75826E357 /* ReaderConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderConstants.m; path = Sources/ReaderConstants.m; sourceTree = "<group>"; };
+		4DB682CD92A00606864241762B4A5C56 /* ReaderMainPagebar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderMainPagebar.h; path = Sources/ReaderMainPagebar.h; sourceTree = "<group>"; };
+		4E80FE97E3C447AE43D55446AB875AAC /* CGPDFDocument.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CGPDFDocument.m; path = Sources/CGPDFDocument.m; sourceTree = "<group>"; };
 		4ED9EB800C04C6756B239BB55058498C /* GTLDriveComment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveComment.h; path = Source/Services/Drive/Generated/GTLDriveComment.h; sourceTree = "<group>"; };
-		50064B8551FD48C3B24B74204C156A2B /* Reader-Mark-N.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-N.png"; path = "Graphics/Reader-Mark-N.png"; sourceTree = "<group>"; };
-		5009AC44F879215DF04383AC8F170394 /* ReaderThumbRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbRequest.h; path = Sources/ReaderThumbRequest.h; sourceTree = "<group>"; };
-		50BFD23958AB5B85E39207162836C0D3 /* Reader-Button-N@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-N@2x.png"; path = "Graphics/Reader-Button-N@2x.png"; sourceTree = "<group>"; };
+		511FC36A28C58B539F5228A947FC24A4 /* Reader-Thumbs@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Thumbs@2x.png"; path = "Graphics/Reader-Thumbs@2x.png"; sourceTree = "<group>"; };
 		537CEB4583275DF526C28158B910C13C /* GTMSessionFetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GTMSessionFetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		543194CEA3A1C8A18DA81A42F214C6F1 /* ReaderMainToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderMainToolbar.m; path = Sources/ReaderMainToolbar.m; sourceTree = "<group>"; };
-		54C9758E8BC8F527DA5D2BC9B96B123E /* ReaderThumbCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbCache.m; path = Sources/ReaderThumbCache.m; sourceTree = "<group>"; };
+		541FDE5C861B10F56C8D688F5F3DED16 /* ReaderThumbsView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbsView.h; path = Sources/ReaderThumbsView.h; sourceTree = "<group>"; };
 		555D0F9A5274BE79F6EBD805F5D7675B /* GTLDriveAbout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveAbout.h; path = Source/Services/Drive/Generated/GTLDriveAbout.h; sourceTree = "<group>"; };
-		56E4B30C704734309B735C1C9B5CF602 /* Reader-Thumbs@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Thumbs@2x.png"; path = "Graphics/Reader-Thumbs@2x.png"; sourceTree = "<group>"; };
+		56B89F1BCF5C647BD9C0E4FD78723811 /* UIXToolbarView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = UIXToolbarView.m; path = Sources/UIXToolbarView.m; sourceTree = "<group>"; };
 		58CAFD3954364E142E9B8C1F289BA3E8 /* GTLBase64.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLBase64.m; path = Source/Utilities/GTLBase64.m; sourceTree = "<group>"; };
 		59C4909CDDF8C5AE14030915B1F29CCE /* GTLDriveConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveConstants.m; path = Source/Services/Drive/Generated/GTLDriveConstants.m; sourceTree = "<group>"; };
 		5A8F9EEF0B3E68C7D66F992951172772 /* GTMOAuth2-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GTMOAuth2-umbrella.h"; sourceTree = "<group>"; };
-		5BE7624A3CD495E9DF06BB3492C0FEFE /* ReaderThumbQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbQueue.m; path = Sources/ReaderThumbQueue.m; sourceTree = "<group>"; };
+		5C183D858996B66D11D89CDD68EF15F4 /* ReaderViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderViewController.h; path = Sources/ReaderViewController.h; sourceTree = "<group>"; };
+		5CABCC548B2DACA4F2B6446BB9F2F206 /* ReaderContentTile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderContentTile.m; path = Sources/ReaderContentTile.m; sourceTree = "<group>"; };
 		5D4A67E1AEFBB69221FBD0232A5719BE /* GoogleAPIClient.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = GoogleAPIClient.modulemap; sourceTree = "<group>"; };
 		5EBDB80F1660ED9288156891C06B08BC /* GTLDateTime.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDateTime.m; path = Source/Objects/GTLDateTime.m; sourceTree = "<group>"; };
+		5ED1FEC0E920593C24874DBD1E872A9F /* ReaderMainToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderMainToolbar.m; path = Sources/ReaderMainToolbar.m; sourceTree = "<group>"; };
+		5F19066F2047029A37763CF81E873AFB /* ReaderMainToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderMainToolbar.h; path = Sources/ReaderMainToolbar.h; sourceTree = "<group>"; };
 		5FDE780AD86725667489FF5AC092441A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
 		5FFCA1052A057C67D930E05AF7CB5881 /* GTLServiceDrive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLServiceDrive.h; path = Source/Services/Drive/Generated/GTLServiceDrive.h; sourceTree = "<group>"; };
 		6048BD9F6C5A35D092BAEEFF9A072022 /* Pods-Sheets-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Sheets-umbrella.h"; sourceTree = "<group>"; };
 		60576A696B8B2BFC798F83E995F9373A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61BEEBCC70E2D74E4C8FB7BD04CBD23C /* GTLDriveChange.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveChange.m; path = Source/Services/Drive/Generated/GTLDriveChange.m; sourceTree = "<group>"; };
 		63B223DC062094527439C91BC1717486 /* GTLQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLQuery.h; path = Source/Objects/GTLQuery.h; sourceTree = "<group>"; };
-		6405925DC4B70108FEDEDEF8A6CF2388 /* ReaderViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderViewController.m; path = Sources/ReaderViewController.m; sourceTree = "<group>"; };
-		64A0324B829D634CF6AAAE7EE3A7311C /* ReaderThumbRender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbRender.m; path = Sources/ReaderThumbRender.m; sourceTree = "<group>"; };
+		678A765041F5BD1BC84106195918BC1C /* ReaderThumbView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbView.m; path = Sources/ReaderThumbView.m; sourceTree = "<group>"; };
 		68276CCC0A991965FED0F8C97854C82B /* GTLService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLService.h; path = Source/Objects/GTLService.h; sourceTree = "<group>"; };
-		68A2777A4176A28706F9B92F5B6A492F /* ReaderConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderConstants.m; path = Sources/ReaderConstants.m; sourceTree = "<group>"; };
 		68C01C2FCE962E5638B2B2236DE14EC4 /* GTLDrive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDrive.h; path = Source/Services/Drive/Generated/GTLDrive.h; sourceTree = "<group>"; };
+		68FBA98977A3175E858575FA97D1E00B /* ReaderViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderViewController.m; path = Sources/ReaderViewController.m; sourceTree = "<group>"; };
 		69677D5CC08DD7C88BA53A55B9EB36EA /* GTLDriveAbout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveAbout.m; path = Source/Services/Drive/Generated/GTLDriveAbout.m; sourceTree = "<group>"; };
-		6A32208B8681D56C1160148C27FC0C23 /* ReaderDocument.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderDocument.m; path = Sources/ReaderDocument.m; sourceTree = "<group>"; };
 		6D86FA4726177417C25D6CAD13FBED9F /* Pods-Sheets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sheets.debug.xcconfig"; sourceTree = "<group>"; };
-		6F24C6DDF9BA74C081B352090DBBDAB1 /* vfrReader-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "vfrReader-dummy.m"; sourceTree = "<group>"; };
+		6E0FE7D377C47A5FC142A6B85302B686 /* ReaderDocument.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderDocument.h; path = Sources/ReaderDocument.h; sourceTree = "<group>"; };
 		6F45E4DF8821AF407229DA1E8137FDF1 /* GTLDriveRevisionList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveRevisionList.h; path = Source/Services/Drive/Generated/GTLDriveRevisionList.h; sourceTree = "<group>"; };
-		70CF1B0F158C35E0ED2091930DA1E1B7 /* ReaderConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderConstants.h; path = Sources/ReaderConstants.h; sourceTree = "<group>"; };
 		71BCA7A24C16FE0DC3764020320A953A /* GTLDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDefines.h; path = Source/GTLDefines.h; sourceTree = "<group>"; };
+		7241FB2AAF3243F034CC0B73A67563D1 /* Reader-Mark-Y.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-Y.png"; path = "Graphics/Reader-Mark-Y.png"; sourceTree = "<group>"; };
 		72ACECC500806B93C2199A9EE26C6A28 /* GTLDriveUser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveUser.h; path = Source/Services/Drive/Generated/GTLDriveUser.h; sourceTree = "<group>"; };
 		75426C3348A075630007F84E3F6908BA /* GTLDriveReply.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveReply.m; path = Source/Services/Drive/Generated/GTLDriveReply.m; sourceTree = "<group>"; };
 		75FDCECB775361B728BE8D77DDE82291 /* GTMSessionFetcher-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GTMSessionFetcher-dummy.m"; sourceTree = "<group>"; };
 		7639F7CE796352F9896B525700745F69 /* GTLDriveChangeList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveChangeList.m; path = Source/Services/Drive/Generated/GTLDriveChangeList.m; sourceTree = "<group>"; };
-		793AFBE163BB1AB55311B66D47355C70 /* Reader-Print.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Print.png"; path = "Graphics/Reader-Print.png"; sourceTree = "<group>"; };
-		7ACE69B4C9B1A5B8EF4F2FC189271877 /* UIXToolbarView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UIXToolbarView.h; path = Sources/UIXToolbarView.h; sourceTree = "<group>"; };
+		7787CD8D7A13AA887D8296E527FB4745 /* vfrReader-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "vfrReader-dummy.m"; sourceTree = "<group>"; };
 		7B034FB8770EA707380C262550AFCF4F /* GTLJSONParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLJSONParser.h; path = Source/Utilities/GTLJSONParser.h; sourceTree = "<group>"; };
 		7B79972947EF4E764829DFC4C127A397 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
 		7B7DB7302FEF27D9DD9CA2E5512BAC65 /* GTLDriveStartPageToken.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveStartPageToken.m; path = Source/Services/Drive/Generated/GTLDriveStartPageToken.m; sourceTree = "<group>"; };
 		7C2C14CFD38FBC9E51A50E4917ABF674 /* GTMOAuth2Authentication.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMOAuth2Authentication.m; path = Source/GTMOAuth2Authentication.m; sourceTree = "<group>"; };
-		7C9360AC25465B11F26FF54A8E32A3F3 /* ReaderDocument.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderDocument.h; path = Sources/ReaderDocument.h; sourceTree = "<group>"; };
-		7C9EBDE0104C32272C8026020C3D871D /* ReaderMainPagebar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderMainPagebar.m; path = Sources/ReaderMainPagebar.m; sourceTree = "<group>"; };
-		7EC3331956DBDE1326282F65547FF4FB /* ReaderContentView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderContentView.h; path = Sources/ReaderContentView.h; sourceTree = "<group>"; };
 		7ED54467AEA67365D8E945F268070D9A /* GTLObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLObject.m; path = Source/Objects/GTLObject.m; sourceTree = "<group>"; };
 		81131FFD7BBBC17BD7A6EFA15377CF8A /* GTLRuntimeCommon.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLRuntimeCommon.m; path = Source/Objects/GTLRuntimeCommon.m; sourceTree = "<group>"; };
 		812408C42C52DE0381C82F7645597E69 /* GTLQuery.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLQuery.m; path = Source/Objects/GTLQuery.m; sourceTree = "<group>"; };
 		8147A3D64EAE25C129E132D3C5885BEB /* GTLService.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLService.m; path = Source/Objects/GTLService.m; sourceTree = "<group>"; };
+		8614A40ECE154C67F60F15F1353D7B03 /* UIXToolbarView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UIXToolbarView.h; path = Sources/UIXToolbarView.h; sourceTree = "<group>"; };
 		865A4E45A755DA23F5E8504B42997F28 /* Pods-Sheets-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Sheets-frameworks.sh"; sourceTree = "<group>"; };
-		87C500CD10A822BD05ADBFE54DD760AB /* ReaderThumbRender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbRender.h; path = Sources/ReaderThumbRender.h; sourceTree = "<group>"; };
-		8BDAC9FCF989F0BDF8AB6C939B4D4CB4 /* ReaderThumbView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbView.h; path = Sources/ReaderThumbView.h; sourceTree = "<group>"; };
 		8CC1BA5BD0F7DA685A00E8BF9A264146 /* GTLDriveRevision.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveRevision.m; path = Source/Services/Drive/Generated/GTLDriveRevision.m; sourceTree = "<group>"; };
-		8D6CF5B211809F7188B5333509566D16 /* ReaderThumbCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbCache.h; path = Sources/ReaderThumbCache.h; sourceTree = "<group>"; };
 		8F0EDD810DD244F591DD8C5EE629615D /* GTLDriveFile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveFile.m; path = Source/Services/Drive/Generated/GTLDriveFile.m; sourceTree = "<group>"; };
 		8F8DE28F903AF865235F1D9B27F55042 /* GTLQueryDrive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLQueryDrive.h; path = Source/Services/Drive/Generated/GTLQueryDrive.h; sourceTree = "<group>"; };
-		8FCFD7EAA8E090F16D90AA265C2A5FE1 /* ReaderContentPage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderContentPage.m; path = Sources/ReaderContentPage.m; sourceTree = "<group>"; };
+		90B3756C183D08C1274522F79D6B3416 /* Reader-Export@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Export@2x.png"; path = "Graphics/Reader-Export@2x.png"; sourceTree = "<group>"; };
+		911F17A7FF67FD92CBF3347E983E8B91 /* Reader-Email@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Email@2x.png"; path = "Graphics/Reader-Email@2x.png"; sourceTree = "<group>"; };
 		93873FA073007C1323897B161A9DE114 /* Pods_Sheets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sheets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9687CF639C260314A5A60F48FB948ADF /* GTLErrorObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLErrorObject.m; path = Source/Objects/GTLErrorObject.m; sourceTree = "<group>"; };
+		97CA7062C0D455AA8FF0BBFDBF012888 /* ReaderDocumentOutline.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderDocumentOutline.h; path = Sources/ReaderDocumentOutline.h; sourceTree = "<group>"; };
 		98027881DE1E0593ECB1A86D7099C447 /* GTLDriveChangeList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveChangeList.h; path = Source/Services/Drive/Generated/GTLDriveChangeList.h; sourceTree = "<group>"; };
 		994A1B0AA158988D7967E44DE3739CFF /* GTLDriveCommentList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveCommentList.h; path = Source/Services/Drive/Generated/GTLDriveCommentList.h; sourceTree = "<group>"; };
 		9A305824A34D0DCC9B0AA50C465CED89 /* GTMSessionFetcher-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GTMSessionFetcher-prefix.pch"; sourceTree = "<group>"; };
+		9B4267B5F7264571ECC212D19CFD5EA0 /* ReaderContentView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderContentView.m; path = Sources/ReaderContentView.m; sourceTree = "<group>"; };
 		9BE842ADA7A61634CEDBB9B6BDAD1370 /* GTLErrorObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLErrorObject.h; path = Source/Objects/GTLErrorObject.h; sourceTree = "<group>"; };
+		9BF526281CDAE5AFF7DEC806BB46B54B /* Reader-Email.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Email.png"; path = "Graphics/Reader-Email.png"; sourceTree = "<group>"; };
 		9E18462811A34D31AEDB17BEB94F49B9 /* GTLDriveFile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveFile.h; path = Source/Services/Drive/Generated/GTLDriveFile.h; sourceTree = "<group>"; };
+		A34533BA46C1BF1024D971ADF3FC2DC2 /* ReaderDocumentOutline.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderDocumentOutline.m; path = Sources/ReaderDocumentOutline.m; sourceTree = "<group>"; };
+		A3D5B4DEDF874FEA0129536FAD5E868B /* ReaderThumbRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbRequest.h; path = Sources/ReaderThumbRequest.h; sourceTree = "<group>"; };
 		A42FA04360315D8A7EC76BBDE184059B /* GoogleAPIClient-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleAPIClient-umbrella.h"; sourceTree = "<group>"; };
-		A468B3170F7A7BD9A09703C621559463 /* ReaderThumbsView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbsView.m; path = Sources/ReaderThumbsView.m; sourceTree = "<group>"; };
-		A5DFD99748B4750FB4CB56F1465A4359 /* ReaderThumbsView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbsView.h; path = Sources/ReaderThumbsView.h; sourceTree = "<group>"; };
 		A68FFCDACADF03B8C7DB060C0292EC5D /* GTLDateTime.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDateTime.h; path = Source/Objects/GTLDateTime.h; sourceTree = "<group>"; };
-		A6A05F6A9088E4FB0A35BFEFAF9E1517 /* ReaderContentTile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderContentTile.h; path = Sources/ReaderContentTile.h; sourceTree = "<group>"; };
 		A6EFC020DFCC7AC95A7CA80DF35F6EA8 /* GTMGatherInputStream.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMGatherInputStream.m; path = Source/GTMGatherInputStream.m; sourceTree = "<group>"; };
+		A8C0EE8FEA9112032DF79739FB19C8EA /* vfrReader-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "vfrReader-umbrella.h"; sourceTree = "<group>"; };
+		A8E7ACA7CEC886839898913542DF880D /* Reader-Print@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Print@2x.png"; path = "Graphics/Reader-Print@2x.png"; sourceTree = "<group>"; };
 		A9404B4A0409A6842547EFA688D58455 /* GTMOAuth2SignIn.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMOAuth2SignIn.h; path = Source/GTMOAuth2SignIn.h; sourceTree = "<group>"; };
 		A9F30CC905D147CD3C5F180C70132775 /* GTMOAuth2.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GTMOAuth2.xcconfig; sourceTree = "<group>"; };
 		AA07DB8035F1355C79BC7D492E84A6F0 /* GTLDriveChannel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveChannel.m; path = Source/Services/Drive/Generated/GTLDriveChannel.m; sourceTree = "<group>"; };
 		AD0DB244828933A41EC7A2CCA1CE7705 /* GTLDrivePermission.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDrivePermission.m; path = Source/Services/Drive/Generated/GTLDrivePermission.m; sourceTree = "<group>"; };
+		AD3BBF4D484808956AB694822A00BC52 /* ReaderContentView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderContentView.h; path = Sources/ReaderContentView.h; sourceTree = "<group>"; };
 		AE16DD305F3FC930C020A5831FE1879F /* GTMSessionUploadFetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMSessionUploadFetcher.m; path = Source/GTMSessionUploadFetcher.m; sourceTree = "<group>"; };
 		AE3D0E0FEE7D009C0C8644F0EA85EFEC /* GTLFramework.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLFramework.m; path = Source/Utilities/GTLFramework.m; sourceTree = "<group>"; };
 		AF6D219191720F9FB5D3E3EDAA9FABE8 /* GTLQueryDrive.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLQueryDrive.m; path = Source/Services/Drive/Generated/GTLQueryDrive.m; sourceTree = "<group>"; };
 		AFE99B278EBCE9E8726D4BBB8724E035 /* GTMOAuth2Authentication.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMOAuth2Authentication.h; path = Source/GTMOAuth2Authentication.h; sourceTree = "<group>"; };
+		AFF32A813B0E534D8367AEC412E07FD2 /* ReaderThumbRender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbRender.m; path = Sources/ReaderThumbRender.m; sourceTree = "<group>"; };
 		B0DDBA76142B85E49A61994FBDF1E79C /* GTLUploadParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLUploadParameters.h; path = Source/Objects/GTLUploadParameters.h; sourceTree = "<group>"; };
 		B35C16A000F235E510D1FC08727D4904 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		B5B65321C327F81F905E5C542E29050C /* GTMOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GTMOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -364,61 +379,62 @@
 		B7B9B65E0E4EF32DA3AC50A3B1B2E8CD /* Pods-Sheets-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Sheets-dummy.m"; sourceTree = "<group>"; };
 		B9773F836D40735FF2B52F3607C322D5 /* GTLUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLUtilities.m; path = Source/Utilities/GTLUtilities.m; sourceTree = "<group>"; };
 		BA69169BAA7B930D2663817F5E5CF198 /* GTLObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLObject.h; path = Source/Objects/GTLObject.h; sourceTree = "<group>"; };
-		BA7DB26DD87CC69C4ED41C3882B0F4DB /* ThumbsViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ThumbsViewController.h; path = Sources/ThumbsViewController.h; sourceTree = "<group>"; };
 		BC98EA97849EE014CE100EC1976E20EF /* GTLUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLUtilities.h; path = Source/Utilities/GTLUtilities.h; sourceTree = "<group>"; };
+		BE63AA1A4A453DA0816C492AAFD066BC /* ReaderContentTile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderContentTile.h; path = Sources/ReaderContentTile.h; sourceTree = "<group>"; };
 		BE8FFBE90A09DC0889B7B8751877B0A8 /* GTMOAuth2SignIn.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMOAuth2SignIn.m; path = Source/GTMOAuth2SignIn.m; sourceTree = "<group>"; };
 		BF857A357DC22F3570538E741F0C9FA8 /* GoogleAPIClient-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoogleAPIClient-dummy.m"; sourceTree = "<group>"; };
 		C0775B2EF0E7467BC1A07E644A24D05E /* GTLDriveGeneratedIds.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveGeneratedIds.m; path = Source/Services/Drive/Generated/GTLDriveGeneratedIds.m; sourceTree = "<group>"; };
 		C0F31A935591A70D4CA4C1A39852F4A2 /* GTLBatchResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLBatchResult.h; path = Source/Objects/GTLBatchResult.h; sourceTree = "<group>"; };
 		C1B24AC81FA33EE5D0A75E1DB2294AC9 /* Pods-Sheets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Sheets.release.xcconfig"; sourceTree = "<group>"; };
-		C3368F388B2FB1F9D1B0CB1A2B2AB125 /* Reader-Email@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Email@2x.png"; path = "Graphics/Reader-Email@2x.png"; sourceTree = "<group>"; };
+		C21F77AC160F904FB195F8CFFDFC4074 /* Reader-Mark-N@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-N@3x.png"; path = "Graphics/Reader-Mark-N@3x.png"; sourceTree = "<group>"; };
 		C373E9F40CADFF92B70AF17C5A6AC9CC /* GTLDriveReplyList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveReplyList.h; path = Source/Services/Drive/Generated/GTLDriveReplyList.h; sourceTree = "<group>"; };
-		C732E15827A9B3DCA080B3A66D0CE59E /* Reader-Mark-Y@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-Y@2x.png"; path = "Graphics/Reader-Mark-Y@2x.png"; sourceTree = "<group>"; };
+		C3FF632BA4C263E2ADAC8CD99A2D7179 /* ReaderMainPagebar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderMainPagebar.m; path = Sources/ReaderMainPagebar.m; sourceTree = "<group>"; };
+		C549CE249F18EB6D615FA59243F1DF7E /* Reader-Print.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Print.png"; path = "Graphics/Reader-Print.png"; sourceTree = "<group>"; };
+		C6A1A6B0D224F1D478E0FBD283D33981 /* vfrReader.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = vfrReader.modulemap; sourceTree = "<group>"; };
 		C79F004983A18223A887C317C7D50B1A /* GTLDriveReply.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDriveReply.h; path = Source/Services/Drive/Generated/GTLDriveReply.h; sourceTree = "<group>"; };
+		C8C729E1C4252086009B927D342FBC74 /* ReaderThumbQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbQueue.h; path = Sources/ReaderThumbQueue.h; sourceTree = "<group>"; };
 		C8E3E278955DFA5DFD7433974D140708 /* GTMOAuth2-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GTMOAuth2-dummy.m"; sourceTree = "<group>"; };
 		CBCC4174416B4DEA1742F5403009B7FD /* GTLBatchQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLBatchQuery.h; path = Source/Objects/GTLBatchQuery.h; sourceTree = "<group>"; };
-		CC41B32FC0D54C23E378D5F9E52E87CC /* ReaderContentTile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderContentTile.m; path = Sources/ReaderContentTile.m; sourceTree = "<group>"; };
+		CCB760CC09832217F7D52F82EFDD2A7C /* Reader-Button-N@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-N@3x.png"; path = "Graphics/Reader-Button-N@3x.png"; sourceTree = "<group>"; };
 		CD14A589AB51368C19F63CDA2098E8F9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		CD3C04C2B4D291429E9897C73D2FF2A6 /* GTMMIMEDocument.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMMIMEDocument.m; path = Source/GTMMIMEDocument.m; sourceTree = "<group>"; };
-		CD7ED663A8F76A4C8695A41DB8B2B3CB /* Reader-Thumbs.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Thumbs.png"; path = "Graphics/Reader-Thumbs.png"; sourceTree = "<group>"; };
-		CE6C05BDADBDD6AEE03C55BF7F6D97B9 /* ThumbsMainToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ThumbsMainToolbar.h; path = Sources/ThumbsMainToolbar.h; sourceTree = "<group>"; };
-		CED26A95BA5BECACF9042188C2E54AD6 /* ReaderViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderViewController.h; path = Sources/ReaderViewController.h; sourceTree = "<group>"; };
+		CE0C7E2D74014F014D0E131DE643137E /* ReaderThumbRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbRequest.m; path = Sources/ReaderThumbRequest.m; sourceTree = "<group>"; };
 		CEDDD2627E054B687A1FFDEAB04A5E11 /* GTLBase64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLBase64.h; path = Source/Utilities/GTLBase64.h; sourceTree = "<group>"; };
 		D0130F63EA45DA59885DF21999734932 /* GTMOAuth2ViewControllerTouch.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMOAuth2ViewControllerTouch.m; path = Source/Touch/GTMOAuth2ViewControllerTouch.m; sourceTree = "<group>"; };
+		D0539BF44D95B5CD71259A815F99BBFD /* Reader-Email@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Email@3x.png"; path = "Graphics/Reader-Email@3x.png"; sourceTree = "<group>"; };
+		D05737A7E0B6F1B5F0FC2AEB1EB8A250 /* Reader-Button-N.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-N.png"; path = "Graphics/Reader-Button-N.png"; sourceTree = "<group>"; };
 		D07EDFFC2FA6563E391C25DF403248AE /* GTMOAuth2ViewTouch.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = GTMOAuth2ViewTouch.xib; path = Source/Touch/GTMOAuth2ViewTouch.xib; sourceTree = "<group>"; };
-		D0EF41C0DA955EBF616F9EBE69398446 /* ReaderThumbFetch.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbFetch.m; path = Sources/ReaderThumbFetch.m; sourceTree = "<group>"; };
 		D154D35F2BD732CC96C2C695B37D4624 /* GTLFramework.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLFramework.h; path = Source/Utilities/GTLFramework.h; sourceTree = "<group>"; };
 		D22CB7719BB3685D2E22796E994E0B4E /* GTLDriveComment.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDriveComment.m; path = Source/Services/Drive/Generated/GTLDriveComment.m; sourceTree = "<group>"; };
 		D3539F3BDC931113EDA17B81150775E9 /* GTLBatchQuery.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLBatchQuery.m; path = Source/Objects/GTLBatchQuery.m; sourceTree = "<group>"; };
 		D3A96A6724AC39C3F80E886FA2DA0E1F /* GTLTargetNamespace.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLTargetNamespace.h; path = Source/Utilities/GTLTargetNamespace.h; sourceTree = "<group>"; };
 		D48EBCDBC87EEC2E7D3A332F7FE5A16D /* GTMSessionFetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMSessionFetcher.m; path = Source/GTMSessionFetcher.m; sourceTree = "<group>"; };
-		D5DCB33F8DB0727584B0739685904757 /* ReaderDocumentOutline.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderDocumentOutline.h; path = Sources/ReaderDocumentOutline.h; sourceTree = "<group>"; };
-		D8BCB6D2EABD3AA6BF4BAFEEE20D8BAD /* Reader-Email.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Email.png"; path = "Graphics/Reader-Email.png"; sourceTree = "<group>"; };
 		D9133C8B477A264F5E5095886F45094F /* GTMReadMonitorInputStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMReadMonitorInputStream.h; path = Source/GTMReadMonitorInputStream.h; sourceTree = "<group>"; };
 		DD11516B0CECB9B4D4EC049ED4377329 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		DE350D8F10693F179A9B90FCC976B2FB /* GTMSessionFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMSessionFetcher.h; path = Source/GTMSessionFetcher.h; sourceTree = "<group>"; };
 		E1D058BCAC6FFF160AF216F501AC175E /* GTLDrivePermissionList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDrivePermissionList.h; path = Source/Services/Drive/Generated/GTLDrivePermissionList.h; sourceTree = "<group>"; };
 		E22CC33ADC5731E6D926E26E694C36DC /* Pods-Sheets-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Sheets-acknowledgements.markdown"; sourceTree = "<group>"; };
-		E25BC6F90B92826DFEEEB9F783394E53 /* Reader-Print@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Print@2x.png"; path = "Graphics/Reader-Print@2x.png"; sourceTree = "<group>"; };
+		E2607879C117C93AA975DBFB80C3979F /* Reader-Print@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Print@3x.png"; path = "Graphics/Reader-Print@3x.png"; sourceTree = "<group>"; };
 		E483B0727E5F5A210A3512E7D4BD0B56 /* GTLDrivePermission.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLDrivePermission.h; path = Source/Services/Drive/Generated/GTLDrivePermission.h; sourceTree = "<group>"; };
-		E600080F51A45DEFDEE696F458FF7A16 /* vfrReader.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = vfrReader.modulemap; sourceTree = "<group>"; };
 		E7550FDB6A76C31272488671D9795037 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		E7B8A7C2A2E33CF9627314AE2874DB76 /* ReaderContentView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderContentView.m; path = Sources/ReaderContentView.m; sourceTree = "<group>"; };
-		E97CDD6E3B7585663D24CFAFBD5790F3 /* Reader-Export.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Export.png"; path = "Graphics/Reader-Export.png"; sourceTree = "<group>"; };
 		EA68336697947EF73DC163C6D64DB030 /* GTMSessionFetcherLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMSessionFetcherLogging.h; path = Source/GTMSessionFetcherLogging.h; sourceTree = "<group>"; };
+		EBB81245052410E5D85F177EBA50FF58 /* Reader-Mark-Y@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-Y@3x.png"; path = "Graphics/Reader-Mark-Y@3x.png"; sourceTree = "<group>"; };
 		EC6D9653FF637771C2000BFD99CF7B60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		ECA8FDC99C4B888E4BA5C65BA68C8AAE /* Reader-Mark-Y.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-Y.png"; path = "Graphics/Reader-Mark-Y.png"; sourceTree = "<group>"; };
 		ECA9DBCEF60BF425E4F7DB4E27E56C2E /* GTMSessionFetcher-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GTMSessionFetcher-umbrella.h"; sourceTree = "<group>"; };
+		ED2792062064DEC0B1255B9E756FC73B /* Reader-Export.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Export.png"; path = "Graphics/Reader-Export.png"; sourceTree = "<group>"; };
 		F0DDBD137B1D77990DEE5C6DC14FA6C2 /* GTLRuntimeCommon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTLRuntimeCommon.h; path = Source/Objects/GTLRuntimeCommon.h; sourceTree = "<group>"; };
-		F3A4CDB7A3EB9499259C8436D6C3E5C6 /* ReaderThumbQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbQueue.h; path = Sources/ReaderThumbQueue.h; sourceTree = "<group>"; };
-		F607FDCB037C670AE0946ABCBFB98286 /* ReaderThumbRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbRequest.m; path = Sources/ReaderThumbRequest.m; sourceTree = "<group>"; };
-		F78F1288A57808F43F819C4333BE0C14 /* Reader-Button-H.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Button-H.png"; path = "Graphics/Reader-Button-H.png"; sourceTree = "<group>"; };
+		F32DE95FBA234DA0BC701B59C3E7EC1B /* ThumbsMainToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ThumbsMainToolbar.m; path = Sources/ThumbsMainToolbar.m; sourceTree = "<group>"; };
+		F37EE192D38B32D54A311990E1ACC950 /* Reader-Mark-Y@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-Y@2x.png"; path = "Graphics/Reader-Mark-Y@2x.png"; sourceTree = "<group>"; };
+		F45786FF67961D40367169521984F01F /* ReaderThumbCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderThumbCache.h; path = Sources/ReaderThumbCache.h; sourceTree = "<group>"; };
 		F798968E06C7A112C005A31A59A7BF12 /* GTLDrivePermissionList.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLDrivePermissionList.m; path = Source/Services/Drive/Generated/GTLDrivePermissionList.m; sourceTree = "<group>"; };
-		F86E310D70A63FF032CA94A8F117FCFE /* Reader-Mark-N@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Reader-Mark-N@2x.png"; path = "Graphics/Reader-Mark-N@2x.png"; sourceTree = "<group>"; };
+		F80A52F663F86DA97F4C7005E6B710B7 /* ReaderThumbCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbCache.m; path = Sources/ReaderThumbCache.m; sourceTree = "<group>"; };
+		F88B81B154AE8C839B359F64CAAA3113 /* ReaderConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReaderConstants.h; path = Sources/ReaderConstants.h; sourceTree = "<group>"; };
 		FA59DBE44DCFCC6688E8896EF11EB274 /* GTMGatherInputStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMGatherInputStream.h; path = Source/GTMGatherInputStream.h; sourceTree = "<group>"; };
 		FAEEADBFB7F18827DA55CAF9C2BD3981 /* GTLServiceDrive.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTLServiceDrive.m; path = Source/Services/Drive/Generated/GTLServiceDrive.m; sourceTree = "<group>"; };
 		FAFE4E1221E2185B15186A64EB0DD9B2 /* Pods-Sheets-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Sheets-resources.sh"; sourceTree = "<group>"; };
-		FC9E8F2C260C01F5947EBC2DD31BF682 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB95AA94435C9DD27541F11429055D6E /* ReaderThumbFetch.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReaderThumbFetch.m; path = Sources/ReaderThumbFetch.m; sourceTree = "<group>"; };
+		FBB46EB318160E242499E653E5FF7B16 /* ThumbsMainToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ThumbsMainToolbar.h; path = Sources/ThumbsMainToolbar.h; sourceTree = "<group>"; };
+		FD9D8B1CB672F6DEA22EDF8492CC55A1 /* ThumbsViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ThumbsViewController.h; path = Sources/ThumbsViewController.h; sourceTree = "<group>"; };
 		FDD49870F1AF7DEF9EE912C57C103371 /* GTMSessionFetcherService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMSessionFetcherService.h; path = Source/GTMSessionFetcherService.h; sourceTree = "<group>"; };
 		FE8C3D817A79832D656515582228DC9B /* GTMOAuth2-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GTMOAuth2-prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -502,6 +518,20 @@
 				3ABC9AEF710F9098A2ACDB6D344F0C89 /* GTMReadMonitorInputStream.m */,
 			);
 			name = Full;
+			sourceTree = "<group>";
+		};
+		1C06EFDFE1A68EB64F15322B9FA325E3 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1B13E85C02A0134E9541C5FC9CD73E87 /* Info.plist */,
+				C6A1A6B0D224F1D478E0FBD283D33981 /* vfrReader.modulemap */,
+				17DFF2EB9A9A025F8250EF317CA0E6E9 /* vfrReader.xcconfig */,
+				7787CD8D7A13AA887D8296E527FB4745 /* vfrReader-dummy.m */,
+				2864A1B6165FAE8B39DF34A7C5121112 /* vfrReader-prefix.pch */,
+				A8C0EE8FEA9112032DF79739FB19C8EA /* vfrReader-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/vfrReader";
 			sourceTree = "<group>";
 		};
 		1CB72757D1176B7D522CCA262C0BF539 /* Pods-Sheets */ = {
@@ -622,7 +652,7 @@
 				8A5FA0E5ACA1F01D996A750EDDE2E3F6 /* GoogleAPIClient */,
 				8944A6233D751D41CE6BBD362F07D4D3 /* GTMOAuth2 */,
 				B5A204E16E47B31FE188CAC04E12937B /* GTMSessionFetcher */,
-				A30D945CAC8B2399F3941A119A307D60 /* vfrReader */,
+				7E0B6D7F12FDE405F3177DB156FEE838 /* vfrReader */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -636,6 +666,55 @@
 				E1471C5AFB9B080828E8E47056324F3B /* Products */,
 				73B014AE2F7D6F81A3DB3858B06CDA49 /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		7E0B6D7F12FDE405F3177DB156FEE838 /* vfrReader */ = {
+			isa = PBXGroup;
+			children = (
+				40B0E5F179DC97AD16D4B4FFE1D9E6FD /* CGPDFDocument.h */,
+				4E80FE97E3C447AE43D55446AB875AAC /* CGPDFDocument.m */,
+				F88B81B154AE8C839B359F64CAAA3113 /* ReaderConstants.h */,
+				4A81A6D0A26050CEA24382C75826E357 /* ReaderConstants.m */,
+				2A21B59FA3016C8DE39BFF0E36D3414F /* ReaderContentPage.h */,
+				4618060A61F12B4AC2689DB3CC503882 /* ReaderContentPage.m */,
+				BE63AA1A4A453DA0816C492AAFD066BC /* ReaderContentTile.h */,
+				5CABCC548B2DACA4F2B6446BB9F2F206 /* ReaderContentTile.m */,
+				AD3BBF4D484808956AB694822A00BC52 /* ReaderContentView.h */,
+				9B4267B5F7264571ECC212D19CFD5EA0 /* ReaderContentView.m */,
+				6E0FE7D377C47A5FC142A6B85302B686 /* ReaderDocument.h */,
+				36D2EAFA50DDF67239E927CE1F5EB480 /* ReaderDocument.m */,
+				97CA7062C0D455AA8FF0BBFDBF012888 /* ReaderDocumentOutline.h */,
+				A34533BA46C1BF1024D971ADF3FC2DC2 /* ReaderDocumentOutline.m */,
+				4DB682CD92A00606864241762B4A5C56 /* ReaderMainPagebar.h */,
+				C3FF632BA4C263E2ADAC8CD99A2D7179 /* ReaderMainPagebar.m */,
+				5F19066F2047029A37763CF81E873AFB /* ReaderMainToolbar.h */,
+				5ED1FEC0E920593C24874DBD1E872A9F /* ReaderMainToolbar.m */,
+				F45786FF67961D40367169521984F01F /* ReaderThumbCache.h */,
+				F80A52F663F86DA97F4C7005E6B710B7 /* ReaderThumbCache.m */,
+				43FFDE24A2C30D62CF2AA62C912E5A4F /* ReaderThumbFetch.h */,
+				FB95AA94435C9DD27541F11429055D6E /* ReaderThumbFetch.m */,
+				C8C729E1C4252086009B927D342FBC74 /* ReaderThumbQueue.h */,
+				31FB196E73B83F8488D1A484C84B365A /* ReaderThumbQueue.m */,
+				2F0562A1DBC2431B498B4186FD195A42 /* ReaderThumbRender.h */,
+				AFF32A813B0E534D8367AEC412E07FD2 /* ReaderThumbRender.m */,
+				A3D5B4DEDF874FEA0129536FAD5E868B /* ReaderThumbRequest.h */,
+				CE0C7E2D74014F014D0E131DE643137E /* ReaderThumbRequest.m */,
+				541FDE5C861B10F56C8D688F5F3DED16 /* ReaderThumbsView.h */,
+				129A099B6095157F16ED53A094F0EB12 /* ReaderThumbsView.m */,
+				1E3D269914DD7B51473939506A237DC0 /* ReaderThumbView.h */,
+				678A765041F5BD1BC84106195918BC1C /* ReaderThumbView.m */,
+				5C183D858996B66D11D89CDD68EF15F4 /* ReaderViewController.h */,
+				68FBA98977A3175E858575FA97D1E00B /* ReaderViewController.m */,
+				FBB46EB318160E242499E653E5FF7B16 /* ThumbsMainToolbar.h */,
+				F32DE95FBA234DA0BC701B59C3E7EC1B /* ThumbsMainToolbar.m */,
+				FD9D8B1CB672F6DEA22EDF8492CC55A1 /* ThumbsViewController.h */,
+				002868BFDB25D9AC9C714E9A0A6C119E /* ThumbsViewController.m */,
+				8614A40ECE154C67F60F15F1353D7B03 /* UIXToolbarView.h */,
+				56B89F1BCF5C647BD9C0E4FD78723811 /* UIXToolbarView.m */,
+				CC5937E9D4F991690C235CE69C00304D /* Resources */,
+				1C06EFDFE1A68EB64F15322B9FA325E3 /* Support Files */,
+			);
+			path = vfrReader;
 			sourceTree = "<group>";
 		};
 		8944A6233D751D41CE6BBD362F07D4D3 /* GTMOAuth2 */ = {
@@ -677,69 +756,6 @@
 			path = "../Target Support Files/GTMSessionFetcher";
 			sourceTree = "<group>";
 		};
-		A30D945CAC8B2399F3941A119A307D60 /* vfrReader */ = {
-			isa = PBXGroup;
-			children = (
-				46C3BD0C34F7E05C6AD0F62CA644EAB6 /* CGPDFDocument.h */,
-				3C8960328E5AD67DDD879CC57D24FFF4 /* CGPDFDocument.m */,
-				70CF1B0F158C35E0ED2091930DA1E1B7 /* ReaderConstants.h */,
-				68A2777A4176A28706F9B92F5B6A492F /* ReaderConstants.m */,
-				4E0DF149333D1E0491EE12DD70B3D5B4 /* ReaderContentPage.h */,
-				8FCFD7EAA8E090F16D90AA265C2A5FE1 /* ReaderContentPage.m */,
-				A6A05F6A9088E4FB0A35BFEFAF9E1517 /* ReaderContentTile.h */,
-				CC41B32FC0D54C23E378D5F9E52E87CC /* ReaderContentTile.m */,
-				7EC3331956DBDE1326282F65547FF4FB /* ReaderContentView.h */,
-				E7B8A7C2A2E33CF9627314AE2874DB76 /* ReaderContentView.m */,
-				7C9360AC25465B11F26FF54A8E32A3F3 /* ReaderDocument.h */,
-				6A32208B8681D56C1160148C27FC0C23 /* ReaderDocument.m */,
-				D5DCB33F8DB0727584B0739685904757 /* ReaderDocumentOutline.h */,
-				2D0D1E1473F09B4825ED6794F948ED65 /* ReaderDocumentOutline.m */,
-				33BBB55770D196D81C22857DB086AC3E /* ReaderMainPagebar.h */,
-				7C9EBDE0104C32272C8026020C3D871D /* ReaderMainPagebar.m */,
-				059A9377DDB03CE30D316C5322A637DD /* ReaderMainToolbar.h */,
-				543194CEA3A1C8A18DA81A42F214C6F1 /* ReaderMainToolbar.m */,
-				8D6CF5B211809F7188B5333509566D16 /* ReaderThumbCache.h */,
-				54C9758E8BC8F527DA5D2BC9B96B123E /* ReaderThumbCache.m */,
-				3ADDEA24145C63DF21E4F4CEBE39BED1 /* ReaderThumbFetch.h */,
-				D0EF41C0DA955EBF616F9EBE69398446 /* ReaderThumbFetch.m */,
-				F3A4CDB7A3EB9499259C8436D6C3E5C6 /* ReaderThumbQueue.h */,
-				5BE7624A3CD495E9DF06BB3492C0FEFE /* ReaderThumbQueue.m */,
-				87C500CD10A822BD05ADBFE54DD760AB /* ReaderThumbRender.h */,
-				64A0324B829D634CF6AAAE7EE3A7311C /* ReaderThumbRender.m */,
-				5009AC44F879215DF04383AC8F170394 /* ReaderThumbRequest.h */,
-				F607FDCB037C670AE0946ABCBFB98286 /* ReaderThumbRequest.m */,
-				A5DFD99748B4750FB4CB56F1465A4359 /* ReaderThumbsView.h */,
-				A468B3170F7A7BD9A09703C621559463 /* ReaderThumbsView.m */,
-				8BDAC9FCF989F0BDF8AB6C939B4D4CB4 /* ReaderThumbView.h */,
-				42BBCC5999531F512722408A75BB4DF6 /* ReaderThumbView.m */,
-				CED26A95BA5BECACF9042188C2E54AD6 /* ReaderViewController.h */,
-				6405925DC4B70108FEDEDEF8A6CF2388 /* ReaderViewController.m */,
-				CE6C05BDADBDD6AEE03C55BF7F6D97B9 /* ThumbsMainToolbar.h */,
-				2292A93EE17EA9A97C7575A8BC1895C6 /* ThumbsMainToolbar.m */,
-				BA7DB26DD87CC69C4ED41C3882B0F4DB /* ThumbsViewController.h */,
-				1EC4CDB99C778E0A6043DDE70606ABBE /* ThumbsViewController.m */,
-				7ACE69B4C9B1A5B8EF4F2FC189271877 /* UIXToolbarView.h */,
-				38E7F92CF2F1101BA4A92A022D6AEAA4 /* UIXToolbarView.m */,
-				DFDA1880473684C88ABE697EDFF4F832 /* Resources */,
-				AD41D04CE3F7EF873CCC51254EF41F5D /* Support Files */,
-			);
-			path = vfrReader;
-			sourceTree = "<group>";
-		};
-		AD41D04CE3F7EF873CCC51254EF41F5D /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				FC9E8F2C260C01F5947EBC2DD31BF682 /* Info.plist */,
-				E600080F51A45DEFDEE696F458FF7A16 /* vfrReader.modulemap */,
-				2833E9D517CA38E3EC1D5ED7D9B9D70F /* vfrReader.xcconfig */,
-				6F24C6DDF9BA74C081B352090DBBDAB1 /* vfrReader-dummy.m */,
-				2681910337B05C6B561B5032FE1BE2A3 /* vfrReader-prefix.pch */,
-				0726D8C4763D1C490ADD8E0EA910F090 /* vfrReader-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/vfrReader";
-			sourceTree = "<group>";
-		};
 		B5A204E16E47B31FE188CAC04E12937B /* GTMSessionFetcher */ = {
 			isa = PBXGroup;
 			children = (
@@ -758,25 +774,33 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		DFDA1880473684C88ABE697EDFF4F832 /* Resources */ = {
+		CC5937E9D4F991690C235CE69C00304D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F78F1288A57808F43F819C4333BE0C14 /* Reader-Button-H.png */,
-				0E6168AC4C4BAFD64415B4F45E2AD974 /* Reader-Button-H@2x.png */,
-				3A67E482F0C671AF6456A51375262A97 /* Reader-Button-N.png */,
-				50BFD23958AB5B85E39207162836C0D3 /* Reader-Button-N@2x.png */,
-				D8BCB6D2EABD3AA6BF4BAFEEE20D8BAD /* Reader-Email.png */,
-				C3368F388B2FB1F9D1B0CB1A2B2AB125 /* Reader-Email@2x.png */,
-				E97CDD6E3B7585663D24CFAFBD5790F3 /* Reader-Export.png */,
-				2A6F31DF7A6DB61D42062EA4C291531D /* Reader-Export@2x.png */,
-				50064B8551FD48C3B24B74204C156A2B /* Reader-Mark-N.png */,
-				F86E310D70A63FF032CA94A8F117FCFE /* Reader-Mark-N@2x.png */,
-				ECA8FDC99C4B888E4BA5C65BA68C8AAE /* Reader-Mark-Y.png */,
-				C732E15827A9B3DCA080B3A66D0CE59E /* Reader-Mark-Y@2x.png */,
-				793AFBE163BB1AB55311B66D47355C70 /* Reader-Print.png */,
-				E25BC6F90B92826DFEEEB9F783394E53 /* Reader-Print@2x.png */,
-				CD7ED663A8F76A4C8695A41DB8B2B3CB /* Reader-Thumbs.png */,
-				56E4B30C704734309B735C1C9B5CF602 /* Reader-Thumbs@2x.png */,
+				11647DECDAD46C2E6E68BF751142820C /* Reader-Button-H.png */,
+				453D3718B75F097C174E8C527481D895 /* Reader-Button-H@2x.png */,
+				0355F9CBC19E17C4A17F75974BA9F95F /* Reader-Button-H@3x.png */,
+				D05737A7E0B6F1B5F0FC2AEB1EB8A250 /* Reader-Button-N.png */,
+				307D6C54FE95AF893B99B9CFFE1ACC00 /* Reader-Button-N@2x.png */,
+				CCB760CC09832217F7D52F82EFDD2A7C /* Reader-Button-N@3x.png */,
+				9BF526281CDAE5AFF7DEC806BB46B54B /* Reader-Email.png */,
+				911F17A7FF67FD92CBF3347E983E8B91 /* Reader-Email@2x.png */,
+				D0539BF44D95B5CD71259A815F99BBFD /* Reader-Email@3x.png */,
+				ED2792062064DEC0B1255B9E756FC73B /* Reader-Export.png */,
+				90B3756C183D08C1274522F79D6B3416 /* Reader-Export@2x.png */,
+				41B1B3163C7D1054C52200010BE9B706 /* Reader-Export@3x.png */,
+				17CCD5E2573E7EBE382C22ACB44003EA /* Reader-Mark-N.png */,
+				142A30170B0FF896B7D34211FEF9CD53 /* Reader-Mark-N@2x.png */,
+				C21F77AC160F904FB195F8CFFDFC4074 /* Reader-Mark-N@3x.png */,
+				7241FB2AAF3243F034CC0B73A67563D1 /* Reader-Mark-Y.png */,
+				F37EE192D38B32D54A311990E1ACC950 /* Reader-Mark-Y@2x.png */,
+				EBB81245052410E5D85F177EBA50FF58 /* Reader-Mark-Y@3x.png */,
+				C549CE249F18EB6D615FA59243F1DF7E /* Reader-Print.png */,
+				A8E7ACA7CEC886839898913542DF880D /* Reader-Print@2x.png */,
+				E2607879C117C93AA975DBFB80C3979F /* Reader-Print@3x.png */,
+				33AA2272C8837B05AC44D7A93631DD90 /* Reader-Thumbs.png */,
+				511FC36A28C58B539F5228A947FC24A4 /* Reader-Thumbs@2x.png */,
+				02F2CB32D8170A7532D89207C7FEC4F1 /* Reader-Thumbs@3x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1000,7 +1024,7 @@
 				935BB68B4280E4E3ECCB2C42B0D60313 /* Sources */,
 				0F996A8EFDFDB01292E759FFE12D02EF /* Frameworks */,
 				61ED9EA2EDD2D2CC51460DF262BC1D67 /* Headers */,
-				9459E2F6DCDF876FA151793DA9B9C9E0 /* Resources */,
+				D8674D42780D1E5B2D66AD35E5D367EF /* Resources */,
 			);
 			buildRules = (
 			);
@@ -1087,26 +1111,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9459E2F6DCDF876FA151793DA9B9C9E0 /* Resources */ = {
+		D8674D42780D1E5B2D66AD35E5D367EF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF76899183EA13CF3A2B2F569A7520BB /* Reader-Button-H.png in Resources */,
-				D00266DC222A816F47C7FB992DC54F72 /* Reader-Button-H@2x.png in Resources */,
-				37738008BF33B2796E3624557B54917C /* Reader-Button-N.png in Resources */,
-				97ED9E6E203E3A573CAF33590B17D8B7 /* Reader-Button-N@2x.png in Resources */,
-				D24E4AA771DC7973EEC3553F9CD231E6 /* Reader-Email.png in Resources */,
-				494B0285608C06C4B5009164C081F3AB /* Reader-Email@2x.png in Resources */,
-				BF47F6409DD3AD670EDA5F6EB3AA9FC8 /* Reader-Export.png in Resources */,
-				0E4801B2941CF7D3F32A22831EE5905D /* Reader-Export@2x.png in Resources */,
-				1AC3291280ABD8FE5DDFFD7E40558B15 /* Reader-Mark-N.png in Resources */,
-				E8589FA64A76E86F31CB6E655B7D5FC0 /* Reader-Mark-N@2x.png in Resources */,
-				DD74D7ECF1B6638FF6470783071F91F4 /* Reader-Mark-Y.png in Resources */,
-				68EA1BEC46C679E1D9B4F3826A351F7A /* Reader-Mark-Y@2x.png in Resources */,
-				718985A2A45D6BFCB8BCDE36B0123E88 /* Reader-Print.png in Resources */,
-				2F32424256F0B6EAD6B91EA2C2B2838E /* Reader-Print@2x.png in Resources */,
-				11BF0C633F2A292EAB33E2F1D8807586 /* Reader-Thumbs.png in Resources */,
-				34A0D1CBC4EE4195471DE909FCD8B606 /* Reader-Thumbs@2x.png in Resources */,
+				0798E9ED242529B91B566AA7EF7028B2 /* Reader-Button-H.png in Resources */,
+				5F3437094B9FF805A4FAA0F766842948 /* Reader-Button-H@2x.png in Resources */,
+				143345E0D2BE1142E129C399B5AF926B /* Reader-Button-H@3x.png in Resources */,
+				6FE80D531F3109AD40568BBB985EA178 /* Reader-Button-N.png in Resources */,
+				5D83EB069FE84AE506FE05C320D60AA3 /* Reader-Button-N@2x.png in Resources */,
+				E417441AD05B6E93EAFAC38A931F4250 /* Reader-Button-N@3x.png in Resources */,
+				A7D6760668289D34694BB655D75424F7 /* Reader-Email.png in Resources */,
+				D7C353E6F3F153AD46060567ECB8417C /* Reader-Email@2x.png in Resources */,
+				CFF1EDA6C84F3753DF9C5A16E4571AD1 /* Reader-Email@3x.png in Resources */,
+				EAA4AEC1D9D816BC41BB14BC8249FDA5 /* Reader-Export.png in Resources */,
+				507BF28DAB2731CEA40E2B512060C0A4 /* Reader-Export@2x.png in Resources */,
+				6BFD33D88D010385934673ED08395601 /* Reader-Export@3x.png in Resources */,
+				F59DC0BE5974B8DA156E3567239F6E58 /* Reader-Mark-N.png in Resources */,
+				D074ADB4D4973DF74CB6BCE1D1413A54 /* Reader-Mark-N@2x.png in Resources */,
+				D7D1413D9755DF4A9718D2C6B4B8F751 /* Reader-Mark-N@3x.png in Resources */,
+				A40B7F6734A40E08B46CD68CD197E97B /* Reader-Mark-Y.png in Resources */,
+				902DC154EC95A17493146C1878DBF8B2 /* Reader-Mark-Y@2x.png in Resources */,
+				AD6925B2CC7FACB9113DF394BE690A82 /* Reader-Mark-Y@3x.png in Resources */,
+				37AB9CC21BD97F5851D6D939985C62CB /* Reader-Print.png in Resources */,
+				75F5E02C546A2B9433DDFDAAC31D84DB /* Reader-Print@2x.png in Resources */,
+				73254F20A10F48FCCE20F7FB0B3AC0BB /* Reader-Print@3x.png in Resources */,
+				F3212DE7D4E79294543A5425593A6737 /* Reader-Thumbs.png in Resources */,
+				C965C31F22B193AC6DBEA298ED009546 /* Reader-Thumbs@2x.png in Resources */,
+				558A62EC902A3B20BAC1D26AF6D7E071 /* Reader-Thumbs@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,7 +1334,7 @@
 		};
 		0866F5C28244AC8EEFF36C8D9AE9CF6A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2833E9D517CA38E3EC1D5ED7D9B9D70F /* vfrReader.xcconfig */;
+			baseConfigurationReference = 17DFF2EB9A9A025F8250EF317CA0E6E9 /* vfrReader.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -1547,7 +1579,7 @@
 		};
 		E2FE38DFEF7E80A945C22DD5829FD5BF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2833E9D517CA38E3EC1D5ED7D9B9D70F /* vfrReader.xcconfig */;
+			baseConfigurationReference = 17DFF2EB9A9A025F8250EF317CA0E6E9 /* vfrReader.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;

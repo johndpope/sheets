@@ -37,9 +37,9 @@ class SheetReaderViewController: UIViewController, UIScrollViewDelegate, UIGestu
     var contentViews: NSMutableDictionary!
     var userInterfaceIdiom: UIUserInterfaceIdiom!
     
-    var currentPage: Int!
-    var minimumPage: Int!
-    var maximumPage: Int!
+    var currentPage: Int! = 0
+    var minimumPage: Int! = 0
+    var maximumPage: Int! = 0
     
     var documentInteraction: UIDocumentInteractionController!
     var printInteraction: UIPrintInteractionController!
@@ -48,7 +48,7 @@ class SheetReaderViewController: UIViewController, UIScrollViewDelegate, UIGestu
     var lastAppearSize: CGSize!
     var lastHideTime: NSDate!
     
-    var ignoreDidScroll: Bool!
+    var ignoreDidScroll = false
     
     //other constants
     let STATUS_HEIGHT: CGFloat = 20
@@ -386,14 +386,17 @@ class SheetReaderViewController: UIViewController, UIScrollViewDelegate, UIGestu
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if !CGSizeEqualToSize(lastAppearSize, CGSizeZero) {
-            if !CGSizeEqualToSize(lastAppearSize, self.view.bounds.size) {
-                self.updateContentViews(theScrollView) // Update content views
+        if lastAppearSize != nil {
+            if !CGSizeEqualToSize(lastAppearSize, CGSizeZero) {
+                if !CGSizeEqualToSize(lastAppearSize, self.view.bounds.size) {
+                    self.updateContentViews(theScrollView) // Update content views
+                }
             }
-            
+        } else {
+            self.updateContentViews(theScrollView) // Update content views
             lastAppearSize = CGSizeZero // Reset view size tracking
         }
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -641,7 +644,7 @@ class SheetReaderViewController: UIViewController, UIScrollViewDelegate, UIGestu
     // ReaderMainToolbarDelegate methods
     
     func tappedInToolbar(toolbar: ReaderMainToolbar!, doneButton button: UIButton!) {
-        if READER_STANDALONE {
+        if !READER_STANDALONE {
             self.closeDocument() // Close ReaderViewController
         }
     }

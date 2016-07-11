@@ -11,19 +11,28 @@ PODS:
   - GTMSessionFetcher/Core (1.1.4)
   - GTMSessionFetcher/Full (1.1.4):
     - GTMSessionFetcher/Core (= 1.1.4)
-  - vfrReader (2.8.6)
+  - vfrReader (2.8.7)
 
 DEPENDENCIES:
   - GoogleAPIClient/Drive (~> 1.0.2)
   - GTMOAuth2 (~> 1.1.0)
-  - vfrReader (= 2.8.6)
+  - vfrReader (from `https://github.com/keiwando/Reader.git`)
+
+EXTERNAL SOURCES:
+  vfrReader:
+    :git: https://github.com/keiwando/Reader.git
+
+CHECKOUT OPTIONS:
+  vfrReader:
+    :commit: f69f394d9889a0c2b08b38ca44dbd519d426a22f
+    :git: https://github.com/keiwando/Reader.git
 
 SPEC CHECKSUMS:
   GoogleAPIClient: 4dedb6af613eb7d171814c343f8a82ee5411e13b
   GTMOAuth2: bdb12f3e0d2110bfe585f6151230b883beb4d042
   GTMSessionFetcher: 174bc61d5238f81f9ddb807b0b0170420f67de85
-  vfrReader: 94ea739a545e39093c93802ca1c5b203a5df46b1
+  vfrReader: 60aa3b2ac62baaa3c8f9a6e4fb42a1480fc6082e
 
-PODFILE CHECKSUM: 73406035175ff3e4fb4b6f303be13b30474c447c
+PODFILE CHECKSUM: 1d5ff0fbb9952d410801cf513884ded9c0efbc87
 
 COCOAPODS: 1.0.1

@@ -76,17 +76,22 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
     func showPDFInReader(filename: String){
         let filePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename).path
         let readerDocument = ReaderDocument(filePath: filePath!, password: "")
-        let readerViewController = SheetReaderViewController(readerDocument: readerDocument,
-            name: (filename as NSString).stringByDeletingPathExtension)
+        let readerViewController = ReaderViewController(readerDocument: readerDocument)
+        //let readerViewController = SheetReaderViewController(object: readerDocument)
         
         presentViewController(readerViewController, animated: true, completion: nil)
         readerViewController.delegate = self
         
     }
     
-    func dismissReaderViewController(readerVC: ReaderViewController){
-        readerVC.dismissViewControllerAnimated(false, completion: nil)
+    
+    func dismissReaderViewController(viewController: ReaderViewController!) {
+        viewController.dismissViewControllerAnimated(true, completion: nil)
     }
+    /*
+    func dismissReaderViewController(readerVC: SheetReaderViewController){
+        readerVC.dismissViewControllerAnimated(true, completion: nil)
+    }*/
     
     func generalSetup(){
         files = [File]()
