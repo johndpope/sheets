@@ -12,6 +12,7 @@ import UIKit
 class RenameViewController: UIViewController {
     
     override func viewDidLoad() {
-        
+        super.viewDidLoad()
     }
+    
 }

@@ -83,7 +83,7 @@
 
 		const CGFloat buttonSpacing = BUTTON_SPACE; const CGFloat iconButtonWidth = ICON_BUTTON_WIDTH;
 
-		CGFloat titleX = BUTTON_X; CGFloat titleWidth = (viewWidth - (titleX + titleX));
+		CGFloat titleX = BUTTON_X; CGFloat titleWidth = (viewWidth - (2 * titleX));
 
 		CGFloat leftButtonX = BUTTON_X; // Left-side button start X position
 
@@ -108,7 +108,7 @@
 
 		[self addSubview:doneButton]; leftButtonX += (doneButtonWidth + buttonSpacing);
 
-		titleX += (doneButtonWidth + buttonSpacing); titleWidth -= (doneButtonWidth + buttonSpacing);
+		titleX += (doneButtonWidth + buttonSpacing + 45); titleWidth -= (doneButtonWidth + buttonSpacing + 50);  // TITLE X AND WIDTH CHANGE
 
 #endif // end of READER_STANDALONE Option
 
@@ -221,12 +221,13 @@
 
 		if (largeDevice == YES) // Show document filename in toolbar
 		{
-			CGRect titleRect = CGRectMake(titleX, BUTTON_Y, titleWidth, TITLE_HEIGHT);
+			CGRect titleRect = CGRectMake(titleX, BUTTON_Y + 3, titleWidth, TITLE_HEIGHT);  // LABEL Y CHANGE
 
 			UILabel *titleLabel = [[UILabel alloc] initWithFrame:titleRect];
 
 			titleLabel.textAlignment = NSTextAlignmentCenter;
-			titleLabel.font = [UIFont systemFontOfSize:TITLE_FONT_SIZE];
+			//titleLabel.font = [UIFont systemFontOfSize:TITLE_FONT_SIZE];
+            titleLabel.font = [UIFont fontWithName:@"Menlo-Bold" size:20];   // FONT CHANGE
 			titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 			titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 			titleLabel.textColor = [UIColor colorWithWhite:0.0f alpha:1.0f];
@@ -238,9 +239,21 @@
 			titleLabel.shadowColor = [UIColor colorWithWhite:0.75f alpha:1.0f];
 			titleLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
 #endif // end of READER_FLAT_UI Option
+            
+            // Label Tap Recognizer  CHANGE
+            
+            UITapGestureRecognizer *labelTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(nameLabelTapped:)];
+            labelTapRecognizer.numberOfTapsRequired = 1;
+            labelTapRecognizer.numberOfTouchesRequired = 1;
+            labelTapRecognizer.delegate = self;
+            titleLabel.userInteractionEnabled = YES;
+            [titleLabel addGestureRecognizer:labelTapRecognizer];
+            // End of Label Tap Recognizer
 
 			[self addSubview:titleLabel]; 
-		}
+        } else { // Small device -> implement later         //CHANGE BUT NOT REALLY
+            
+        }
 	}
 
 	return self;
@@ -351,6 +364,13 @@
 - (void)markButtonTapped:(UIButton *)button
 {
 	[delegate tappedInToolbar:self markButton:button];
+}
+
+// ADDED FUNCTION CHANGE
+
+- (void)nameLabelTapped:(UITapGestureRecognizer *)recognizer
+{
+    [delegate tappedInToolbar:self nameLabel:(UILabel *)recognizer.view];
 }
 
 @end

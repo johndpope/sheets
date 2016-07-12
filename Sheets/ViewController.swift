@@ -84,9 +84,26 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
         
     }
     
+    // ReaderViewControllerDelegate methods
     
     func dismissReaderViewController(viewController: ReaderViewController!) {
         viewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func showTitleChangeView(viewController: ReaderViewController!, nameLabel: UILabel) {
+        print("showTitleChange")
+        
+        let popoverY = nameLabel.frame.origin.y + 40
+        let popoverRect = CGRectMake(CGRectGetMidX(viewController.view.bounds), popoverY,0,0)
+        
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let renameView = storyBoard.instantiateViewControllerWithIdentifier("RenameVC") as! RenameViewController
+        renameView.modalPresentationStyle = .Popover
+        renameView.modalTransitionStyle = .CoverVertical
+        renameView.popoverPresentationController?.sourceView = viewController.view
+        renameView.popoverPresentationController?.sourceRect = popoverRect
+        
+        viewController.presentViewController(renameView, animated: true, completion: nil)
     }
     /*
     func dismissReaderViewController(readerVC: SheetReaderViewController){

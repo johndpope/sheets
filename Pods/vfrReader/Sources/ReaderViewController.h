@@ -34,6 +34,7 @@
 @optional // Delegate protocols
 
 - (void)dismissReaderViewController:(ReaderViewController *)viewController;
+- (void)showTitleChangeView:(ReaderViewController *)viewController nameLabel:(UILabel *)label;
 
 @end
 

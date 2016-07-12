@@ -845,6 +845,16 @@
 #endif // end of READER_BOOKMARKS Option
 }
 
+// Label touch method added    CHANGE
+- (void)tappedInToolbar:(ReaderMainToolbar *)toolbar nameLabel:(UILabel *)label
+{
+    if (printInteraction != nil) [printInteraction dismissAnimated:YES];
+    
+    //display Filename change interface
+    [delegate showTitleChangeView:self nameLabel:label];
+    
+}
+
 #pragma mark - MFMailComposeViewControllerDelegate methods
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error

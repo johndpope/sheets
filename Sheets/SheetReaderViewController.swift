@@ -766,6 +766,10 @@ class SheetReaderViewController: UIViewController, UIScrollViewDelegate, UIGestu
         }
     }
     
+    func tappedInToolbar(toolbar: ReaderMainToolbar!, nameLabel label: UILabel!) {
+        
+    }
+    
     
     // MFMailComposeViewControllerDelegate methods
     
