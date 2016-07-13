@@ -68,10 +68,10 @@
             </objects>
             <point key="canvasLocation" x="127" y="315"/>
         </scene>
-        <!--RenameVC-->
+        <!--Rename View Controller-->
         <scene sceneID="00b-vx-cCH">
             <objects>
-                <viewController storyboardIdentifier="RenameVC" title="RenameVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aHt-bB-rGR" customClass="RenameViewController" customModule="Sheets" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RenameVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aHt-bB-rGR" customClass="RenameViewController" customModule="Sheets" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TdO-FW-jLF"/>
                         <viewControllerLayoutGuide type="bottom" id="ed2-cp-Ao8"/>
@@ -80,21 +80,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aHl-3o-FHL">
-                                <rect key="frame" x="252" y="107" width="97" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="L2N-S5-7dK"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aHl-3o-FHL">
+                                <rect key="frame" x="104" y="105" width="393" height="30"/>
+                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="19"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWv-e1-dTh">
+                                <rect key="frame" x="250" y="66" width="101" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Svw-NM-wWu"/>
+                                    <constraint firstAttribute="width" constant="101" id="xtU-GE-gGw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="19"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.96930219240837701" green="0.96930219240837701" blue="0.96930219240837701" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="aHl-3o-FHL" firstAttribute="top" secondItem="TdO-FW-jLF" secondAttribute="bottom" constant="87" id="9fa-qp-0VW"/>
-                            <constraint firstItem="aHl-3o-FHL" firstAttribute="leading" secondItem="QNo-Cu-fuD" secondAttribute="leading" constant="252" id="V3M-FP-6Rp"/>
+                            <constraint firstItem="aHl-3o-FHL" firstAttribute="leading" secondItem="QNo-Cu-fuD" secondAttribute="leadingMargin" constant="84" id="BoN-yg-ken"/>
+                            <constraint firstItem="iWv-e1-dTh" firstAttribute="centerX" secondItem="aHl-3o-FHL" secondAttribute="centerX" id="DDa-PZ-vua"/>
+                            <constraint firstItem="aHl-3o-FHL" firstAttribute="top" secondItem="iWv-e1-dTh" secondAttribute="bottom" constant="18" id="YI1-np-GQD"/>
+                            <constraint firstItem="iWv-e1-dTh" firstAttribute="centerX" secondItem="QNo-Cu-fuD" secondAttribute="centerX" id="jkG-lj-uJX"/>
+                            <constraint firstItem="iWv-e1-dTh" firstAttribute="top" secondItem="TdO-FW-jLF" secondAttribute="bottom" constant="46" id="udr-Qf-HOD"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="titleInput" destination="aHl-3o-FHL" id="U7y-aV-MaT"/>
+                        <outlet property="titleLabel" destination="iWv-e1-dTh" id="Y03-kk-8GB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxl-ur-mG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

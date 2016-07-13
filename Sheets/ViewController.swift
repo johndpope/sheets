@@ -34,6 +34,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
     @IBOutlet var tableView: UITableView!
     
     var files: [File]!
+    var currentFile: File!
     
     // When the view loads, create necessary subviews
     // and initialize the Drive API service
@@ -77,7 +78,6 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
         let filePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename).path
         let readerDocument = ReaderDocument(filePath: filePath!, password: "")
         let readerViewController = ReaderViewController(readerDocument: readerDocument)
-        //let readerViewController = SheetReaderViewController(object: readerDocument)
         
         presentViewController(readerViewController, animated: true, completion: nil)
         readerViewController.delegate = self
@@ -90,20 +90,29 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
         viewController.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func showTitleChangeView(viewController: ReaderViewController!, nameLabel: UILabel) {
+    func showTitleChangeView(viewController: ReaderViewController!, nameLabel: UILabel, document: ReaderDocument) {
         print("showTitleChange")
         
         let popoverY = nameLabel.frame.origin.y + 40
         let popoverRect = CGRectMake(CGRectGetMidX(viewController.view.bounds), popoverY,0,0)
         
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let renameView = storyBoard.instantiateViewControllerWithIdentifier("RenameVC") as! RenameViewController
+        let renameView = self.storyboard?.instantiateViewControllerWithIdentifier("RenameVC") as! RenameViewController
+        let nav = UINavigationController(rootViewController: renameView)
+        
+        renameView.file = currentFile
+        
+        /*
         renameView.modalPresentationStyle = .Popover
         renameView.modalTransitionStyle = .CoverVertical
         renameView.popoverPresentationController?.sourceView = viewController.view
         renameView.popoverPresentationController?.sourceRect = popoverRect
+        */
+        nav.modalPresentationStyle = .Popover
+        let popover = nav.popoverPresentationController
+        popover?.sourceView = viewController.view
+        popover?.sourceRect = popoverRect
         
-        viewController.presentViewController(renameView, animated: true, completion: nil)
+        viewController.presentViewController(nav, animated: true, completion: nil)
     }
     /*
     func dismissReaderViewController(readerVC: SheetReaderViewController){
@@ -390,7 +399,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
     func downloadAndDisplayFile(url: NSURL){
         let fileData = NSData(contentsOfURL: url)
         let filename = url.lastPathComponent!
-        saveFileToDocumentsDirectory(fileData!, filename: filename)
+        currentFile = saveFileToDocumentsDirectory(fileData!, filename: filename)
         showPDFInReader(filename)
     }
     
@@ -421,13 +430,14 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
         output.text = "Finished Download"
     }
     
-    func saveFileToDocumentsDirectory(data: NSData,filename: String){
+    func saveFileToDocumentsDirectory(data: NSData,filename: String) -> File{
         let writePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename)
         
         let file = createFileObject(writePath, title: filename)
         data.writeToFile(file.url.path!, atomically: true)
         tableView.reloadData()
         
+        return file
     }
     
     func createFileObject(url: NSURL, title: String) -> File {
@@ -557,7 +567,9 @@ class ViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // cell selected code here
-        showPDFInReader(files[indexPath.row].title)
+        let file = files[indexPath.row]
+        currentFile = file
+        showPDFInReader(file.title)
     }
     
     
