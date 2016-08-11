@@ -14,6 +14,7 @@ class File {
     //metadata
     var title = " "
     var composer = " "
+    var arranger = " "
     var opus: Int?
     var number: Int?
     var musicalForm = " "

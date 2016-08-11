@@ -139,10 +139,10 @@
 		BB00B94C1D213948008B1135 /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
-				BBEFA78E1D2A5DFE007DA3A7 /* NameConstants.swift */,
-				BBEFA78A1D2A5863007DA3A7 /* File.swift */,
 				BB00B94D1D213948008B1135 /* AppDelegate.swift */,
 				BB00B94F1D213948008B1135 /* ViewController.swift */,
+				BBEFA78E1D2A5DFE007DA3A7 /* NameConstants.swift */,
+				BBEFA78A1D2A5863007DA3A7 /* File.swift */,
 				BB41187F1D2D1A7100168B76 /* RenameViewController.swift */,
 				BB00B9511D213948008B1135 /* Main.storyboard */,
 				BB00B9541D213948008B1135 /* Assets.xcassets */,
