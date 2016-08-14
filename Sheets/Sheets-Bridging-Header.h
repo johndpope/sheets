@@ -9,5 +9,6 @@
 #ifndef Sheets_Bridging_Header_h
 #define Sheets_Bridging_Header_h
 
+#import "SWRevealViewController.h"
 
 #endif /* Sheets_Bridging_Header_h */

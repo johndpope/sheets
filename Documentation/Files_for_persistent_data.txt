@@ -1,0 +1,38 @@
+Metadata.txt
+
+- Includes all File metadata
+- one line per file
+
+
+
+FilenameChanges.txt
+
+- All changes to the filenames need to 
+  be stored for syncing purposes
+- Changes will be stored in the following format:
+
+old_filename >>> new_filename
+
+
+
+FileDeletions.txt
+
+- Entries of files that need to be deleted
+- Format:
+
+metadata_entry_for_file 
+
+
+
+NamingPresets.txt
+
+- Includes all presets as strings
+- fixed order!
+
+
+- - - - - - - - - - - - - 
+ConstantsFiles:
+
+Tempo.txt
+Composers.txt
+MusicalForms.txt

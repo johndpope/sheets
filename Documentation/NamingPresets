@@ -1,0 +1,31 @@
+general structure:+
+
+attribute + separator + attribute + separator + ...
+
+
+attributes:
+
+- title		
+- composer
+- arranger
+- opus
+- number
+- musicalForm
+- tempo
+- instrument
+
+
+separators:
+
+,	.	/	//	\	-	"" (empty)	:	;	(	)	&
+
+
+id = index in Presets.txt file
+
+presetString = general structure separated by %
+
+attr % sep % attr % sep 
+
+
+filename is generated in File class
+

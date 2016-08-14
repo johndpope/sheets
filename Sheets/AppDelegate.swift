@@ -12,7 +12,7 @@ import vfrReader
 import GoogleAPIClient
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
 
@@ -24,16 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let finalURL = NSURL(fileURLWithPath: documentsDirectory)
         self.addSkipBackupAttributeToItemAtURL(finalURL.path!)
         
-        
         return true
     }
     
     //Handler for opening PDFs from outside the application
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         //url contains a URL to the file this app shall open
-        let viewController = self.window?.rootViewController as? ViewController
+        let rootViewController = self.window?.rootViewController as? SWRevealViewController
         
-        viewController!.downloadAndDisplayFile(url)
+        let navigationViewController = rootViewController?.frontViewController as!UINavigationController
+        let mainViewController = navigationViewController.viewControllers[0] as! MainViewController
+        
+        mainViewController.downloadAndDisplayFile(url)
         return true
         
     }
