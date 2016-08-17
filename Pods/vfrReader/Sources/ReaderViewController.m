@@ -851,7 +851,7 @@
     if (printInteraction != nil) [printInteraction dismissAnimated:YES];
     
     //display Filename change interface
-    [delegate showTitleChangeView:self nameLabel:label document:document];
+    [delegate showRenameView:self nameLabel:label document:document];
     
 }
 

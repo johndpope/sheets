@@ -18,6 +18,16 @@ class SidebarViewController: UITableViewController {
         menuItems = ["title","sheets","composers","filter","download","settings"]
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "filterSegue" {
+            let navController = segue.destinationViewController as! UINavigationController
+            let nextScene = navController.visibleViewController as! MainViewController
+            
+            // Pass the attribute to the new view controller.
+            nextScene.shouldShowFilterOptions = true
+        }
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }

@@ -19,9 +19,11 @@
 		BB5B07191D5F8BF20036E194 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */; };
 		BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEFA78A1D2A5863007DA3A7 /* File.swift */; };
 		BBEFA78F1D2A5DFE007DA3A7 /* NameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEFA78E1D2A5DFE007DA3A7 /* NameConstants.swift */; };
+		BBF397261D63B26B0023C298 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF397251D63B26B0023C298 /* DownloadViewController.swift */; };
 		BBF467F61D5D194000913CAD /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF467F51D5D194000913CAD /* SWRevealViewController.m */; };
 		BBF467F91D5E683A00913CAD /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF467F81D5E683A00913CAD /* SidebarViewController.swift */; };
 		BBF4D0521D22740600C85784 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBF4D0511D22740600C85784 /* GTMOAuth2ViewTouch.xib */; };
+		BBF5AFED1D60AB4A00A0645F /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5AFEC1D60AB4900A0645F /* FilterViewController.swift */; };
 		F335D8FB3930858798FEE27F /* Pods_Sheets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED0341CC43A387ABAC40C75 /* Pods_Sheets.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,10 +68,12 @@
 		BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BBEFA78A1D2A5863007DA3A7 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BBEFA78E1D2A5DFE007DA3A7 /* NameConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameConstants.swift; sourceTree = "<group>"; };
+		BBF397251D63B26B0023C298 /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		BBF467F41D5D194000913CAD /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BBF467F51D5D194000913CAD /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		BBF467F81D5E683A00913CAD /* SidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		BBF4D0511D22740600C85784 /* GTMOAuth2ViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTMOAuth2ViewTouch.xib; sourceTree = "<group>"; };
+		BBF5AFEC1D60AB4900A0645F /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		DB8C99F99D13F66371AE4635 /* Pods-Sheets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sheets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sheets/Pods-Sheets.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,7 +153,9 @@
 				BBEFA78E1D2A5DFE007DA3A7 /* NameConstants.swift */,
 				BBEFA78A1D2A5863007DA3A7 /* File.swift */,
 				BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */,
+				BBF397251D63B26B0023C298 /* DownloadViewController.swift */,
 				BB41187F1D2D1A7100168B76 /* RenameViewController.swift */,
+				BBF5AFEC1D60AB4900A0645F /* FilterViewController.swift */,
 				BBF467F81D5E683A00913CAD /* SidebarViewController.swift */,
 				BB00B9511D213948008B1135 /* Main.storyboard */,
 				BB00B9541D213948008B1135 /* Assets.xcassets */,
@@ -459,8 +465,10 @@
 				BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */,
 				BB4118821D2D9D4300168B76 /* SheetReaderViewController.swift in Sources */,
 				BBEFA78F1D2A5DFE007DA3A7 /* NameConstants.swift in Sources */,
+				BBF5AFED1D60AB4A00A0645F /* FilterViewController.swift in Sources */,
 				BB00B9501D213948008B1135 /* MainViewController.swift in Sources */,
 				BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */,
+				BBF397261D63B26B0023C298 /* DownloadViewController.swift in Sources */,
 				BB00B94E1D213948008B1135 /* AppDelegate.swift in Sources */,
 				BBF467F91D5E683A00913CAD /* SidebarViewController.swift in Sources */,
 				BB5B07191D5F8BF20036E194 /* SettingsViewController.swift in Sources */,
@@ -613,6 +621,7 @@
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Sheets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Keiwan.SheetsApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -633,6 +642,7 @@
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Sheets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Keiwan.SheetsApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

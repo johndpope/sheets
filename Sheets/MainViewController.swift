@@ -12,7 +12,8 @@ import UIKit
 import Foundation
 import vfrReader
 
-class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, ReaderViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, ReaderViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate ,
+    UIGestureRecognizerDelegate {
     
     private let metadataFileName = "Metadata.txt"
     
@@ -33,7 +34,17 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     @IBOutlet var webView: UIWebView?
     @IBOutlet var tableView: UITableView!
     
+    //UINavigationItems
     @IBOutlet var sidebarButton: UIBarButtonItem!
+    @IBOutlet var syncButton: UIBarButtonItem!
+    @IBOutlet var searchButton: UIBarButtonItem!
+    
+    var searchBar: UISearchBar?
+    var navTitle: String!
+    var navTitleView: UIView!
+    
+    //segue variable
+    var shouldShowFilterOptions = false
     
     var files: [File]!
     var currentFile: File!
@@ -50,13 +61,29 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
         
+        // Setup Navigation Bar Title Label
+        let titleView = UILabel()
+        titleView.text = "Hello World"
+        titleView.font = UIFont(name: "Futura-Medium", size: 20)
+        let width = titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+        titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 500))
+        titleView.userInteractionEnabled = true
+        self.navigationItem.titleView = titleView
+        navTitleView = titleView
         
+        // Setup Output view
         output.frame = view.bounds
         output.editable = false
         output.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 400, right: 0)
         output.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         
         view.addSubview(output);
+        
+        
+        //add filter Gesture recognizer
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(showFilterView))
+        recognizer.delegate = self
+        titleView.addGestureRecognizer(recognizer)
         
         if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
             kKeychainItemName,
@@ -73,10 +100,13 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         
         //self.navigationController!.navigationBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 80.0)
         
+        if shouldShowFilterOptions {
+            showFilterView()
+        }
+        
         if let authorizer = service.authorizer,
             canAuth = authorizer.canAuthorize where canAuth {
                 generalSetup()
-                //fetchFiles()
         } else {
             presentViewController(
                 createAuthController(),
@@ -86,13 +116,63 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         }
     }
     
+    @IBAction func searchButtonPressed(sender: AnyObject){
+        showSearchBar()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        hideSearchBar()
+    }
+    
+    func showSearchBar(){
+        
+        navTitle = navigationItem.title
+        navTitleView = navigationItem.titleView
+        navigationItem.titleView = searchBar
+        navigationItem.setLeftBarButtonItem(nil, animated: true)
+        
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(searchBarCancelButtonClicked(_:)))
+        navigationItem.setRightBarButtonItems([cancelButton], animated: true)
+        
+        UIView.animateWithDuration(0.2, animations: {
+            self.searchBar = UISearchBar()
+            self.searchBar!.delegate = self
+            self.searchBar!.alpha = 1
+            self.navigationItem.titleView = self.searchBar
+            
+            }, completion: { finished in
+                //self.searchBar.becomeFirstResponder()
+                
+        })
+    }
+    
+    func hideSearchBar(){
+        
+        self.searchBar!.alpha = 0
+        UIView.animateWithDuration(0.2, animations: {
+                //self.searchBar.alpha = 0
+            
+            }, completion: { finished in
+                self.navigationItem.titleView = self.navTitleView
+                
+        })
+        navigationItem.setLeftBarButtonItem(sidebarButton, animated: true)
+        navigationItem.setRightBarButtonItems([searchButton,syncButton], animated: true)
+    }
+    
     func showPDFInReader(filename: String){
         let filePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename).path
         let readerDocument = ReaderDocument(filePath: filePath!, password: "")
         let readerViewController = ReaderViewController(readerDocument: readerDocument)
         
-        presentViewController(readerViewController, animated: true, completion: nil)
-        readerViewController.delegate = self
+        if let readerDoc = readerDocument {
+            presentViewController(readerViewController, animated: true, completion: nil)
+            readerViewController.delegate = self
+        }else {
+            print("Reader document could not be created!")
+        }
+        
+        
         
     }
     
@@ -102,8 +182,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         viewController.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func showTitleChangeView(viewController: ReaderViewController!, nameLabel: UILabel, document: ReaderDocument) {
-        print("showTitleChange")
+    func showRenameView(viewController: ReaderViewController!, nameLabel: UILabel, document: ReaderDocument) {
+        print("show Rename View")
         
         let popoverY = nameLabel.frame.origin.y + 40
         let popoverRect = CGRectMake(CGRectGetMidX(viewController.view.bounds), popoverY,0,0)
@@ -125,6 +205,23 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         popover?.sourceRect = popoverRect
         
         viewController.presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    func showFilterView(){
+        print("show Filter")
+        
+        let popoverY = self.navTitleView.frame.origin.y + 300
+        let popoverRect = CGRectMake(CGRectGetMidX(self.view.bounds), popoverY, 0, 0)
+        
+        let filterView = self.storyboard?.instantiateViewControllerWithIdentifier("FilterVC") as! FilterViewController
+        
+        let nav = UINavigationController(rootViewController: filterView)
+        nav.modalPresentationStyle = .Popover
+        let popover = nav.popoverPresentationController
+        popover?.sourceView = self.view
+        popover?.sourceRect = popoverRect
+        
+        self.presentViewController(nav, animated: true, completion: nil)
     }
     /*
     func dismissReaderViewController(readerVC: SheetReaderViewController){
@@ -153,6 +250,11 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
             printMetaDataFile()
         }
         tableView.reloadData()
+    }
+    
+    /** (dummy sync) loads all files in the google drive folder */
+    @IBAction func sync(){
+        fetchFilesInFolder()
     }
     
     //sets up all of the files
@@ -453,13 +555,15 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     }
     
     func createFileObject(url: NSURL, title: String) -> File {
-        let file = File(url: url, title: title, dict: nil)
+        // let file = File(url: url, title: title, dict: nil)
+        let file = File(url: url)
         
         //append file data to metadata file and file list
         //first check to see if it already exists or not
-        let dataString = file.getFileNameAsString()
+        let dataString = file.getFileName()
+        
         for document in files {
-            if document.getFileNameAsString() == dataString {
+            if document.getFileName() == dataString {
                 print("File already exists in metadata")
                 return document
             }
@@ -573,7 +677,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
-        cell.textLabel?.text = files[indexPath.row].title
+        cell.textLabel?.text = files[indexPath.row].getFileName()
         return cell
     }
     
@@ -581,7 +685,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         // cell selected code here
         let file = files[indexPath.row]
         currentFile = file
-        showPDFInReader(file.title)
+        showPDFInReader(file.getFileName())
     }
     
     
