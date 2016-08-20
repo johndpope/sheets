@@ -168,6 +168,24 @@
             </objects>
             <point key="canvasLocation" x="947" y="-1051"/>
         </scene>
+        <!--Setup View Controller-->
+        <scene sceneID="Z2G-cc-coL">
+            <objects>
+                <viewController id="kWk-oj-2nQ" customClass="SetupViewController" customModule="Sheets" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DZq-nr-iX4"/>
+                        <viewControllerLayoutGuide type="bottom" id="DM4-HY-j38"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aF8-x7-OfC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sRB-LQ-gle" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1763" y="-2595"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="rZj-j1-mVI">
             <objects>
@@ -659,7 +677,7 @@
         <image name="sync_icon" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FA5-FQ-2Q6"/>
+        <segue reference="Xsr-pK-tuN"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.05183870124525139" green="0.16093756925107988" blue="0.17590144230769234" alpha="0.8824800532" colorSpace="calibratedRGB"/>
 </document>
