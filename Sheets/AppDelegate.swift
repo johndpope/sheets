@@ -30,12 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     //Handler for opening PDFs from outside the application
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         //url contains a URL to the file this app shall open
-        let rootViewController = self.window?.rootViewController as? SWRevealViewController
         
-        let navigationViewController = rootViewController?.frontViewController as!UINavigationController
-        let mainViewController = navigationViewController.viewControllers[0] as! MainViewController
+        DataManager.sharedInstance.downloadFileFromURL(url)
         
-        mainViewController.downloadAndDisplayFile(url)
+        VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile.getFileName())
         return true
         
     }

@@ -40,8 +40,10 @@ class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnect
     }
     
     @IBAction func download(){
-        let mainViewController = MainViewController()
-        mainViewController.downloadAndDisplayFile((webView.request?.URL)!)
+        
+        DataManager.sharedInstance.downloadFileFromURL((self.webView.request?.URL)!)
+        
+        VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile.getFileName())
     }
     
     /**

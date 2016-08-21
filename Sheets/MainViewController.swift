@@ -30,9 +30,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     private var mainFolderID: String?
     let userDefaults = NSUserDefaults()
     
-    @IBOutlet var output: UITextView!
-    @IBOutlet var webView: UIWebView?
-    @IBOutlet var tableView: UITableView!
+    var tableView: UITableView!
     
     //UINavigationItems
     @IBOutlet var sidebarButton: UIBarButtonItem!
@@ -49,14 +47,12 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     var files: [File]!
     var currentFile: File!
     
-    var dataManager: DataManager!
+    var dataManager = DataManager.sharedInstance
     
     // When the view loads, create necessary subviews
     // and initialize the Drive API service
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        dataManager = DataManager.sharedInstance
         
         //add Reveal Menu functionality
         if let revealViewController = self.revealViewController() {
@@ -75,26 +71,11 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         self.navigationItem.titleView = titleView
         navTitleView = titleView
         
-        // Setup Output view
-        output.frame = view.bounds
-        output.editable = false
-        output.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 400, right: 0)
-        output.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-        
-        view.addSubview(output);
-        
         
         //add filter Gesture recognizer
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(showFilterView))
         recognizer.delegate = self
         titleView.addGestureRecognizer(recognizer)
-        
-        /*if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(
-            kKeychainItemName,
-            clientID: kClientID,
-            clientSecret: nil) {
-                service.authorizer = auth
-        }*/
         
     }
     
@@ -120,8 +101,15 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     func generalSetup(){
         
         //files = [File]()
+        let offset : CGFloat = 50
+        let navHeight = (self.navigationController?.navigationBar.frame.height)! + offset
+        let height = CGRectGetHeight(self.view.frame) - navHeight
+        tableView = UITableView(frame: CGRectMake(0, navHeight, UIScreen.mainScreen().bounds.width, height ),
+                                style: .Plain)
         tableView.delegate = self
         tableView.dataSource = self
+        
+        self.view.addSubview(tableView)
         
         //check if first time launch
         if (userDefaults.valueForKey("firstTime") == nil) {
@@ -130,7 +118,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
             setupGoogleDriveSync()
         }else{
             
-            listAllLocalFiles()
+            //listAllLocalFiles()
             //printMetaDataFile()
         }
         tableView.reloadData()
@@ -185,6 +173,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     }
     
     func showPDFInReader(filename: String){
+        VFRController.sharedInstance.showPDFInReader(filename)
+        /*
         let filePath = dataManager.createDocumentURLFromFilename(filename).path
         let readerDocument = ReaderDocument(filePath: filePath!, password: "")
         let readerViewController = ReaderViewController(readerDocument: readerDocument)
@@ -195,6 +185,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         }else {
             print("Reader document could not be created!")
         }
+ */
     }
     
     // ReaderViewControllerDelegate methods
@@ -500,11 +491,13 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     }*/
     
     func downloadAndDisplayFile(url: NSURL){
-        let fileData = NSData(contentsOfURL: url)
+        let fileData = NSData(contentsOfURL: url)!
         let filename = url.lastPathComponent!
-        dataManager.currentFile = dataManager.saveFileToDocumentsDirectory(fileData!, filename: filename)
-        tableView.reloadData()
+    
+        dataManager.currentFile = dataManager.saveFileToDocumentsDirectory(fileData, filename: filename)
+        //tableView.reloadData()
         showPDFInReader(filename)
+        
     }
     
     /*
@@ -625,19 +618,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     
     func listAllLocalFiles(){
         let fileNames = dataManager.listAllLocalFiles()
-        output.text = fileNames
-    }
-    
-    func displayPDFInWebView(filePath: String){
-        //let webView = UIWebView(frame: CGRectMake(10,10,200,200))
-        let url = NSURL(fileURLWithPath: filePath)
-        let requestObj = NSURLRequest(URL: url)
-        
-        self.webView!.userInteractionEnabled = true
-        self.webView!.delegate = self
-        webView!.loadRequest(requestObj)
-        
-        self.view.addSubview(webView!)
+        print("Filenames: " + fileNames)
     }
     
     //TableView Delegate and DataSource functions

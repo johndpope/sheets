@@ -7,7 +7,7 @@ Implementation:
  L ( ) Auto naming
  L ( ) Check double filenames
 
-( ) Check Internet connection
+(X) Check Internet connection
 
 ( ) Delete Files
 
@@ -19,10 +19,8 @@ Implementation:
 
 ( ) Settings
  L ( ) Sync Priority
- L ( ) Change Main Folder Name
+ L (X) Setup Google Drive Sync
  L ( ) custom Auto naming convention
-
-( ) Folder structure
 
 ( ) File display shelf
 

@@ -211,6 +211,14 @@ class DataManager : FolderSearchDelegate {
         
     }
     
+    /** Downloads the file data from the url to the Documents directory and creates a new file object for it and stores it in the currentFile. */
+    func downloadFileFromURL(url: NSURL) {
+        let fileData = NSData(contentsOfURL: url)!
+        let filename = url.lastPathComponent!
+        
+        self.currentFile = self.saveFileToDocumentsDirectory(fileData, filename: filename)
+    }
+    
     /** 
         Saves the data of the downloaded file in the Documents directory.
      
