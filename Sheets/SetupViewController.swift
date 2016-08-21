@@ -39,7 +39,7 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         questionView.backgroundColor = UIColor.whiteColor()
         
         let questionLabel = UILabel()
-        questionLabel.text = "Setup automatic Google Drive backup and syncing?"
+        questionLabel.text = "Setup automatic Google Drive Backup & Syncing?"
         questionLabel.textColor = defaultColor
         questionLabel.font = UIFont(name: "Futura", size: 60)
         questionLabel.textAlignment = .Center
@@ -292,7 +292,12 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
     }
     
     func endSetup(){
-        self.presentingViewController!.dismissViewControllerAnimated(false, completion: nil)
+        /*
+        if presentedViewController != nil {
+            dismissViewControllerAnimated(true, completion: nil)
+        }*/
+        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+        
     }
     
     func createSkipButton() -> UIButton {
@@ -322,7 +327,10 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
     
     
     @IBAction func setupConfirmButtonClicked(sender: AnyObject) {
-        showGoogleAuthentication()
+        
+        checkConnection({ () in
+            self.showGoogleAuthentication()
+        })
     }
     
     @IBAction func foldernameEntered(sender: AnyObject) {
@@ -337,7 +345,23 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
     
     @IBAction func foldernameConfirmed(sender: AnyObject) {
         
-        dataManager.searchForFolder(self, foldername: chosenFoldername)
+        checkConnection({() in
+            self.dataManager.searchForFolder(self, foldername: self.chosenFoldername)
+        })
+        
+        
+    }
+    
+    /** 
+        If a wifi connection exists the function passed as a parameter is executed. 
+        If not, an alert is presented to the user saying there is not wifi connection.
+    */
+    func checkConnection(ifConnected: () -> Void) {
+        if Reachability.isConnectedToNetwork() {
+            ifConnected()
+        } else {
+            showAlert("No wifi connection.", message: "Please connect to wifi to continue with the setup. Or set up Google Drive sync later in the settings.")
+        }
     }
     
     func folderSearchFinished(found: Bool) {
@@ -383,7 +407,7 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
             finishedSelector: #selector(self.finishAuthentication(_:finishedWithAuth:error:))
         )
         
-        authController.view.addSubview(self.createSkipButton())
+        authController.view.addSubview(createSkipButton())
         
         return authController
     }
@@ -399,13 +423,13 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
             dataManager.service.authorizer = nil
             print("Authentication Error: \(error.localizedDescription)")
             showAlert("Authentication Error", message: "Could not authenticate the Google account. Please try again later.")
-            self.skipButtonClicked(self)
+            //self.skipButtonClicked(self)
+        } else {
+        
+            dataManager.service.authorizer = authResult
+            dismissViewControllerAnimated(true, completion: nil)
+            self.showFoldernameInput()
         }
-        
-        dataManager.service.authorizer = authResult
-        dismissViewControllerAnimated(true, completion: nil)
-        self.showFoldernameInput()
-        
     }
     
     /** Helper for showing an alert */

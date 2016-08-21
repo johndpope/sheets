@@ -23,4 +23,9 @@ class SettingsViewController : UIViewController {
         }
     }
     
+    /** Starts the setup process. */
+    @IBAction func setupGDSync(){
+        presentViewController(SetupViewController(), animated: true, completion: nil)
+    }
+    
 }

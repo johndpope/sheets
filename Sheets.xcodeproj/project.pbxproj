@@ -14,6 +14,7 @@
 		BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9561D213948008B1135 /* LaunchScreen.storyboard */; };
 		BB00B9631D213948008B1135 /* SheetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B9621D213948008B1135 /* SheetsTests.swift */; };
 		BB00B96E1D213948008B1135 /* SheetsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00B96D1D213948008B1135 /* SheetsUITests.swift */; };
+		BB3F49DF1D69BCAB005C9F48 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */; };
 		BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41187F1D2D1A7100168B76 /* RenameViewController.swift */; };
 		BB4118821D2D9D4300168B76 /* SheetReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */; };
 		BB5B07191D5F8BF20036E194 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */; };
@@ -65,6 +66,7 @@
 		BB00B96D1D213948008B1135 /* SheetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsUITests.swift; sourceTree = "<group>"; };
 		BB00B96F1D213948008B1135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB08F07B1D33909F00D1ABCE /* Sheets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sheets-Bridging-Header.h"; sourceTree = "<group>"; };
+		BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		BB41187F1D2D1A7100168B76 /* RenameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenameViewController.swift; sourceTree = "<group>"; };
 		BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetReaderViewController.swift; sourceTree = "<group>"; };
 		BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				BB00B9591D213948008B1135 /* Info.plist */,
 				BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */,
 				BB08F07B1D33909F00D1ABCE /* Sheets-Bridging-Header.h */,
+				BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB3F49DF1D69BCAB005C9F48 /* Reachability.swift in Sources */,
 				BBF467F61D5D194000913CAD /* SWRevealViewController.m in Sources */,
 				BBF5F30F1D64DE9B003C3C26 /* DataManager.swift in Sources */,
 				BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */,
