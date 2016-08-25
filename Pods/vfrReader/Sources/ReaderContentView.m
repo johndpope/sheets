@@ -142,6 +142,8 @@ static inline CGFloat zoomScaleThatFits(CGSize target, CGSize source)
 		userInterfaceIdiom = [UIDevice currentDevice].userInterfaceIdiom; // User interface idiom
 
 		theContentPage = [[ReaderContentPage alloc] initWithURL:fileURL page:page password:phrase];
+        
+        // alloc next Page  CHANGE
 
 		if (theContentPage != nil) // Must have a valid and initialized content page
 		{

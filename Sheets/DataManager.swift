@@ -32,12 +32,10 @@ class DataManager : FolderSearchDelegate {
     static let sharedInstance = DataManager()
     
     private let metadataFilename = "Metadata.txt"
-    private let filenameChangesFilename = "FilenameChanges.txt"
-    private let fileDeletionsFilename = "Deletions.txt"
     
-    private let tempoFilename = "Tempo.txt"
-    private let composersFilename = "Composers.txt"
-    private let musicalFormsFilename = "MusicalForms.txt"
+    private let tempoFilename = "Tempo"
+    private let composersFilename = "Composers"
+    private let musicalFormsFilename = "MusicalForms"
     
     // Google Drive variables
     let kKeychainItemName = "Drive API"
@@ -48,6 +46,8 @@ class DataManager : FolderSearchDelegate {
     let scopes = [kGTLAuthScopeDrive]
     
     let service = GTLServiceDrive()
+    
+    var syncEnabled: Bool!
     
     var mainFolderName: String!
     var mainFolderID: String?
@@ -60,14 +60,16 @@ class DataManager : FolderSearchDelegate {
     
     var semaphor: dispatch_semaphore_t
     
-    
+    /** Contains the File objects of all of the files ( incl. locally deleted) */
+    var allFiles: [File]!
     /** Contains the File objects of all of the local files */
     var files: [File]!
+    /** The currently opened file */
     var currentFile: File!
     
-    var composerNames: [String]!
-    var tempoNames: [String]!
-    var musicalFormNames: [String]!
+    var composerNames: [String]?
+    var tempoNames: [String]?
+    var musicalFormNames: [String]?
     
     init(){
         semaphor = dispatch_semaphore_create(0)
@@ -84,12 +86,18 @@ class DataManager : FolderSearchDelegate {
             service.authorizer = auth
         }
         
-        mainFolderID = userDefaults.valueForKey("mainFolderID") as? String
-        mainFolderName = userDefaults.valueForKey("mainFolderName") as? String
+        setupUserDefaults()
         
         files = [File]()
         
         loadData()
+    }
+    
+    func setupUserDefaults() {
+        syncEnabled = userDefaults.valueForKey("syncEnabled") as? Bool
+        
+        mainFolderID = userDefaults.valueForKey("mainFolderID") as? String
+        mainFolderName = userDefaults.valueForKey("mainFolderName") as? String
     }
     
     /**
@@ -98,13 +106,14 @@ class DataManager : FolderSearchDelegate {
     */
     func loadData(){
         loadLocalFiles()
+        loadConstantFiles()
     }
     
     /**
         Loads / creates all of the File objects from the entries of the metadata.txt file and 
         stores them in the files array.
     */
-    func loadLocalFiles(){
+    func loadLocalFiles() {
         //create File objects from Metadata file
         let metadataFilePath = createDocumentURLFromFilename(metadataFilename)
         
@@ -115,8 +124,13 @@ class DataManager : FolderSearchDelegate {
                 let lines = fileContent.componentsSeparatedByString("\n")
                 for line in lines {
                     if line != "" {
+                        
                         let file = File(data: line)
-                        files.append(file)
+                        allFiles.append(file)
+                        
+                        if (file.status != File.STATUS.DELETED) {
+                            files.append(file)
+                        }
                     }
                 }
                 
@@ -128,22 +142,90 @@ class DataManager : FolderSearchDelegate {
     }
     
     
+    /** 
+        Loads the local constant files into their respective String arrays.
+    */
+    func loadConstantFiles() {
+        composerNames = arrayFromContentsOfFileWithName(composersFilename)
+        tempoNames = arrayFromContentsOfFileWithName(tempoFilename)
+        musicalFormNames = arrayFromContentsOfFileWithName(musicalFormsFilename)
+    }
+    
+    
+    /** 
+        Loads the lines of a txt file located in the main bundle into a String array.
+     
+        - Parameter fileName: Filename of the file to be loaded
+    */
+    func arrayFromContentsOfFileWithName(fileName: String) -> [String]? {
+        guard let path = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt") else {
+            print("\(fileName).txt could not be found.")
+            return nil
+        }
+        
+        do {
+            let content = try String(contentsOfFile:path, encoding: NSUTF8StringEncoding)
+            return content.componentsSeparatedByString("\n")
+        } catch _ as NSError {
+            print("Could not read from \(fileName).txt")
+            return nil
+        }
+    }
+    
+    
     
     /*  Google Drive Sync  */
     
     
     /**
-        Syncs alls of the sheet (pdf) files and metadata files with the specified folder in Google Drive
+        Syncs alls of the sheet (pdf) files and metadata files with the specified folder in Google Drive.
+        Has to be called with dispatch_async!.
     */
     func sync(){
+        
+        let result = [File]()
+        let filenameChanges = [File]()
+        let toDownload = [File]()
+        let toUpload = [File]()
+        
+        
+    }
+    
+    /** 
+        Syncs the App Data files ( composers, musicalForms, tempo )
+    */
+    func syncMetadataFiles() {
     
     }
     
     /** Disables the Google Drive sync functionality. */
     func disableSync(){
-    
+        syncEnabled = false
+        userDefaults.setBool(false, forKey: "syncEnabled")
     }
     
+    
+    /**
+        Donwloads the metadata file from the Google Drive AppData folder and parses the entries into the 
+        list passed as a parameter.
+     
+        Parameter entries: The result list to enter the files
+    */
+    func fetchMetadataFromDriveToArray(entries: [File]) {
+        
+        let query = GTLQueryDrive.queryForFilesList()
+        query.q = "\'name = \(metadataFilename)\' and \'appDataFolder\' in parents"
+        
+        service.executeQuery(query, completionHandler: { (ticket: GTLServiceTicket!, response: AnyObject!, error: NSError?) in
+            
+            if let error = error {
+                print("Error while fetching metadataFile: \(error.localizedDescription)")
+            }
+            
+            // Parse the file entries to 
+            
+        })
+    }
     
     /** 
         Fetches all PDF files in the main Google Drive folder
@@ -199,7 +281,8 @@ class DataManager : FolderSearchDelegate {
             }
             
             if let data = data {
-                self.saveFileToDocumentsDirectory(data,file: file)
+                let localFile = self.saveFileToDocumentsDirectory(data,file: file)
+                localFile.status = File.STATUS.SYNCED
         
                 print("Finished Download")
             }
@@ -225,21 +308,19 @@ class DataManager : FolderSearchDelegate {
         - Returns: The file object associated with the GTLDriveFile.
     */
     func saveFileToDocumentsDirectory(data: NSData,file: GTLDriveFile) -> File {
-        let writePath = createDocumentURLFromFilename(file.name)
         
-        let file = createAndAddFileObject(writePath, fileID: file.identifier)
-        data.writeToFile(file.url.path!, atomically: true)
+        let localFile = createAndAddFileObject(file.name, fileID: file.identifier)
+        data.writeToFile(localFile.getUrl().path!, atomically: true)
         
-        return file
+        return localFile
     }
     
     func saveFileToDocumentsDirectory(data: NSData, filename: String) -> File {
-        let writePath = createDocumentURLFromFilename(filename)
         
-        let file = createAndAddFileObject(writePath)
-        data.writeToFile(file.url.path!, atomically: true)
+        let localFile = createAndAddFileObject(filename)
+        data.writeToFile(localFile.getUrl().path!, atomically: true)
         
-        return file
+        return localFile
     }
     
     /** 
@@ -248,17 +329,16 @@ class DataManager : FolderSearchDelegate {
      
         - Returns: The created File object.
     */
-    func createAndAddFileObject(url: NSURL, fileID: String = "") -> File {
-        // let file = File(url: url, title: title, dict: nil)
-        let file = File(url: url)
+    func createAndAddFileObject(filename: String, fileID: String = "") -> File {
+        let file = File(filename: filename)
         file.fileID = fileID
         
         //append file data to metadata file and file list
         //first check to see if it already exists or not
-        let dataString = file.getFileName()
+        let dataString = file.filename
         
         for document in files {
-            if document.getFileName() == dataString {
+            if document.filename == dataString {
                 print("File already exists in metadata and/or loaded files")
                 return document
             }
@@ -401,6 +481,7 @@ class DataManager : FolderSearchDelegate {
             self.mainFolderName = file.name
             self.userDefaults.setValue(self.mainFolderID!, forKey: "mainFolderID")
             self.userDefaults.setValue(self.mainFolderName, forKey: "mainFolderName")
+            
         })
     }
     

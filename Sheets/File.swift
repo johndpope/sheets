@@ -13,6 +13,15 @@ class File {
     
     //metadata
     
+    enum STATUS : String {
+        case NEW = "N"
+        case SYNCED = "S"
+        case CHANGED = "C"
+        case DELETED = "D"
+    }
+    
+    var status: STATUS!
+    
     /** The name of the piece (not the filename) */
     var title = " "
     
@@ -23,7 +32,7 @@ class File {
     var number: Int?
     
     var musicalForm = " "
-    var tempo: Tempo?
+    var tempo: String?
     var key = " "
     
     var instrument = " "
@@ -34,8 +43,8 @@ class File {
     /** The file identifier for the file on Google Drive */
     var fileID = " "
     
-    /** The url of the file in the local documents directory */
-    var url: NSURL!
+    /** The filename of the file in the local documents directory */
+    var filename: String!
     
     /**
         Creates a file object from a metadata String `data`.
@@ -47,12 +56,13 @@ class File {
     }
     
     /**
-        Creates a file object from its local URL.
+        Creates a file object from its local URL. Status is set to NEW by default.
         
         - Parameter url: The url pointing to the file in the local Documents directory
     */
-    init(url: NSURL){
-        self.url = url
+    init(filename: String){
+        self.filename = filename
+        self.status = STATUS.NEW
         let date = NSDate()
         saveDateAsString(date)
     }
@@ -80,15 +90,8 @@ class File {
         return filename
     }
     
-    /**
-        Returns the filename of the PDF document.
-     
-        - Returns: the filename
-    */
-    func getFileName() -> String {
-        let filename = url.lastPathComponent!
-        
-        return filename
+    func getUrl() -> NSURL {
+        return DataManager.sharedInstance.createDocumentURLFromFilename(filename)
     }
     
     /** 
@@ -102,7 +105,7 @@ class File {
         - Returns: Metadata as a string
     */
     func getDataAsString() -> String {
-        let data = "\(title)%\(composer)%\(arranger)%\(opus)%\(number)%\(musicalForm)%\(tempo)%\(key)%\(instrument)%\(dateOfCreation)%\(namingPresetID)%\(fileID)%\(url.path!)\n"
+        let data = "\(status)%\(title)%\(composer)%\(arranger)%\(opus)%\(number)%\(musicalForm)%\(tempo)%\(key)%\(instrument)%\(dateOfCreation)%\(namingPresetID)%\(fileID)%\(filename)\n"
         return data
     }
     
@@ -116,19 +119,21 @@ class File {
     func setupMetaDataFromString(data: String){
         let parts = data.componentsSeparatedByString("%")
         
-        self.title = parts[0]
-        self.composer = parts[1]
-        self.arranger = parts[2]
-        self.opus = Int(parts[3])
-        self.number = Int(parts[4])
-        self.musicalForm = parts[5]
-        self.tempo = Tempo(rawValue: parts[6])
-        self.key = parts[7]
-        self.instrument = parts[8]
-        self.dateOfCreation = parts[9]
-        self.namingPresetID = Int(parts[10])
-        self.fileID = parts[11]
-        self.url = NSURL(fileURLWithPath: parts[12])
+        self.status = STATUS(rawValue: parts[0])
+        
+        self.title = parts[1]
+        self.composer = parts[2]
+        self.arranger = parts[3]
+        self.opus = Int(parts[4])
+        self.number = Int(parts[5])
+        self.musicalForm = parts[6]
+        self.tempo = parts[7]
+        self.key = parts[8]
+        self.instrument = parts[9]
+        self.dateOfCreation = parts[10]
+        self.namingPresetID = Int(parts[11])
+        self.fileID = parts[12]
+        self.filename = parts[13]
     }
     
     

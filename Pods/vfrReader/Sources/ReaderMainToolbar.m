@@ -227,7 +227,7 @@
 
 			titleLabel.textAlignment = NSTextAlignmentCenter;
 			//titleLabel.font = [UIFont systemFontOfSize:TITLE_FONT_SIZE];
-            titleLabel.font = [UIFont fontWithName:@"Menlo-Bold" size:20];   // FONT CHANGE
+            titleLabel.font = [UIFont fontWithName:@"Futura" size:20];   // FONT CHANGE
 			titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 			titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
 			titleLabel.textColor = [UIColor colorWithWhite:0.0f alpha:1.0f];

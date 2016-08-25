@@ -277,10 +277,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXS-Gf-Y5I">
-                                <rect key="frame" x="133" y="97" width="335" height="52"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXS-Gf-Y5I">
+                                <rect key="frame" x="133" y="88" width="335" height="52"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="335" id="bDx-MC-SK5"/>
+                                    <constraint firstAttribute="width" constant="335" id="IT3-46-LVp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                 <state key="normal" title="Setup Google Drive Sync &amp; Backup"/>
@@ -291,9 +291,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="top" secondItem="wTO-7c-88I" secondAttribute="bottom" constant="33" id="JMX-Cr-KkQ"/>
-                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="centerX" secondItem="8Cr-B3-eFt" secondAttribute="centerX" id="cYK-Jb-1VP"/>
-                            <constraint firstItem="oCv-Jp-4qt" firstAttribute="top" secondItem="bXS-Gf-Y5I" secondAttribute="bottom" constant="451" id="chJ-fR-9rz"/>
+                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="top" secondItem="wTO-7c-88I" secondAttribute="bottom" constant="24" id="DWw-Rp-Kro"/>
+                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="centerX" secondItem="8Cr-B3-eFt" secondAttribute="centerX" id="x2L-0J-ARV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZdO-Jy-TKe">
