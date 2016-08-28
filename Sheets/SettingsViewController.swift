@@ -28,4 +28,8 @@ class SettingsViewController : UIViewController {
         presentViewController(SetupViewController(), animated: true, completion: nil)
     }
     
+    @IBAction func deleteAllLocalFiles() {
+        DataManager.sharedInstance.deleteAllFiles()
+    }
+    
 }

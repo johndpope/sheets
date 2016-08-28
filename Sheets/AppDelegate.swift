@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         DataManager.sharedInstance.downloadFileFromURL(url)
         
-        VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile.getFileName())
+        VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile.filename)
         return true
         
     }

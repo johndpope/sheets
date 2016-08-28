@@ -92,7 +92,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         if let authorizer = dataManager.service.authorizer,
             canAuth = authorizer.canAuthorize where canAuth {
             
-            dataManager.sync()
+            //dataManager.sync()
         }
         
         generalSetup()
@@ -121,7 +121,9 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
             //listAllLocalFiles()
             //printMetaDataFile()
         }
+        dataManager.loadLocalFiles()
         tableView.reloadData()
+        
     }
     
     func setupGoogleDriveSync(){
@@ -174,18 +176,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     
     func showPDFInReader(filename: String){
         VFRController.sharedInstance.showPDFInReader(filename)
-        /*
-        let filePath = dataManager.createDocumentURLFromFilename(filename).path
-        let readerDocument = ReaderDocument(filePath: filePath!, password: "")
-        let readerViewController = ReaderViewController(readerDocument: readerDocument)
         
-        if readerDocument != nil {
-            presentViewController(readerViewController, animated: true, completion: nil)
-            readerViewController.delegate = self
-        }else {
-            print("Reader document could not be created!")
-        }
- */
     }
     
     // ReaderViewControllerDelegate methods
@@ -231,264 +222,11 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     }
     
     
-    /** (dummy sync) loads all files in the google drive folder */
+    /** Calls the Sync function of the dataManager */
     @IBAction func sync(){
-        dataManager.fetchFilesInFolder()
+        //dataManager.fetchFilesInFolder()
+        dataManager.startSync()
     }
-    
-    /*
-    //sets up all of the files
-    //includes loading from Documents directory and 
-    //syncing with Google drive (not implemented yet)
-    func setupFiles(){
-        loadLocalFiles()
-        
-        //print("Number of Files: \(files.count)")
-    }
-    
-    func loadLocalFiles(){
-        /*// Get the document directory url
-        let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-         */
-        
-        //create File objects from Metadata file
-        let mFilePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(metadataFileName)
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(mFilePath.path!) {
-            do {
-                let fileContent = try String(contentsOfFile: mFilePath.path!, encoding: NSUTF8StringEncoding)
-                
-                let lines = fileContent.componentsSeparatedByString("\n")
-                for line in lines {
-                    if line != "" {
-                        let file = File(data: line)
-                        files.append(file)
-                    }
-                }
-                
-            } catch {
-                print("Error! Could not read from metadata file")
-            }
-        }
-    }
-    
-    //Setup SheetFolder (Create if not existing)
-    func setupSheetFolder(wrongInput: Bool = false){
-        //prompt user to input folder name
-        var message = "Please choose a folder name for your sheet music\n (Sheets will only operate in this folder)"
-        if wrongInput {
-            message = "Invalid Input!\n" + message
-        }
-        
-        let alert = UIAlertController(
-            title: "Folder name",
-            message: message,
-            preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addTextFieldWithConfigurationHandler(nil)
-        
-        let alertAction = UIAlertAction(
-            title: "Choose",
-            style: UIAlertActionStyle.Default,
-            handler: {(action: UIAlertAction) in
-                
-                self.mainFolderName = alert.textFields![0].text!
-                
-                if self.mainFolderName == "" {
-                    self.setupSheetFolder(true)
-                }else{
-                    //save folder name in user Preferences
-                    self.userDefaults.setValue(self.mainFolderName, forKey: "mainFolderName")
-                    
-                    //search for the folder and if it doesn't exist create it
-                    self.searchForFolder(self.mainFolderName)
-                }
-            })
-        alert.addAction(alertAction)
-        
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    func searchForFolder(foldername: String, toGetID: Bool = false){
-        
-        service.shouldFetchNextPages = true
-        
-        var sel = #selector(MainViewController.checkFolderSearchQuery(_:finishedWithObject:error:))
-        if toGetID {
-           sel = #selector(MainViewController.checkFolderSearchQueryForID(_:finishedWithObject:error:))
-        }
-        
-        let query = GTLQueryDrive.queryForFilesList()
-        query.q = "name = \'\(foldername)\'"
-        
-        service.executeQuery(
-            query,
-            delegate: self,
-            didFinishSelector: sel)
-    }
-    
-    func checkFolderSearchQuery(ticket : GTLServiceTicket,
-        finishedWithObject response : GTLDriveFileList,
-        error : NSError?){
-            
-            if let error = error {
-                showAlert("Error", message: error.localizedDescription)
-                return
-            }
-            
-            if let files = response.files where !files.isEmpty {
-                //folder was found
-            } else {
-                createSheetFolder(mainFolderName!)
-                //searchForFolder(mainFolderName)
-                output.text = "No files found."
-            }
-            
-    }
-    
-    func checkFolderSearchQueryForID(ticket : GTLServiceTicket,
-        finishedWithObject response : GTLDriveFileList,
-        error : NSError?){
-            
-            if let error = error {
-                showAlert("Error", message: error.localizedDescription)
-                return
-            }
-            
-            if let files = response.files where !files.isEmpty {
-                //folder was found -> save folder iD
-                let file = files[0] as! GTLDriveFile
-                self.mainFolderID = file.identifier
-                self.userDefaults.setValue(mainFolderID!, forKey: "mainFolderID")
-            }
-            fetchFilesInFolder()
-            
-    }
-    
-    func getFolderID(){
-        searchForFolder(mainFolderName,toGetID: true)
-    }
-    
-    
-    //Create an empty folder
-    func createSheetFolder(filename: String) {
-        
-        let folder = GTLDriveFile()
-        folder.name = filename
-        folder.mimeType = "application/vnd.google-apps.folder"
-        
-        let query = GTLQueryDrive.queryForFilesCreateWithObject(folder, uploadParameters: nil)
-        service.executeQuery(
-            query,
-            delegate: self,
-            didFinishSelector: #selector(MainViewController.displayFinishedCreatingFolder(_:updatedFile:error:))
-        )
-    }
-    
-    func displayFinishedCreatingFolder(ticket: GTLServiceTicket,
-        updatedFile file:GTLDriveFile,
-        error: NSError?){
-            
-            if let error = error {
-                showAlert("Error", message: error.localizedDescription)
-                return
-            }
-            output.text = "Finished creating Folder!"
-    }
-    
-    // Construct a query to get names and IDs of 10 files using the Google Drive API
-    func fetchAllFiles() {
-        output.text = "Getting files..."
-        let query = GTLQueryDrive.queryForFilesList()
-        query.pageSize = 15
-        query.fields = "nextPageToken, files(id, name)"
-        service.executeQuery(
-            query,
-            delegate: self,
-            didFinishSelector: #selector(MainViewController.finishedFetchingAllFiles(_:finishedWithObject:error:))
-        )
-    }
-    
-    func finishedFetchingAllFiles(ticket: GTLServiceTicket,
-        finishedWithObject response: GTLDriveFileList,
-        error: NSError?){
-            
-        if let error = error {
-            showAlert("Error", message: error.localizedDescription)
-            return
-        }
-            
-        displayFiles(response.files)
-    }
-    
-    //Fetches all PDF files in the main Folder
-    func fetchFilesInFolder(){
-        output.text = "Getting sheets"
-        let query = GTLQueryDrive.queryForFilesList()
-        if let folderID = mainFolderID {
-            query.q = "\'\(folderID)\' in parents and (mimeType = \'application/pdf\')"
-            service.executeQuery(
-                query,
-                delegate: self,
-                didFinishSelector: #selector(MainViewController.finishedFetchingFilesInFolder(_:finishedWithObject:error:))
-            )
-        }else{
-            getFolderID()
-        }
-    }
-    
-    func finishedFetchingFilesInFolder(ticket: GTLServiceTicket,
-        finishedWithObject response: GTLDriveFileList,
-        error: NSError?){
-            
-        if let error = error {
-            showAlert("Error", message: error.localizedDescription)
-            return
-        }
-        
-        displayFiles(response.files)
-        for file in response.files {
-            downloadFile(file as! GTLDriveFile)
-        }
-    }
-    
-    // Parse results and display
-    func displayResultWithTicket(ticket : GTLServiceTicket,
-        finishedWithObject response : GTLDriveFileList,
-        error : NSError?) {
-            
-            if let error = error {
-                showAlert("Error", message: error.localizedDescription)
-                return
-            }
-            
-            var filesString = ""
-            
-            if let files = response.files where !files.isEmpty {
-                filesString += "Files:\n"
-                for file in files as! [GTLDriveFile] {
-                    filesString += "\(file.name)\n" // (\(file.identifier))\n"
-                }
-            } else {
-                filesString = "No files found."
-            }
-            
-            output.text = filesString
-    }
-    
-    func displayFiles(files: [AnyObject]?){
-        var filesString = ""
-        
-        if let files = files where !files.isEmpty {
-            filesString += "Files:\n"
-            for file in files as! [GTLDriveFile] {
-                filesString += "\(file.name)\n" // (\(file.identifier))\n"
-            }
-        } else {
-            filesString = "No files found."
-        }
-        
-        output.text = filesString
-    }*/
     
     func downloadAndDisplayFile(url: NSURL){
         let fileData = NSData(contentsOfURL: url)!
@@ -499,122 +237,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         showPDFInReader(filename)
         
     }
-    
-    /*
-    func downloadFile(file: GTLDriveFile){
-        output.text = "Downloading"
-        let url = "https://www.googleapis.com/drive/v3/files/\(file.identifier)?alt=media"
-        
-        let fetcher = service.fetcherService.fetcherWithURLString(url)
-        
-        fetcher.beginFetchWithDelegate(
-            self,
-            didFinishSelector: #selector(MainViewController.finishedFileDownload(_:finishedWithData:error:)))
-        
-    }
-    
-    func finishedFileDownload(fetcher: GTMSessionFetcher, finishedWithData data: NSData, error: NSError?){
-        if let error = error {
-            showAlert("Error", message: error.localizedDescription)
-            return
-        }
-        
-        let filename = "Rach.pdf"
-        
-        saveFileToDocumentsDirectory(data,filename: filename)
-        
-        showPDFInReader(filename)
-        
-        output.text = "Finished Download"
-    }
-    
-    func saveFileToDocumentsDirectory(data: NSData,filename: String) -> File{
-        let writePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename)
-        
-        let file = createFileObject(writePath, title: filename)
-        data.writeToFile(file.url.path!, atomically: true)
-        tableView.reloadData()
-        
-        return file
-    }
-    
-    func createFileObject(url: NSURL, title: String) -> File {
-        // let file = File(url: url, title: title, dict: nil)
-        let file = File(url: url)
-        
-        //append file data to metadata file and file list
-        //first check to see if it already exists or not
-        let dataString = file.getFileName()
-        
-        for document in files {
-            if document.getFileName() == dataString {
-                print("File already exists in metadata")
-                return document
-            }
-        }
-        
-        updateMetadataFile(file)
-        files.append(file)
-        return file
-    }
-    
-    //appends the data of file to Metadata file
-    func updateMetadataFile(file: File){
-        let metadataFileUrl = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(metadataFileName)
-        
-        let dataAsString = file.getDataAsString()
-        let data = dataAsString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(metadataFileUrl.path!) {
-            do {
-                let fileHandle = try NSFileHandle(forWritingToURL: metadataFileUrl)
-                fileHandle.seekToEndOfFile()
-                fileHandle.writeData(data)
-                fileHandle.closeFile()
-            }catch{
-                print("Can't open fileHandler")
-            }
-        }else{
-            //File doesn't exist
-            do{
-                try data.writeToURL(metadataFileUrl, options: .DataWritingAtomic)
-            }catch{
-                print("Couldn't create and write to file")
-            }
-            
-        }
-    }
-    
-    func resetMetaDataFile(){
-        let metadataFileUrl = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(metadataFileName)
-        
-        do {
-            try "".writeToURL(metadataFileUrl, atomically: true, encoding: NSUTF8StringEncoding)
-        } catch {
-            print("Couldn't reset metadata file")
-        }
-        
-    }
-    
-    func printMetaDataFile(){
-        let mFilePath = NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(metadataFileName)
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(mFilePath.path!) {
-            do {
-                let fileContent = try String(contentsOfFile: mFilePath.path!, encoding: NSUTF8StringEncoding)
-                
-                let lines = fileContent.componentsSeparatedByString("\n")
-                for line in lines {
-                    print(line)
-                }
-                
-            } catch {
-                print("Error! Could not read from metadata file")
-            }
-        } else {
-            print("Metadata file does not exist.")
-        }
-    }*/
     
     func listAllLocalFiles(){
         let fileNames = dataManager.listAllLocalFiles()
@@ -630,7 +252,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
-        cell.textLabel?.text = dataManager.files[indexPath.row].getFileName()
+        cell.textLabel?.text = dataManager.files[indexPath.row].filename
         return cell
     }
     
@@ -638,37 +260,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         // cell selected code here
         let file = dataManager.files[indexPath.row]
         dataManager.currentFile = file
-        showPDFInReader(file.getFileName())
+        showPDFInReader(file.filename)
     }
-    
-    /*
-    // Creates the auth controller for authorizing access to Drive API
-    private func createAuthController() -> GTMOAuth2ViewControllerTouch {
-        let scopeString = scopes.joinWithSeparator(" ")
-        return GTMOAuth2ViewControllerTouch(
-            scope: scopeString,
-            clientID: kClientID,
-            clientSecret: nil,
-            keychainItemName: kKeychainItemName,
-            delegate: self,
-            finishedSelector: #selector(MainViewController.viewController(_:finishedWithAuth:error:))
-        )
-    }
-    
-    // Handle completion of the authorization process, and update the Drive API
-    // with the new credentials.
-    func viewController(vc : UIViewController,
-        finishedWithAuth authResult : GTMOAuth2Authentication, error : NSError?) {
-            
-            if let error = error {
-                service.authorizer = nil
-                showAlert("Authentication Error", message: error.localizedDescription)
-                return
-            }
-            
-            service.authorizer = authResult
-            dismissViewControllerAnimated(true, completion: nil)
-    }*/
     
     // Helper for showing an alert
     func showAlert(title : String, message: String) {
@@ -685,26 +278,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         alert.addAction(ok)
         presentViewController(alert, animated: true, completion: nil)
     }
-    
-    /*
-    func applicationDocumentDirectory() -> String {
-        return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-    }
-    
-    //deletes all of the content of the Document Directory
-    func deleteDocumentsDirectory(){
-        let fileManager = NSFileManager.defaultManager()
-        let directoryURL = NSURL(fileURLWithPath: applicationDocumentDirectory())
-        let enumerator = fileManager.enumeratorAtPath(applicationDocumentDirectory())
-        while let file = enumerator?.nextObject() as? String {
-            do {
-                try fileManager.removeItemAtURL(directoryURL.URLByAppendingPathComponent(file))
-            } catch {
-                print("Could not remove \(file)")
-            }
-            
-        }
-    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

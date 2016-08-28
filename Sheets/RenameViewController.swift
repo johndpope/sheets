@@ -61,7 +61,7 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func setupInputFields(){
         // filename
         //filenameInput.text = ((file?.title)! as NSString).stringByDeletingPathExtension
-        filenameInput.text = ((file?.getFileName())! as NSString).stringByDeletingPathExtension
+        filenameInput.text = ((file?.filename)! as NSString).stringByDeletingPathExtension
         //title
         titleInput.text = file?.title
         

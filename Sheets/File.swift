@@ -14,10 +14,10 @@ class File {
     //metadata
     
     enum STATUS : String {
-        case NEW = "N"
-        case SYNCED = "S"
-        case CHANGED = "C"
-        case DELETED = "D"
+        case NEW = "NEW"
+        case SYNCED = "SYNCED"
+        case CHANGED = "CHANGED"
+        case DELETED = "DELETED"
     }
     
     var status: STATUS!
@@ -32,7 +32,7 @@ class File {
     var number: Int?
     
     var musicalForm = " "
-    var tempo: String?
+    var tempo = " "
     var key = " "
     
     var instrument = " "
@@ -99,7 +99,7 @@ class File {
         Used to save the metadata to a file.
         
         Form:
-        title % composer % arranger % opus % number % musicalForm % tempo % key % instrument % dateOfCreation
+        status % title % composer % arranger % opus % number % musicalForm % tempo % key % instrument % dateOfCreation
         % namingPresetID % fileID % url
      
         - Returns: Metadata as a string
