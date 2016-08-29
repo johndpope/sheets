@@ -109,7 +109,7 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         width = 700
         infoText.frame = CGRectMake((CGRectGetWidth(self.view.frame) - width) / 2, 620, width, 450)
         infoText.text = "All of your sheet music will be synced with this Google Drive folder. \nIf you already have a Drive folder with your sheet music, enter its name and your PDF files will automatically be imported."
-        infoText.font = UIFont(name: "Futura", size: 40)
+        infoText.font = UIFont(name: "Futura", size: 20)
         infoText.textColor = defaultColor
         infoText.textAlignment = .Left
         infoText.numberOfLines = 8
@@ -154,7 +154,7 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         
         let confirmButton = UIButton(type: .System)
         width = 400
-        confirmButton.frame = CGRectMake((CGRectGetWidth(self.view.frame) - width) / 2, CGRectGetHeight(self.view.frame) * 0.5, width, 100)   // old height 850
+        confirmButton.frame = CGRectMake((CGRectGetWidth(self.view.frame) - width) / 2, CGRectGetHeight(self.view.frame) * 0.6, width, 100)   // old height 850
         
         confirmButton.setTitle("Continue", forState: .Normal)
         confirmButton.setTitleColor(UIColor(red: 49/255.0, green: 117/255.0, blue: 131/255.0, alpha: 1), forState: .Normal)
@@ -167,7 +167,7 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         
         let backButton = UIButton(type: .System)
         width = 400
-        backButton.frame = CGRectMake((CGRectGetWidth(self.view.frame) - width) / 2, CGRectGetHeight(self.view.frame) * 0.6, width, 100)   // old height 850
+        backButton.frame = CGRectMake((CGRectGetWidth(self.view.frame) - width) / 2, CGRectGetHeight(self.view.frame) * 0.7, width, 100)   // old height 850
         
         backButton.setTitle("Back", forState: .Normal)
         backButton.setTitleColor(UIColor(red: 49/255.0, green: 117/255.0, blue: 131/255.0, alpha: 1), forState: .Normal)

@@ -53,7 +53,7 @@ class DataManager : FolderSearchDelegate {
     var mainFolderName: String!
     var mainFolderID: String?
     
-    let metadataFolderName = "AppData - DON'T EDIT"
+    let metadataFolderName = "AppData - DO NOT EDIT"
     var metadataFolderID: String?
     
     private var downloadedDriveFiles = [GTLDriveFile]()
@@ -239,6 +239,7 @@ class DataManager : FolderSearchDelegate {
         dispatch_async(backgroundQueue, {
             // This is run on the background thread
             self.sync()
+            //self.searchForMetadataFolder()
             //self.uploadMetadataFile()
             /**dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 print("This is run on the main queue, after the previous code in outer block")
@@ -268,6 +269,16 @@ class DataManager : FolderSearchDelegate {
         
         // Create a dispatch group for downloading the driveFiles and the remoteMetadataFile
         let group = dispatch_group_create()
+        
+        // save the remote metadata folder id if it's not known locally
+        
+        dispatch_group_enter(group)
+        // This function call will save the metadata folder id, or create it
+        self.createMetadataFolderIfNotPresent({
+            dispatch_group_leave(group)
+        })
+        
+        dispatch_group_wait(group, DISPATCH_TIME_FOREVER)
         
         // Download the remote Metadata File to the local documents directory
         dispatch_group_enter(group)
@@ -477,11 +488,10 @@ class DataManager : FolderSearchDelegate {
                 // If it doesn't exist locally on this device, it can't be uploaded.
                 if fileExistsLocally {
                     toUpload.append(localFile!)
+                    // replace the remote file data with the local file data
+                    result[remoteIndex] = localFile!
                     
                     if localFile!.status == File.STATUS.CHANGED {
-                        
-                        // replace the remote file data with the local file data
-                        result[remoteIndex] = localFile!
                         
                         // set its status to SYNCED
                         localFile?.status = File.STATUS.SYNCED
@@ -589,6 +599,10 @@ class DataManager : FolderSearchDelegate {
                 print("\(file.filename) uploaded to Google Drive")
                 // Set the local file status to synced
                 file.status = File.STATUS.SYNCED
+                file.fileID = (updatedFile as! GTLDriveFile).identifier
+                
+                self.writeMetadataFile()
+                self.uploadMetadataFile({})
             }
         })
         
@@ -994,9 +1008,14 @@ class DataManager : FolderSearchDelegate {
     func createMetadataFolderIfNotPresent(completionHandler: () -> Void){
         
         let searchQuery = GTLQueryDrive.queryForFilesList()
-        searchQuery.q = "name = \'\(metadataFolderName)\' and mimetype = \'application/vnd.google-apps.folder\'"
+        searchQuery.q = "name = \'\(metadataFolderName)\' and mimeType = \'application/vnd.google-apps.folder\'"
         
         service.executeQuery(searchQuery, completionHandler: { (ticket: GTLServiceTicket!, response: AnyObject?, error: NSError?) in
+            
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+                return
+            }
             
             if let files = response?.files where (files != nil && !files.isEmpty) {
                 print("The metadata folder already exists")
@@ -1012,6 +1031,7 @@ class DataManager : FolderSearchDelegate {
                 completionHandler()
             } else {
                 // Metadata folder doesn't exist
+                print("Metadata folder not found")
                 // Create the metadata folder
                 let folder = GTLDriveFile()
                 folder.name = self.metadataFolderName
@@ -1033,10 +1053,33 @@ class DataManager : FolderSearchDelegate {
                     
                 })
             }
-            
         })
+    }
+    
+    /** 
+        Searches for the metadata folder and prints the search result.
+    */
+    func searchForMetadataFolder(){
         
+        let searchQuery = GTLQueryDrive.queryForFilesList()
+        searchQuery.q = "name = \'\(metadataFolderName)\' and mimeType = \'application/vnd.google-apps.folder\'"
         
+        service.executeQuery(searchQuery, completionHandler: { (ticket: GTLServiceTicket!, response: AnyObject?, error: NSError?) in
+            
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+                return
+            }
+            
+            if let files = response?.files where (files != nil && !files.isEmpty) {
+                print("Metadata folder found")
+                for file in (files as! [GTLDriveFile]) {
+                    print(file.name)
+                }
+            } else {
+                print("Metadata folder not found")
+            }
+        })
     }
     
     /**
