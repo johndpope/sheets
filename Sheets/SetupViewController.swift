@@ -208,8 +208,8 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         
         self.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: NSBlockOperation(block: {
         
-            progressBar.progress = Float(self.dataManager.currentDownloadProgress)
-            //progressBar.progress += 0.01
+            //progressBar.progress = Float(self.dataManager.currentDownloadProgress)
+            progressBar.progress = Float(self.dataManager.getSyncProgress())
             
             if progressBar.progress >= 0.99 {
                 self.timer!.invalidate()
@@ -370,8 +370,8 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         // If not, create the folder and store its information
         
         if found {
-            dataManager.fetchFilesInFolder()
-            //dataManager.sync()
+            //dataManager.fetchFilesInFolder()
+            dataManager.startSync()
             showFileImport()
         } else {
             dataManager.createSheetFolder(chosenFoldername)

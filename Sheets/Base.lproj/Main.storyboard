@@ -231,17 +231,47 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="jpL-DY-tEh">
-                        <barButtonItem key="leftBarButtonItem" image="Sandwich-Button" style="plain" id="nt6-hk-CSS"/>
-                        <barButtonItem key="rightBarButtonItem" title="Download" id="72w-5R-IJp">
-                            <connections>
-                                <action selector="download" destination="z1K-Ga-SwR" id="xPr-rf-Fan"/>
-                            </connections>
-                        </barButtonItem>
+                        <nil key="title"/>
+                        <leftBarButtonItems>
+                            <barButtonItem image="Sandwich-Button" style="plain" id="nt6-hk-CSS"/>
+                            <barButtonItem image="previous_arrow" style="plain" id="dz2-kE-HlS">
+                                <connections>
+                                    <action selector="goBack" destination="wtX-L5-k3R" id="4Vt-nC-31m"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="next_arrow" style="plain" id="uOz-35-4Gc">
+                                <connections>
+                                    <action selector="goForward" destination="wtX-L5-k3R" id="NsM-mz-4aV"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="www.google.com" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="dqp-hC-zfk">
+                            <rect key="frame" x="189" y="7" width="260" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                        </textField>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Download" id="72w-5R-IJp">
+                                <connections>
+                                    <action selector="download" destination="z1K-Ga-SwR" id="xPr-rf-Fan"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="Jmx-pp-1to">
+                                <connections>
+                                    <action selector="reload" destination="wtX-L5-k3R" id="UAA-vO-85U"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="backButton" destination="dz2-kE-HlS" id="ytY-7g-wl7"/>
+                        <outlet property="forwardButton" destination="uOz-35-4Gc" id="i2r-G5-Ge4"/>
                         <outlet property="openInButton" destination="72w-5R-IJp" id="fSg-80-a7e"/>
+                        <outlet property="reloadPage" destination="Jmx-pp-1to" id="wT9-HL-aaR"/>
                         <outlet property="sidebarButton" destination="nt6-hk-CSS" id="N4X-6m-Fwa"/>
+                        <outlet property="webAdress" destination="dqp-hC-zfk" id="6Gb-XF-B23"/>
                         <outlet property="webView" destination="wtX-L5-k3R" id="MGS-u8-TDF"/>
                     </connections>
                 </viewController>
@@ -290,13 +320,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohl-HE-g07">
-                                <rect key="frame" x="190" y="409" width="221" height="30"/>
+                                <rect key="frame" x="190" y="406" width="221" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="JJB-h9-0dm"/>
+                                    <constraint firstAttribute="height" constant="36" id="JJB-h9-0dm"/>
                                     <constraint firstAttribute="width" constant="221" id="ibT-Ia-1bg"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                <state key="normal" title="Delete All Local Files">
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="22"/>
+                                <state key="normal" title="Reset">
                                     <color key="titleColor" red="0.66674679487179489" green="0.094711848211870439" blue="0.099247190980832928" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -306,7 +336,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oCv-Jp-4qt" firstAttribute="top" secondItem="ohl-HE-g07" secondAttribute="bottom" constant="161" id="2NX-xu-Km8"/>
+                            <constraint firstItem="oCv-Jp-4qt" firstAttribute="top" secondItem="ohl-HE-g07" secondAttribute="bottom" constant="158" id="2NX-xu-Km8"/>
                             <constraint firstItem="bXS-Gf-Y5I" firstAttribute="top" secondItem="wTO-7c-88I" secondAttribute="bottom" constant="24" id="DWw-Rp-Kro"/>
                             <constraint firstItem="bXS-Gf-Y5I" firstAttribute="centerX" secondItem="ohl-HE-g07" secondAttribute="centerX" id="qXl-MM-IhX"/>
                             <constraint firstItem="bXS-Gf-Y5I" firstAttribute="centerX" secondItem="8Cr-B3-eFt" secondAttribute="centerX" id="x2L-0J-ARV"/>
@@ -661,7 +691,9 @@
         <image name="composers_icon" width="84" height="84"/>
         <image name="download_icon" width="84" height="84"/>
         <image name="filter_icon" width="84" height="84"/>
+        <image name="next_arrow" width="26" height="26"/>
         <image name="note_icon" width="84" height="84"/>
+        <image name="previous_arrow" width="26" height="26"/>
         <image name="search_icon" width="50" height="50"/>
         <image name="settings_icon" width="84" height="84"/>
         <image name="sync_icon" width="50" height="50"/>

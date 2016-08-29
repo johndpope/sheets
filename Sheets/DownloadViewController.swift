@@ -8,13 +8,17 @@
 
 import Foundation
 
-class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnectionDataDelegate {
+class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnectionDataDelegate, UITextFieldDelegate {
     
     @IBOutlet var sidebarButton: UIBarButtonItem!
     @IBOutlet var webView: UIWebView!
     @IBOutlet var openInButton: UIBarButtonItem!
+    @IBOutlet var backButton: UIBarButtonItem!
+    @IBOutlet var forwardButton: UIBarButtonItem!
+    @IBOutlet var webAdress: UITextField!
+    @IBOutlet var reloadPage: UIBarButtonItem!
     
-    let defaultAddress = "http://imslp.org/wiki/Special:ImagefromIndex/388675"       //"https://www.google.com"
+    let defaultAddress = "https://www.google.com" //"http://imslp.org/wiki/Special:ImagefromIndex/388675"       //
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +29,9 @@ class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnect
             sidebarButton.action = #selector(revealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
+        
+        webAdress.frame = CGRectMake(0, 0, 600, webAdress.frame.height)
+        webAdress.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -34,9 +41,35 @@ class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnect
     
     /** loads the defaut webpage in the UIWebView */
     func loadDefaultPage(){
-        let url = NSURL(string: defaultAddress)
+        loadPage(defaultAddress)
+    }
+    
+    func loadPage(address: String){
+        let validString = turnStringToValidURL(address)
+        let url = NSURL(string: validString)
         let request = NSURLRequest(URL: url!)
         webView.loadRequest(request)
+    }
+    
+    func turnStringToValidURL(urlString: String) -> String {
+        if !urlString.containsString("http://www.") &&
+            !urlString.containsString("https://www.") {
+            if urlString.containsString("www.") {
+                return "http://" + urlString
+            } else {
+                return "http://www." + urlString
+            }
+        } else {
+            return urlString
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
+        textField.resignFirstResponder()
+        if let text = textField.text {
+            self.loadPage(text)
+        }
+        return true
     }
     
     @IBAction func download(){

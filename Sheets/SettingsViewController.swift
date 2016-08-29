@@ -29,7 +29,18 @@ class SettingsViewController : UIViewController {
     }
     
     @IBAction func deleteAllLocalFiles() {
-        DataManager.sharedInstance.deleteAllFiles()
+        // Show safety question
+        let confirmAlert = UIAlertController(title: "Confirm Reset", message: "Are you sure you want to reset the app? All of your local files will be lost. (The files in the Google Drive will not be deleted)", preferredStyle: .Alert)
+        
+        confirmAlert.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: { (action: UIAlertAction!) in
+            DataManager.sharedInstance.deleteAllFiles()
+        }))
+        
+        confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction!) in
+            // Cancelled
+        }))
+        
+        presentViewController(confirmAlert, animated: true, completion: nil)
     }
     
 }

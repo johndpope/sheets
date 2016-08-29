@@ -15,16 +15,14 @@ Implementation:
  L ( ) Import files setting 
     L ( ) Parse file metadata from filename
  L ( ) button (manual)
- L ( ) automatic
 
 ( ) Settings
- L ( ) Sync Priority
  L (X) Setup Google Drive Sync
  L ( ) custom Auto naming convention
 
 ( ) File display shelf
 
-( ) Sort Files
+( ) Filter Files
  L ( ) Name
  L ( ) Composer
  L ( ) musical Form

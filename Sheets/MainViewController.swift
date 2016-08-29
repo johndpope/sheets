@@ -63,7 +63,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         
         // Setup Navigation Bar Title Label
         let titleView = UILabel()
-        titleView.text = "Hello World"
+        titleView.text = "All"
         titleView.font = UIFont(name: "Futura-Medium", size: 20)
         let width = titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
         titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 500))

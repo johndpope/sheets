@@ -60,6 +60,8 @@ class DataManager : FolderSearchDelegate {
     var completeDownloadSize : CGFloat = 0    // in bytes
     var currentDownloadProgress : CGFloat = 1
     
+    private var syncProgress = Dictionary<GTMSessionFetcher,(CGFloat,CGFloat)>()
+    
     let userDefaults = NSUserDefaults()
     
     var semaphor: dispatch_semaphore_t
@@ -78,10 +80,8 @@ class DataManager : FolderSearchDelegate {
     init(){
         semaphor = dispatch_semaphore_create(0)
         
-        /*resetMetaDataFile()
-        deleteDocumentsDirectory()*/
-        printMetaDataFile()
-        print()
+        //printMetaDataFile()
+        //print()
         
         generalSetup()
     }
@@ -552,6 +552,20 @@ class DataManager : FolderSearchDelegate {
         
     }
     
+    
+    func getSyncProgress() -> CGFloat {
+        
+        var totalProgress : CGFloat = 0
+        var totalSize : CGFloat = 0
+        
+        for progress in syncProgress.values {
+            totalProgress += progress.0
+            totalSize += progress.1
+        }
+        
+        return totalProgress/totalSize
+    }
+    
     /** 
         Uploads the file to the main Google Drive folder.
     */
@@ -567,7 +581,7 @@ class DataManager : FolderSearchDelegate {
         let uploadParameters = GTLUploadParameters(fileURL: fileURL, MIMEType: "application/pdf")
         let query = GTLQueryDrive.queryForFilesCreateWithObject(driveFile, uploadParameters: uploadParameters)
         
-        service.executeQuery(query, completionHandler: { (ticket: GTLServiceTicket!, updatedFile: AnyObject!, error: NSError?) in
+        let ticket = service.executeQuery(query, completionHandler: { (ticket: GTLServiceTicket!, updatedFile: AnyObject!, error: NSError?) in
             
             if let error = error {
                 print("Error while uploading file \(file.filename): \(error.localizedDescription)")
@@ -577,6 +591,13 @@ class DataManager : FolderSearchDelegate {
                 file.status = File.STATUS.SYNCED
             }
         })
+        
+        ticket.uploadProgressBlock = { (ticket: GTLServiceTicket!, bytes_Written: UInt64, totalBytesWritten: UInt64) in
+            self.currentDownloadProgress = (CGFloat(totalBytesWritten) * 100)/self.completeDownloadSize
+            
+            self.syncProgress[ticket.objectFetcher] = ((CGFloat(totalBytesWritten) * 100),CGFloat(ticket.objectFetcher.bodyLength))
+        }
+        
     }
     
     /** 
@@ -758,6 +779,8 @@ class DataManager : FolderSearchDelegate {
         
         fetcher.receivedProgressBlock = { (bytes_Written: __int64_t, totalBytesWritten: __int64_t) in
             self.currentDownloadProgress = (CGFloat(totalBytesWritten) * 100)/self.completeDownloadSize
+            
+            self.syncProgress[fetcher] = ((CGFloat(totalBytesWritten) * 100),CGFloat(fetcher.bodyLength))
         }
         
     }
