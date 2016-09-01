@@ -10,13 +10,13 @@ Canzona
 Carol
 Chanson
 Fantasia
-Chromatic fantasia
+Chromatic Fantasia
 Galliard
 Intermedio
 Laude
 Litany
-Madrigal comedy
-Madrigale spirituale
+Madrigal Comedy
+Madrigale Spirituale
 Mass
 Cyclic mass
 Parody mass
@@ -35,7 +35,7 @@ Cantata
 Chaconne
 Concerto
 Concerto grosso
-Solo concerto
+Solo Concerto
 Courante
 Fugue
 Gavotte
@@ -50,74 +50,74 @@ Prelude
 Sarabande
 Sinfonia
 Sonata
-Flute sonata
-Trio sonata
+Flute Sonata
+Trio Sonata
 Suite
 Bagatelle
 Ballet
-Classical ballet
-Cello concerto
-Clarinet concerto
-Double bass concerto
-Flute concerto
-Oboe concerto
-Piano concerto
-Trumpet concerto
-Viola concerto
-Violin concerto
+Classical Ballet
+Cello Concerto
+Clarinet Concerto
+Double bass Concerto
+Flute Concerto
+Oboe Concerto
+Piano Concerto
+Trumpet Concerto
+Viola Concerto
+Violin Concerto
 Dance
 Etude
 Impromptu
 Intermezzo
 Mazurka
 March
-Music hall
+Music Hall
 Nocturne
-Ballad opera
+Ballad Opera
 Opera comique
 Operetta
 Overture
-Concert overture
+Concert Overture
 Symphonic poem
 Singspiel
 Zarzuela
 Concert Aria
 Polonaise
 Quartet
-Piano quartet
-String quartet
-Oboe quartet
+Piano Quartet
+String Quartet
+Oboe Quartet
 Quintet
-Piano quintet
-String quintet
+Piano Quintet
+String Quintet
 Requiem
 Rhapsody
 Rondo
 Scherzo
 Serenade
 Sinfonia concertante
-Piano sonata
-Violin sonata
-Viola sonata
-Cello sonata
-Clarinet sonata
-Bassoon sonata
+Piano Sonata
+Violin Sonata
+Viola Sonata
+Cello Sonata
+Clarinet Sonata
+Bassoon Sonata
 Symphony
-Program symphony
-Choral symphony
+Program Symphony
+Choral Symphony
 Waltz
-Neoclassical ballet
-Contemporary ballet
+Neoclassical Ballet
+Contemporary Ballet
 Blues
 Burlesque
 Cabaret
 Concerto for Orchestra
-Modern dance
-Moment form
-Minimal music
-Musical theatre
-Popular song
-Protest song
+Modern Dance
+Moment Form
+Minimal Music
+Musical Theatre
+Popular Song
+Protest Song
 Soundtrack
 Vaudeville
-Video game music
+Video Game Music

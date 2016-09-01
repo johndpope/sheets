@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
@@ -470,15 +471,21 @@
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IW0-Cf-VKp">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IW0-Cf-VKp" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="227" width="291" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="suggestionsTableView" destination="kcq-Om-LQd" id="Xtg-9T-b80"/>
+                                </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E9F-GQ-nyg">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E9F-GQ-nyg" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="265" width="291" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="suggestionsTableView" destination="kcq-Om-LQd" id="cbV-KU-bGR"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWv-e1-dTh">
                                 <rect key="frame" x="54" y="193" width="101" height="21"/>
@@ -494,6 +501,12 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already exists!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgq-tw-gjQ">
+                                <rect key="frame" x="363" y="109" width="156" height="29"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                <color key="textColor" red="0.66887019230769229" green="0.029254654343315988" blue="0.083089470577694127" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Composer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avV-3f-3AG">
@@ -522,10 +535,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wEt-qt-A0H">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wEt-qt-A0H" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="405" width="148" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="suggestionsTableView" destination="kcq-Om-LQd" id="a3P-d5-duo"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tempo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="che-xa-d5G">
                                 <rect key="frame" x="54" y="406" width="66" height="29"/>
@@ -544,11 +560,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7EO-8J-isI">
-                                <rect key="frame" x="255" y="443" width="148" height="30"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSA-ym-uCN">
                                 <rect key="frame" x="54" y="443" width="38" height="29"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="22"/>
@@ -567,10 +578,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JPm-Rb-M4M">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JPm-Rb-M4M" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="546" width="148" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="suggestionsTableView" destination="kcq-Om-LQd" id="7JL-h7-zge"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NQr-V5-jyp">
                                 <rect key="frame" x="54" y="146" width="492" height="30"/>
@@ -580,28 +594,47 @@
                                 <color key="textColor" red="0.088913666180000003" green="0.13555037210000001" blue="0.13617788459999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="filenameInputChanged" destination="aHt-bB-rGR" eventType="editingChanged" id="bmi-MZ-bJJ"/>
+                                </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vZe-uX-CxA">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vZe-uX-CxA" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="503" width="148" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="suggestionsTableView" destination="kcq-Om-LQd" id="UDH-Bo-nA6"/>
+                                </connections>
                             </textField>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1d-lP-I0L">
-                                <rect key="frame" x="0.0" y="65" width="600" height="45"/>
+                                <rect key="frame" x="0.0" y="54" width="600" height="56"/>
                                 <connections>
                                     <outlet property="dataSource" destination="aHt-bB-rGR" id="xXw-iP-Zge"/>
                                     <outlet property="delegate" destination="aHt-bB-rGR" id="hpP-XT-v3S"/>
                                 </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Naming Convention" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZ6-n6-XJx">
-                                <rect key="frame" x="214" y="34" width="172" height="25"/>
+                                <rect key="frame" x="214" y="29" width="172" height="25"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kcq-Om-LQd">
+                                <rect key="frame" x="424" y="325" width="122" height="250"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7EO-8J-isI" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                                <rect key="frame" x="255" y="443" width="148" height="30"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="suggestionsTableView" destination="kcq-Om-LQd" id="AYI-hF-Q0g"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.96930219240837701" green="0.96930219240837701" blue="0.96930219240837701" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="kcq-Om-LQd" firstAttribute="top" secondItem="Zjp-hd-kzK" secondAttribute="top" id="0PO-rQ-GYI"/>
                             <constraint firstItem="ed2-cp-Ao8" firstAttribute="top" secondItem="JPm-Rb-M4M" secondAttribute="bottom" constant="24" id="16c-zZ-gdA"/>
                             <constraint firstItem="u1d-lP-I0L" firstAttribute="leading" secondItem="QNo-Cu-fuD" secondAttribute="leading" id="1Tz-6z-dmc"/>
                             <constraint firstItem="Iwl-sc-1mp" firstAttribute="baseline" secondItem="JPm-Rb-M4M" secondAttribute="baseline" id="1aX-qF-3G0"/>
@@ -616,16 +649,17 @@
                             <constraint firstItem="avV-3f-3AG" firstAttribute="baseline" secondItem="IW0-Cf-VKp" secondAttribute="baseline" id="7u0-or-eHi"/>
                             <constraint firstItem="iWv-e1-dTh" firstAttribute="centerY" secondItem="aHl-3o-FHL" secondAttribute="centerY" id="9mg-PE-rso"/>
                             <constraint firstItem="vZe-uX-CxA" firstAttribute="top" secondItem="7EO-8J-isI" secondAttribute="bottom" constant="30" id="BNd-1t-XDS"/>
-                            <constraint firstItem="WWa-CM-M0C" firstAttribute="top" secondItem="CZ6-n6-XJx" secondAttribute="bottom" constant="50" id="BaY-jT-XYW"/>
-                            <constraint firstItem="CZ6-n6-XJx" firstAttribute="top" secondItem="TdO-FW-jLF" secondAttribute="bottom" constant="14" id="BsK-9G-Ang"/>
+                            <constraint firstItem="WWa-CM-M0C" firstAttribute="top" secondItem="CZ6-n6-XJx" secondAttribute="bottom" constant="55" id="BaY-jT-XYW"/>
+                            <constraint firstItem="CZ6-n6-XJx" firstAttribute="top" secondItem="TdO-FW-jLF" secondAttribute="bottom" constant="9" id="BsK-9G-Ang"/>
                             <constraint firstItem="NQr-V5-jyp" firstAttribute="leading" secondItem="iWv-e1-dTh" secondAttribute="leading" id="Eey-Bb-Pu2"/>
                             <constraint firstItem="aHl-3o-FHL" firstAttribute="top" secondItem="NQr-V5-jyp" secondAttribute="bottom" constant="13" id="GB6-vV-xSG"/>
                             <constraint firstItem="che-xa-d5G" firstAttribute="leading" secondItem="OSA-ym-uCN" secondAttribute="leading" id="HOn-vd-sq2"/>
                             <constraint firstItem="CZ6-n6-XJx" firstAttribute="centerX" secondItem="u1d-lP-I0L" secondAttribute="centerX" id="Hem-Q7-Y02"/>
-                            <constraint firstItem="u1d-lP-I0L" firstAttribute="top" secondItem="CZ6-n6-XJx" secondAttribute="bottom" constant="6" id="Hqb-rs-Oby"/>
+                            <constraint firstItem="u1d-lP-I0L" firstAttribute="top" secondItem="CZ6-n6-XJx" secondAttribute="bottom" id="Hqb-rs-Oby"/>
                             <constraint firstItem="hpV-WW-xj5" firstAttribute="baseline" secondItem="E9F-GQ-nyg" secondAttribute="baseline" id="Huu-uo-dUw"/>
                             <constraint firstItem="JPm-Rb-M4M" firstAttribute="top" secondItem="vZe-uX-CxA" secondAttribute="bottom" constant="13" id="JJF-wF-sHe"/>
                             <constraint firstItem="OSA-ym-uCN" firstAttribute="top" secondItem="che-xa-d5G" secondAttribute="bottom" constant="8" symbolic="YES" id="JYP-ES-0bd"/>
+                            <constraint firstItem="kcq-Om-LQd" firstAttribute="leading" secondItem="Zjp-hd-kzK" secondAttribute="trailing" constant="21" id="Jt4-qn-p0y"/>
                             <constraint firstItem="Zjp-hd-kzK" firstAttribute="leading" secondItem="xHx-u7-3uw" secondAttribute="leading" id="Jyf-2n-4aB"/>
                             <constraint firstItem="che-xa-d5G" firstAttribute="top" secondItem="6g3-O5-LRy" secondAttribute="bottom" constant="15" id="LJe-Nd-P1D"/>
                             <constraint firstItem="iWv-e1-dTh" firstAttribute="centerX" secondItem="Iwl-sc-1mp" secondAttribute="centerX" id="M7e-wH-dm1"/>
@@ -647,6 +681,8 @@
                             <constraint firstItem="vZe-uX-CxA" firstAttribute="leading" secondItem="JPm-Rb-M4M" secondAttribute="leading" id="cbj-qc-WvG"/>
                             <constraint firstItem="g8Q-Qj-08b" firstAttribute="centerY" secondItem="vZe-uX-CxA" secondAttribute="centerY" id="dWO-Aa-rJs"/>
                             <constraint firstItem="xHx-u7-3uw" firstAttribute="leading" secondItem="wEt-qt-A0H" secondAttribute="leading" id="eIv-2X-JCk"/>
+                            <constraint firstItem="fgq-tw-gjQ" firstAttribute="baseline" secondItem="WWa-CM-M0C" secondAttribute="baseline" id="eon-7P-dQz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fgq-tw-gjQ" secondAttribute="trailing" constant="61" id="etz-F6-mjA"/>
                             <constraint firstItem="WWa-CM-M0C" firstAttribute="top" secondItem="u1d-lP-I0L" secondAttribute="bottom" constant="-1" id="fDX-Rb-Myr"/>
                             <constraint firstItem="aHl-3o-FHL" firstAttribute="trailing" secondItem="IW0-Cf-VKp" secondAttribute="trailing" id="gaf-6a-ZnA"/>
                             <constraint firstAttribute="trailing" secondItem="u1d-lP-I0L" secondAttribute="trailing" id="hKP-80-KaR"/>
@@ -654,11 +690,15 @@
                             <constraint firstItem="wEt-qt-A0H" firstAttribute="top" secondItem="xHx-u7-3uw" secondAttribute="bottom" constant="12" id="hqE-l1-Wp1"/>
                             <constraint firstItem="R0N-Hk-ceQ" firstAttribute="baseline" secondItem="Zjp-hd-kzK" secondAttribute="baseline" id="jaj-g6-G5c"/>
                             <constraint firstItem="R0N-Hk-ceQ" firstAttribute="leading" secondItem="6g3-O5-LRy" secondAttribute="leading" id="jwG-g5-aTw"/>
+                            <constraint firstItem="kcq-Om-LQd" firstAttribute="trailing" secondItem="QNo-Cu-fuD" secondAttribute="trailingMargin" constant="-34" id="kYS-HF-ZU2"/>
                             <constraint firstItem="hpV-WW-xj5" firstAttribute="leading" secondItem="R0N-Hk-ceQ" secondAttribute="leading" id="m9r-Fh-0QG"/>
                             <constraint firstItem="aHl-3o-FHL" firstAttribute="leading" secondItem="IW0-Cf-VKp" secondAttribute="leading" id="mHg-FB-5vF"/>
                             <constraint firstItem="7EO-8J-isI" firstAttribute="leading" secondItem="vZe-uX-CxA" secondAttribute="leading" id="oIq-sx-Uad"/>
+                            <constraint firstItem="kcq-Om-LQd" firstAttribute="bottom" secondItem="Iwl-sc-1mp" secondAttribute="bottom" id="pFc-0v-wYK"/>
                             <constraint firstItem="7EO-8J-isI" firstAttribute="trailing" secondItem="vZe-uX-CxA" secondAttribute="trailing" id="qBH-S6-Ekq"/>
+                            <constraint firstItem="fgq-tw-gjQ" firstAttribute="leading" secondItem="WWa-CM-M0C" secondAttribute="trailing" constant="23" id="r4U-tG-jKj"/>
                             <constraint firstItem="Iwl-sc-1mp" firstAttribute="centerY" secondItem="JPm-Rb-M4M" secondAttribute="centerY" id="rDu-7V-LbM"/>
+                            <constraint firstItem="fgq-tw-gjQ" firstAttribute="firstBaseline" secondItem="WWa-CM-M0C" secondAttribute="firstBaseline" id="rEU-p9-KrY"/>
                             <constraint firstItem="Zjp-hd-kzK" firstAttribute="trailing" secondItem="xHx-u7-3uw" secondAttribute="trailing" id="t3k-ob-a5I"/>
                             <constraint firstItem="wEt-qt-A0H" firstAttribute="trailing" secondItem="7EO-8J-isI" secondAttribute="trailing" id="vec-ig-65P"/>
                             <constraint firstItem="avV-3f-3AG" firstAttribute="centerY" secondItem="IW0-Cf-VKp" secondAttribute="centerY" id="wJR-mr-0fX"/>
@@ -668,6 +708,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="alreadyExistsLabel" destination="fgq-tw-gjQ" id="9nI-yQ-Eda"/>
                         <outlet property="arrangerInput" destination="E9F-GQ-nyg" id="kLt-aY-JWY"/>
                         <outlet property="composerInput" destination="IW0-Cf-VKp" id="WUn-i0-ye8"/>
                         <outlet property="filenameInput" destination="NQr-V5-jyp" id="Q4H-uF-1Lh"/>

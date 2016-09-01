@@ -531,7 +531,7 @@
 - (void)drawLayer:(CATiledLayer *)layer inContext:(CGContextRef)context
 {
 	ReaderContentPage *readerContentPage = self; // Retain self
-
+    
 	CGContextSetRGBFillColor(context, 1.0f, 1.0f, 1.0f, 1.0f); // White
 
 	CGContextFillRect(context, CGContextGetClipBoundingBox(context)); // Fill
@@ -542,11 +542,69 @@
 
 	CGContextConcatCTM(context, CGPDFPageGetDrawingTransform(_PDFPageRef, kCGPDFCropBox, self.bounds, 0, true));
 
-	//CGContextSetRenderingIntent(context, kCGRenderingIntentDefault); CGContextSetInterpolationQuality(context, kCGInterpolationDefault);
-
-	CGContextDrawPDFPage(context, _PDFPageRef); // Render the PDF page into the context
+	//CGContextSetRenderingIntent(context, kCGRenderingIntentDefault);
+    //CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+    
+    //UIImage *pdfImage = [self PDFPageToImage:CGPDFPageGetPageNumber(_PDFPageRef)];
+    //UIImage *pdfImage = [self renderPDFPageToImage:CGPDFPageGetPageNumber(_PDFPageRef)];
+    //CGContextDrawImage(context, CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height), pdfImage.CGImage);
+    
+    CGContextDrawPDFPage(context, _PDFPageRef); // Render the PDF page into the context
+    
+    //CGContextScaleCTM(context, -1.0f, 1.0f);
 
 	if (readerContentPage != nil) readerContentPage = nil; // Release self
+}
+
+-(UIImage *)renderPDFPageToImage:(int)pageNumber//NSOPERATION?
+{
+    //you may not want to permanently (app life) retain doc ref
+    
+    //float dpi = 300.0 / 72.0;
+    float dpi = 1;
+    
+    CGSize size = CGSizeMake(self.bounds.size.width * dpi,self.bounds.size.height*dpi);
+    UIGraphicsBeginImageContext(size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextTranslateCTM(context, 0, self.bounds.size.height);
+    CGContextScaleCTM(context, dpi, -dpi);
+    
+    CGPDFPageRef page;  //Move to class member
+    
+    page = CGPDFDocumentGetPage (_PDFDocRef, pageNumber);
+    CGContextDrawPDFPage (context, page);
+    
+    UIImage * pdfImage = UIGraphicsGetImageFromCurrentImageContext();//autoreleased
+    UIGraphicsEndImageContext();
+    return pdfImage;
+    
+}
+
+-(UIImage *)PDFPageToImage:(int)pageNumber
+{
+    float dpi = 300.0 / 72.0;
+    
+    CGSize pageSize = CGSizeMake(self.bounds.size.width,self.bounds.size.height);
+    pageSize.width = pageSize.width * dpi;
+    pageSize.height = pageSize.height * dpi;
+    
+    UIGraphicsBeginImageContext(pageSize);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+    CGContextTranslateCTM(context, 0.0, pageSize.height);
+    CGContextScaleCTM(context, dpi, -dpi);
+    CGContextSaveGState(context);
+    //CGAffineTransform pdfTransform = CGPDFPageGetDrawingTransform(pdfPageRef, kCGPDFCropBox, CGRectMake(0, 0, pageSize.width, pageSize.height), 0, true);
+    //CGContextConcatCTM(context, pdfTransform);
+    CGContextDrawPDFPage(context, _PDFPageRef);
+    CGContextRestoreGState(context);
+    
+    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return resultingImage;
 }
 
 @end

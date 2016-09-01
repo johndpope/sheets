@@ -22,6 +22,8 @@
 		BB5B07191D5F8BF20036E194 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */; };
 		BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEFA78A1D2A5863007DA3A7 /* File.swift */; };
 		BBF0A2CE1D67771B00D65ECB /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF0A2CD1D67771B00D65ECB /* SetupViewController.swift */; };
+		BBF0FEBF1D7628C40076F59E /* NamingPresets.txt in Resources */ = {isa = PBXBuildFile; fileRef = BBF0FEBE1D7628C40076F59E /* NamingPresets.txt */; };
+		BBF1B1731D7753F200A624C3 /* AutocompleteUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF1B1721D7753F200A624C3 /* AutocompleteUITextField.swift */; };
 		BBF397261D63B26B0023C298 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF397251D63B26B0023C298 /* DownloadViewController.swift */; };
 		BBF467F61D5D194000913CAD /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF467F51D5D194000913CAD /* SWRevealViewController.m */; };
 		BBF467F91D5E683A00913CAD /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF467F81D5E683A00913CAD /* SidebarViewController.swift */; };
@@ -31,6 +33,9 @@
 		BBF4D0521D22740600C85784 /* GTMOAuth2ViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBF4D0511D22740600C85784 /* GTMOAuth2ViewTouch.xib */; };
 		BBF5AFED1D60AB4A00A0645F /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5AFEC1D60AB4900A0645F /* FilterViewController.swift */; };
 		BBF5F30F1D64DE9B003C3C26 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF5F30E1D64DE9B003C3C26 /* DataManager.swift */; };
+		BBF69E691D780BBA0038DD3D /* Instruments.txt in Resources */ = {isa = PBXBuildFile; fileRef = BBF69E681D780BBA0038DD3D /* Instruments.txt */; };
+		BBF69E6B1D783C180038DD3D /* NamingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF69E6A1D783C180038DD3D /* NamingManager.swift */; };
+		BBF69E6D1D78CEE90038DD3D /* Keys.txt in Resources */ = {isa = PBXBuildFile; fileRef = BBF69E6C1D78CEE90038DD3D /* Keys.txt */; };
 		F335D8FB3930858798FEE27F /* Pods_Sheets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED0341CC43A387ABAC40C75 /* Pods_Sheets.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +83,8 @@
 		BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BBEFA78A1D2A5863007DA3A7 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BBF0A2CD1D67771B00D65ECB /* SetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
+		BBF0FEBE1D7628C40076F59E /* NamingPresets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NamingPresets.txt; sourceTree = "<group>"; };
+		BBF1B1721D7753F200A624C3 /* AutocompleteUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteUITextField.swift; sourceTree = "<group>"; };
 		BBF397251D63B26B0023C298 /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		BBF467F41D5D194000913CAD /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		BBF467F51D5D194000913CAD /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -88,6 +95,9 @@
 		BBF4D0511D22740600C85784 /* GTMOAuth2ViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTMOAuth2ViewTouch.xib; sourceTree = "<group>"; };
 		BBF5AFEC1D60AB4900A0645F /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		BBF5F30E1D64DE9B003C3C26 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		BBF69E681D780BBA0038DD3D /* Instruments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instruments.txt; sourceTree = "<group>"; };
+		BBF69E6A1D783C180038DD3D /* NamingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamingManager.swift; sourceTree = "<group>"; };
+		BBF69E6C1D78CEE90038DD3D /* Keys.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Keys.txt; sourceTree = "<group>"; };
 		DB8C99F99D13F66371AE4635 /* Pods-Sheets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sheets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sheets/Pods-Sheets.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +176,7 @@
 				BB00B94D1D213948008B1135 /* AppDelegate.swift */,
 				BB00B94F1D213948008B1135 /* MainViewController.swift */,
 				BBF5F30E1D64DE9B003C3C26 /* DataManager.swift */,
+				BBF69E6A1D783C180038DD3D /* NamingManager.swift */,
 				BBEFA78A1D2A5863007DA3A7 /* File.swift */,
 				BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */,
 				BBF397251D63B26B0023C298 /* DownloadViewController.swift */,
@@ -181,6 +192,7 @@
 				BB00B9591D213948008B1135 /* Info.plist */,
 				BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */,
 				BB08F07B1D33909F00D1ABCE /* Sheets-Bridging-Header.h */,
+				BBF1B1721D7753F200A624C3 /* AutocompleteUITextField.swift */,
 				BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */,
 				BB3F49E01D6A148E005C9F48 /* Extensions.swift */,
 			);
@@ -220,6 +232,9 @@
 				BBF46FDB1D6B39DF00936844 /* Composers.txt */,
 				BBF46FDD1D6B39F700936844 /* MusicalForms.txt */,
 				BBF46FDF1D6B3A0900936844 /* Tempo.txt */,
+				BBF0FEBE1D7628C40076F59E /* NamingPresets.txt */,
+				BBF69E681D780BBA0038DD3D /* Instruments.txt */,
+				BBF69E6C1D78CEE90038DD3D /* Keys.txt */,
 			);
 			name = Textfiles;
 			sourceTree = "<group>";
@@ -339,6 +354,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBF69E6D1D78CEE90038DD3D /* Keys.txt in Resources */,
 				BBF4D0521D22740600C85784 /* GTMOAuth2ViewTouch.xib in Resources */,
 				BBF46FDE1D6B39F700936844 /* MusicalForms.txt in Resources */,
 				BBF46FE01D6B3A0900936844 /* Tempo.txt in Resources */,
@@ -346,6 +362,8 @@
 				BBF46FDC1D6B39DF00936844 /* Composers.txt in Resources */,
 				BB00B9551D213948008B1135 /* Assets.xcassets in Resources */,
 				BB00B9531D213948008B1135 /* Main.storyboard in Resources */,
+				BBF69E691D780BBA0038DD3D /* Instruments.txt in Resources */,
+				BBF0FEBF1D7628C40076F59E /* NamingPresets.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,9 +512,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB3F49E31D6A1554005C9F48 /* VFRController.swift in Sources */,
+				BBF1B1731D7753F200A624C3 /* AutocompleteUITextField.swift in Sources */,
 				BB3F49DF1D69BCAB005C9F48 /* Reachability.swift in Sources */,
 				BBF467F61D5D194000913CAD /* SWRevealViewController.m in Sources */,
 				BBF5F30F1D64DE9B003C3C26 /* DataManager.swift in Sources */,
+				BBF69E6B1D783C180038DD3D /* NamingManager.swift in Sources */,
 				BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */,
 				BB4118821D2D9D4300168B76 /* SheetReaderViewController.swift in Sources */,
 				BBF5AFED1D60AB4A00A0645F /* FilterViewController.swift in Sources */,

@@ -1,0 +1,23 @@
+Custom
+Composer%-%Title%Musical Form%Op.%No.
+Composer (full name)%-%Title%Musical Form%Op.%No.
+Composer%-%Title%Op.%No.
+Composer (full name)%-%Title%Op.%No.
+Composer%-%Musical Form%Op.%No.
+Composer (full name)%-%Musical Form%Op.%No.
+Composer%-%Title%Musical Form%Key%Op.%No.
+Composer (full name)%-%Title%Musical Form%Key%Op.%No.
+Composer%-%Title%Musical Form%No.
+Composer (full name)%-%Title%Musical Form%No.
+Composer%/%Arranger-%Title%Musical Form%Op.%No.
+Composer (full name)%/%Arranger%-%Title%Musical Form%Op.%No.
+Composer%/%Arranger%-%Title%Op.%No.
+Composer (full name)%/%Arranger%-%Title%Op.%No.
+Composer%/%Arranger%-%Musical Form%Op.%No.
+Composer (full name)%/%Arranger%-%Musical Form%Op.%No.
+Composer%/%Arranger%-%Title%Musical Form%Key%Op.%No.
+Composer (full name)%/%Arranger%-%Title%Musical Form%Key%Op.%No.
+Title%Musical Form%Op.%No.%Composer
+Title%Musical Form%Op.%No.%Composer (full name)
+Title%Musical Form%Op.%No.%Composer%/%Arranger
+Title%Musical Form%Op.%No.%Composer (full name)

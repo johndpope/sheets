@@ -123,7 +123,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         }
         dataManager.loadLocalFiles()
         tableView.reloadData()
-        
     }
     
     func setupGoogleDriveSync(){
@@ -176,7 +175,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     
     func showPDFInReader(filename: String){
         VFRController.sharedInstance.showPDFInReader(filename)
-        
     }
     
     // ReaderViewControllerDelegate methods
@@ -228,16 +226,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         dataManager.startSync()
     }
     
-    func downloadAndDisplayFile(url: NSURL){
-        let fileData = NSData(contentsOfURL: url)!
-        let filename = url.lastPathComponent!
-    
-        dataManager.currentFile = dataManager.saveFileToDocumentsDirectory(fileData, filename: filename)
-        //tableView.reloadData()
-        showPDFInReader(filename)
-        
-    }
-    
     func listAllLocalFiles(){
         let fileNames = dataManager.listAllLocalFiles()
         print("Filenames: " + fileNames)
@@ -252,7 +240,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
-        cell.textLabel?.text = dataManager.files[indexPath.row].filename
+        cell.textLabel?.text = dataManager.files[indexPath.row].filename.stringByDeletingPathExtension()
         return cell
     }
     

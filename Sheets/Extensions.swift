@@ -24,3 +24,15 @@ extension UIApplication {
         return base
     }
 }
+
+extension String {
+    /** Removes all of the leading and ending whitespaces from a string. */
+    func trim() -> String {
+        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
+    
+    func stringByDeletingPathExtension() -> String {
+        return (self as NSString).stringByDeletingPathExtension
+    }
+    
+}

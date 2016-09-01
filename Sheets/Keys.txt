@@ -1,0 +1,70 @@
+C major
+D major
+E major
+F major
+G major
+A major
+B major
+C# major
+D# major
+E# major
+F# major
+G# major
+A# major
+B# major
+Cb major
+Db major
+Eb major
+Fb major
+Gb major
+Ab major
+Bb major
+C sharp major
+D sharp major
+E sharp major
+F sharp major
+G sharp major
+A sharp major
+B sharp major
+C flat major
+D flat major
+E flat major
+F flat major
+G flat major
+A flat major
+B flat major
+C minor
+D minor
+E minor
+F minor
+G minor
+A minor
+B minor
+C# minor
+D# minor
+E# minor
+F# minor
+G# minor
+A# minor
+B# minor
+Cb minor
+Db minor
+Eb minor
+Fb minor
+Gb minor
+Ab minor
+Bb minor
+C sharp minor
+D sharp minor
+E sharp minor
+F sharp minor
+G sharp minor
+A sharp minor
+B sharp minor
+C flat minor
+D flat minor
+E flat minor
+F flat minor
+G flat minor
+A flat minor
+B flat minor

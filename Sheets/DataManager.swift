@@ -37,6 +37,8 @@ class DataManager : FolderSearchDelegate {
     private let tempoFilename = "Tempo"
     private let composersFilename = "Composers"
     private let musicalFormsFilename = "MusicalForms"
+    private let instrumentsFilename = "Instruments"
+    private let keysFilename = "Keys"
     
     // Google Drive variables
     let kKeychainItemName = "Drive API"
@@ -76,6 +78,8 @@ class DataManager : FolderSearchDelegate {
     var composerNames: [String]?
     var tempoNames: [String]?
     var musicalFormNames: [String]?
+    var instruments: [String]?
+    var keys: [String]?
     
     init(){
         semaphor = dispatch_semaphore_create(0)
@@ -100,7 +104,9 @@ class DataManager : FolderSearchDelegate {
         files = [File]()
         allFiles = [File]()
         
+        
         loadData()
+        
     }
     
     func setupUserDefaults() {
@@ -196,6 +202,8 @@ class DataManager : FolderSearchDelegate {
         composerNames = arrayFromContentsOfFileWithName(composersFilename)
         tempoNames = arrayFromContentsOfFileWithName(tempoFilename)
         musicalFormNames = arrayFromContentsOfFileWithName(musicalFormsFilename)
+        instruments = arrayFromContentsOfFileWithName(instrumentsFilename)
+        keys = arrayFromContentsOfFileWithName(keysFilename)
     }
     
     
@@ -619,14 +627,12 @@ class DataManager : FolderSearchDelegate {
     */
     func updateRemoteFilename(localFile: File){
         
-        
         let file = GTLDriveFile()
         file.name = localFile.filename
-        file.originalFilename = localFile.filename
-        file.identifier = localFile.fileID
+        //file.identifier = localFile.fileID
         //let uploadParameters =
         
-        let query = GTLQueryDrive.queryForFilesUpdateWithObject(file, fileId: file.identifier, uploadParameters: nil)
+        let query = GTLQueryDrive.queryForFilesUpdateWithObject(file, fileId: localFile.fileID, uploadParameters: nil)
         
         service.executeQuery(query, completionHandler: { (ticket: GTLServiceTicket!, updatedFile: AnyObject!, error: NSError?) in
             
@@ -664,6 +670,8 @@ class DataManager : FolderSearchDelegate {
                         break
                     }
                 }
+                
+                self.writeMetadataFile()    // Write the metadata file to make sure it exists
                 
                 self.forceUploadMetadataFile({
                     // Delete the current file
@@ -703,6 +711,8 @@ class DataManager : FolderSearchDelegate {
         driveFile.name = self.remoteMetadataFilename
         //driveFile.parents = ["appDataFolder"]
         driveFile.parents = [self.metadataFolderID!]
+        
+        self.writeMetadataFile()    // write Metadata file to make sure it exists locally
         
         let fileURL = self.createDocumentURLFromFilename(self.metadataFilename)
         

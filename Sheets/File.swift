@@ -23,23 +23,23 @@ class File {
     var status: STATUS!
     
     /** The name of the piece (not the filename) */
-    var title = " "
+    var title = ""
     
-    var composer = " "
-    var arranger = " "
+    var composer = ""
+    var arranger = ""
     
-    var opus: Int?
-    var number: Int?
+    var opus = -1
+    var number = -1
     
-    var musicalForm = " "
-    var tempo = " "
-    var key = " "
+    var musicalForm = ""
+    var tempo = ""
+    var key = ""
     
-    var instrument = " "
+    var instrument = ""
     /** Refers to the file, not the piece. (Time when the document was first added). Format: dd-MM-yyy(HH:mm:ss) */
-    var dateOfCreation = " "
+    var dateOfCreation = ""
     /** ID of the naming preset used in order to determine the filename for this file */
-    var namingPresetID: Int?
+    var namingPresetID = 0
     /** The file identifier for the file on Google Drive */
     var fileID = " "
     
@@ -124,14 +124,14 @@ class File {
         self.title = parts[1]
         self.composer = parts[2]
         self.arranger = parts[3]
-        self.opus = Int(parts[4])
-        self.number = Int(parts[5])
+        self.opus = Int(parts[4])!
+        self.number = Int(parts[5])!
         self.musicalForm = parts[6]
         self.tempo = parts[7]
         self.key = parts[8]
         self.instrument = parts[9]
         self.dateOfCreation = parts[10]
-        self.namingPresetID = Int(parts[11])
+        self.namingPresetID = Int(parts[11])!
         self.fileID = parts[12]
         self.filename = parts[13]
     }

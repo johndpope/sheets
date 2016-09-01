@@ -598,6 +598,7 @@
 						NSInteger number = [target integerValue]; // Number
 
 						[self showDocumentPage:number]; // Show the page
+                        
 					}
 				}
 			}

@@ -31,7 +31,6 @@ class VFRController : NSObject, ReaderViewControllerDelegate {
     }
     
     @objc func showRenameView(viewController: ReaderViewController!, nameLabel: UILabel, document: ReaderDocument) {
-        print("show Rename View")
         
         let presentingVC = UIApplication.topViewController()!.presentingViewController!
         
