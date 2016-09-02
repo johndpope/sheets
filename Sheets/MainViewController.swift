@@ -12,8 +12,7 @@ import UIKit
 import Foundation
 import vfrReader
 
-class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, ReaderViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate ,
-    UIGestureRecognizerDelegate {
+class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, ReaderViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate, FilterViewDelegate {
     
     private let metadataFileName = "Metadata.txt"
     
@@ -40,6 +39,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     var searchBar: UISearchBar?
     var navTitle: String!
     var navTitleView: UIView!
+    var filterLabel: UILabel!
     
     //segue variable
     var shouldShowFilterOptions = false
@@ -63,13 +63,15 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         
         // Setup Navigation Bar Title Label
         let titleView = UILabel()
-        titleView.text = "All"
+        titleView.text = dataManager.currentFilter
+        titleView.textAlignment = .Center
         titleView.font = UIFont(name: "Futura-Medium", size: 20)
-        let width = titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+        let width : CGFloat = 400//titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
         titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 500))
         titleView.userInteractionEnabled = true
         self.navigationItem.titleView = titleView
         navTitleView = titleView
+        filterLabel = titleView
         
         
         //add filter Gesture recognizer
@@ -209,6 +211,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         let popoverRect = CGRectMake(CGRectGetMidX(self.view.bounds), popoverY, 0, 0)
         
         let filterView = self.storyboard?.instantiateViewControllerWithIdentifier("FilterVC") as! FilterViewController
+        filterView.delegate = self
         
         let nav = UINavigationController(rootViewController: filterView)
         nav.modalPresentationStyle = .Popover
@@ -217,6 +220,12 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         popover?.sourceRect = popoverRect
         
         self.presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    func filterPicked(filter: String) {
+        filterLabel.text = filter
+        DataManager.sharedInstance.filterFiles(filter)
+        tableView.reloadData()
     }
     
     
@@ -234,19 +243,19 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     //TableView Delegate and DataSource functions
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //number of cells
-        return dataManager.files.count
+        return dataManager.filteredFiles.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
-        cell.textLabel?.text = dataManager.files[indexPath.row].filename.stringByDeletingPathExtension()
+        cell.textLabel?.text = dataManager.filteredFiles[indexPath.row].filename.stringByDeletingPathExtension()
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // cell selected code here
-        let file = dataManager.files[indexPath.row]
+        let file = dataManager.filteredFiles[indexPath.row]
         dataManager.currentFile = file
         showPDFInReader(file.filename)
     }

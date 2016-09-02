@@ -68,6 +68,22 @@ class NamingManager {
         return false
     }
     
+    /** Returns true if the filename already exists in the array of file objects. */
+    func filenameAlreadyExistsInArray(files: [File]?, filename: String) -> Bool {
+        let filename = filename + ".pdf"
+        
+        if let files = files {
+            
+            for file in files {
+                if file.filename == filename {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
     func generateNamingDictionary(file: File) -> Dictionary<String,String> {
         
         var dict = Dictionary<String,String>()

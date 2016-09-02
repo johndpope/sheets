@@ -72,8 +72,12 @@ class DataManager : FolderSearchDelegate {
     var allFiles: [File]!
     /** Contains the File objects of all of the local files */
     var files: [File]!
+    
+    var filteredFiles: [File]!
     /** The currently opened file */
     var currentFile: File!
+    /** The currently active filter */
+    var currentFilter = "All"
     
     var composerNames: [String]?
     var tempoNames: [String]?
@@ -134,6 +138,7 @@ class DataManager : FolderSearchDelegate {
     func loadLocalFiles() {
         files = [File]()
         allFiles = [File]()
+        filteredFiles = [File]()
         //create File objects from Metadata file
         let metadataFilePath = createDocumentURLFromFilename(metadataFilename)
         
@@ -159,6 +164,8 @@ class DataManager : FolderSearchDelegate {
                 fatalError()
             }
         }
+        
+        filterFiles(currentFilter)
     }
     
     /**
@@ -227,6 +234,30 @@ class DataManager : FolderSearchDelegate {
         }
     }
     
+    func filteredFiles(filter: String) -> [File] {
+        
+        if filter.lowercaseString == "all" {
+            return files
+        }
+        
+        var filtered = [File]()
+        
+        if let files = files {
+            
+            for file in files {
+                
+                if file.getFilterString().containsString(filter.lowercaseString) {
+                    filtered.append(file)
+                }
+            }
+        }
+        
+        return filtered
+    }
+    
+    func filterFiles(filter: String) {
+        filteredFiles = filteredFiles(filter)
+    }
     
     
     /*  Google Drive Sync  */
@@ -469,7 +500,13 @@ class DataManager : FolderSearchDelegate {
                         // the local file. 
                         // The rest of the changes are already applied through the metadata entry / file object
                         if remoteFile.filename != localFile?.filename {
-                            if !changeFilenameInDocumentsDirectory(localFile!.filename, newFilename: remoteFile.filename) {
+                            
+                            // needed to ensure that no two files with the same filename are downloaded.
+                            var toBeLocalFiles = files
+                            toBeLocalFiles.appendContentsOf(toDownload)
+                            
+                            if NamingManager.sharedInstance.filenameAlreadyExistsInArray(toBeLocalFiles, filename: remoteFile.filename) ||
+                                !changeFilenameInDocumentsDirectory(localFile!.filename, newFilename: remoteFile.filename) {
                                 // The file couldn't be renamed because of an error.
                                 print("Error: \(localFile?.filename) couldn't be renamed to \(remoteFile.filename)")
                                 // change the filename of the remote entry to the local filename and add the file to the list of filename changes

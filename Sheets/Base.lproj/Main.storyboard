@@ -429,8 +429,58 @@
                     <view key="view" contentMode="scaleToFill" id="p2D-9P-LkG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HFB-dT-0JO">
+                                <rect key="frame" x="0.0" y="94" width="600" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="AFU-o0-l3j"/>
+                                </constraints>
+                            </pickerView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4JZ-Ru-3yK" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                                <rect key="frame" x="64" y="170" width="472" height="30"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="suggestionsTableView" destination="Vzd-ps-3lU" id="NpN-RU-yZm"/>
+                                </connections>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vzd-ps-3lU">
+                                <rect key="frame" x="64" y="208" width="472" height="353"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="fe7-gq-e4L">
+                                <rect key="frame" x="20" y="28" width="560" height="58"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58" id="LIf-7a-Nsr"/>
+                                    <constraint firstAttribute="width" constant="560" id="l67-zY-okD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="37"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="fe7-gq-e4L" firstAttribute="top" secondItem="gJw-4P-feZ" secondAttribute="bottom" constant="8" symbolic="YES" id="0Vr-um-EmV"/>
+                            <constraint firstItem="HFB-dT-0JO" firstAttribute="leading" secondItem="p2D-9P-LkG" secondAttribute="leading" id="6KQ-Ux-iXB"/>
+                            <constraint firstAttribute="trailing" secondItem="HFB-dT-0JO" secondAttribute="trailing" id="BUz-ns-hLy"/>
+                            <constraint firstItem="4JZ-Ru-3yK" firstAttribute="leading" secondItem="Vzd-ps-3lU" secondAttribute="leading" id="KcV-60-h3D"/>
+                            <constraint firstItem="HFB-dT-0JO" firstAttribute="top" secondItem="fe7-gq-e4L" secondAttribute="bottom" constant="8" id="LxK-PX-qz7"/>
+                            <constraint firstItem="9dQ-kI-I3T" firstAttribute="top" secondItem="Vzd-ps-3lU" secondAttribute="bottom" constant="39" id="WZ4-PY-CE3"/>
+                            <constraint firstItem="fe7-gq-e4L" firstAttribute="centerX" secondItem="HFB-dT-0JO" secondAttribute="centerX" id="XwA-cK-Pa4"/>
+                            <constraint firstItem="4JZ-Ru-3yK" firstAttribute="trailing" secondItem="Vzd-ps-3lU" secondAttribute="trailing" id="Z6m-2D-5fZ"/>
+                            <constraint firstItem="HFB-dT-0JO" firstAttribute="centerX" secondItem="4JZ-Ru-3yK" secondAttribute="centerX" id="mzV-gH-5B8"/>
+                            <constraint firstItem="4JZ-Ru-3yK" firstAttribute="leading" secondItem="p2D-9P-LkG" secondAttribute="leadingMargin" constant="44" id="uQS-TI-AmU"/>
+                            <constraint firstItem="Vzd-ps-3lU" firstAttribute="top" secondItem="4JZ-Ru-3yK" secondAttribute="bottom" constant="8" symbolic="YES" id="vJB-fw-Kot"/>
+                            <constraint firstItem="4JZ-Ru-3yK" firstAttribute="top" secondItem="HFB-dT-0JO" secondAttribute="bottom" constant="21" id="y5a-lD-Eic"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="currentFilterLabel" destination="fe7-gq-e4L" id="UPw-Fl-ZSp"/>
+                        <outlet property="pickerView" destination="HFB-dT-0JO" id="Uqv-F6-5TQ"/>
+                        <outlet property="tableView" destination="Vzd-ps-3lU" id="chj-lP-jCD"/>
+                        <outlet property="textField" destination="4JZ-Ru-3yK" id="tbf-AL-VHe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rJ9-gA-kUr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

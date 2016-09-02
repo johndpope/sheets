@@ -94,6 +94,10 @@ class File {
         return DataManager.sharedInstance.createDocumentURLFromFilename(filename)
     }
     
+    func getFilterString() -> String {
+        return "\(filename) \(composer) \(musicalForm) \(tempo) \(key) \(instrument)\n".lowercaseString
+    }
+    
     /** 
         Returns the metadata as a string.
         Used to save the metadata to a file.

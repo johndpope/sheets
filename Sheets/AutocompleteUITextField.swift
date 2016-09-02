@@ -9,12 +9,18 @@
 import Foundation
 import UIKit
 
+protocol AutocompleteUITextFieldDelegate {
+    func tableViewSelectedRow(entry: String)
+}
+
 class AutocompleteUITextField : UITextField, UITableViewDelegate, UITableViewDataSource {
     
     /** The TableView containing the autocomplete suggestions. */
     @IBOutlet weak var suggestionsTableView : UITableView?
     /** The height of each TableView cell */
     var tableViewRowHeight : CGFloat = 50
+    
+    var autoCompDelegate: AutocompleteUITextFieldDelegate?
     
     /** The strings from which the suggestions are filtered. */
     var autocompleteStrings : [String]? {
@@ -124,6 +130,8 @@ class AutocompleteUITextField : UITextField, UITableViewDelegate, UITableViewDat
         self.text = cell?.textLabel?.text
         suggestionsTableView?.hidden = true
         suggestionsTableView?.reloadData()
+        
+        autoCompDelegate?.tableViewSelectedRow(text!)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
