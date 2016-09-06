@@ -107,7 +107,7 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         
         let infoText = UILabel()
         width = 700
-        infoText.frame = CGRectMake((CGRectGetWidth(self.view.frame) - width) / 2, 620, width, 450)
+        infoText.frame = CGRectMake((CGRectGetWidth(self.view.frame) - width) / 2, CGRectGetHeight(self.view.frame) * 0.6, width, 150)
         infoText.text = "All of your sheet music will be synced with this Google Drive folder. \nIf you already have a Drive folder with your sheet music, enter its name and your PDF files will automatically be imported."
         infoText.font = UIFont(name: "Futura", size: 20)
         infoText.textColor = defaultColor
@@ -289,6 +289,7 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         doneView.addSubview(confirmButton)
         
         self.view = doneView
+        
     }
     
     func endSetup(){
@@ -371,6 +372,7 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         
         if found {
             //dataManager.fetchFilesInFolder()
+            dataManager.syncEnabled = true
             dataManager.startSync()
             showFileImport()
         } else {

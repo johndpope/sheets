@@ -15,7 +15,7 @@ class SidebarViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        menuItems = ["title","sheets","composers","filter","download","settings"]
+        menuItems = ["title","sheets","composers","filter","sync","download","settings"]
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

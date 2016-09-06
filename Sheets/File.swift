@@ -46,6 +46,8 @@ class File {
     /** The filename of the file in the local documents directory */
     var filename: String!
     
+    var thumbnail: UIImage?
+    
     /**
         Creates a file object from a metadata String `data`.
         

@@ -10,31 +10,44 @@ import GoogleAPIClient
 import GTMOAuth2
 import UIKit
 import Foundation
-import vfrReader
 
-class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelegate, ReaderViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate, FilterViewDelegate {
+class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate, FilterViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private let metadataFileName = "Metadata.txt"
     
-    private let kKeychainItemName = "Drive API"
-    private let kClientID = "451075181287-raoeoh0i74mq51vqv9tk6dhgi9qs26q7.apps.googleusercontent.com"
+    var dataManager = DataManager.sharedInstance
     
-    // If modifying these scopes, delete your previously saved credentials by
-    // resetting the iOS simulator or uninstall the app.
-    private let scopes = [kGTLAuthScopeDrive]
-    
-    private let service = GTLServiceDrive()
-    
-    private var mainFolderName: String!
-    private var mainFolderID: String?
     let userDefaults = NSUserDefaults()
     
     var tableView: UITableView!
     
+    @IBOutlet var collectionView: UICollectionView!
+    private let reuseIdentifier = "SheetCell"
+    private let sectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
+    private var selectedCell: SheetThumbCell?
+    
+    private var fileSelectionMode = false
+    
     //UINavigationItems
     @IBOutlet var sidebarButton: UIBarButtonItem!
-    @IBOutlet var syncButton: UIBarButtonItem!
     @IBOutlet var searchButton: UIBarButtonItem!
+    
+    @IBOutlet var syncButton: UIBarButtonItem! {
+        didSet {
+            let icon = UIImage(named: "sync_icon")?.imageWithRenderingMode(.AlwaysTemplate)
+            let iconSize = CGRect(origin: CGPointZero, size: icon!.size)
+            //let iconButton = UIButton(frame: iconSize)
+            let iconButton = UIButton(type: .System)
+            
+            iconButton.frame = iconSize
+            iconButton.setBackgroundImage(icon, forState: .Normal)
+            iconButton.tintColor = dataManager.defaultBlue
+            iconButton.addTarget(self, action: #selector(sync), forControlEvents: .TouchUpInside)
+            
+            syncButton.customView = iconButton
+            
+            syncButton.customView!.transform = CGAffineTransformIdentity
+        }
+    }
     
     var searchBar: UISearchBar?
     var navTitle: String!
@@ -43,11 +56,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     
     //segue variable
     var shouldShowFilterOptions = false
-    
-    var files: [File]!
-    var currentFile: File!
-    
-    var dataManager = DataManager.sharedInstance
     
     // When the view loads, create necessary subviews
     // and initialize the Drive API service
@@ -79,6 +87,18 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         recognizer.delegate = self
         titleView.addGestureRecognizer(recognizer)
         
+        // setup Collection View
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        // Load Thumbnails
+        //let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        //let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        /*dispatch_async(dispatch_get_main_queue(), {
+        
+            self.dataManager.loadPDFThumbnails(self.collectionView)
+                
+        })*/
     }
     
     // When the view appears, ensure that the Drive API service is authorized
@@ -89,12 +109,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         
         if shouldShowFilterOptions {
             showFilterView()
-        }
-        
-        if let authorizer = dataManager.service.authorizer,
-            canAuth = authorizer.canAuthorize where canAuth {
-            
-            //dataManager.sync()
         }
         
         generalSetup()
@@ -125,6 +139,21 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         }
         dataManager.loadLocalFiles()
         tableView.reloadData()
+        
+        // DEBUG
+        tableView.hidden = true
+        
+        // Add long press gesture recognizer for the collectionView cells
+        let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delegate = self
+        lpgr.delaysTouchesBegan = true
+        self.collectionView?.addGestureRecognizer(lpgr)
+    }
+    
+    func reload(){
+        tableView.reloadData()
+        collectionView.reloadData()
     }
     
     func setupGoogleDriveSync(){
@@ -179,33 +208,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         VFRController.sharedInstance.showPDFInReader(filename)
     }
     
-    // ReaderViewControllerDelegate methods
-    
-    func dismissReaderViewController(viewController: ReaderViewController!) {
-        viewController.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func showRenameView(viewController: ReaderViewController!, nameLabel: UILabel, document: ReaderDocument) {
-        print("show Rename View")
-        
-        let popoverY = nameLabel.frame.origin.y + 40
-        let popoverRect = CGRectMake(CGRectGetMidX(viewController.view.bounds), popoverY,0,0)
-        
-        let renameView = self.storyboard?.instantiateViewControllerWithIdentifier("RenameVC") as! RenameViewController
-        let nav = UINavigationController(rootViewController: renameView)
-        
-        renameView.file = dataManager.currentFile
-        
-        nav.modalPresentationStyle = .Popover
-        let popover = nav.popoverPresentationController
-        popover?.sourceView = viewController.view
-        popover?.sourceRect = popoverRect
-        
-        viewController.presentViewController(nav, animated: true, completion: nil)
-    }
     
     func showFilterView(){
-        print("show Filter")
         
         let popoverY = self.navTitleView.frame.origin.y + 300
         let popoverRect = CGRectMake(CGRectGetMidX(self.view.bounds), popoverY, 0, 0)
@@ -226,19 +230,141 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
         filterLabel.text = filter
         DataManager.sharedInstance.filterFiles(filter)
         tableView.reloadData()
+        collectionView.reloadData()
+    }
+    
+    // Choose and delete files
+    
+    func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
+        
+        if (gestureRecognizer.state != .Began){
+            return
+        }
+        
+        let p = gestureRecognizer.locationInView(self.collectionView)
+        
+        if let indexPath : NSIndexPath = (self.collectionView?.indexPathForItemAtPoint(p)){
+            selectFile(indexPath)
+            
+        } else {
+            print("Couldn't find index path.")
+        }
+        
+    }
+    
+    func selectFile(indexPath: NSIndexPath){
+        let selectedFile = dataManager.filteredFiles[indexPath.row]
+        let newSelectedCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? SheetThumbCell
+        
+        dataManager.currentFile = selectedFile
+        
+        fileSelectionMode = true
+        
+        // mark the cell as chosen
+        selectedCell?.borderEnabled = false
+        selectedCell = newSelectedCell
+        selectedCell?.borderEnabled = true
+        
+        fileChosen()
+    }
+    
+    func fileChosen() {
+        
+        let deleteButton = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: #selector(deleteChosenFile))
+            
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(cancelFileSelection))
+            
+        navigationItem.rightBarButtonItems = [deleteButton]
+        navigationItem.leftBarButtonItem = cancelButton
+    }
+    
+    func deleteChosenFile() {
+        
+        let chosenFile = dataManager.currentFile
+        
+        // Show Safety question
+        let alert = UIAlertController(
+            title: "Delete \(chosenFile.filename)?",
+            message: "Are you sure you want to delete \(chosenFile.filename) from the device?",
+            preferredStyle: UIAlertControllerStyle.Alert
+        )
+        let cancel = UIAlertAction(
+            title: "Cancel",
+            style: .Cancel,
+            handler: nil
+        )
+        let ok = UIAlertAction(
+            title: "Delete",
+            style: .Destructive,
+            handler: { (action: UIAlertAction) in
+                self.dataManager.deleteFile(chosenFile)
+                self.dataManager.loadLocalFiles()
+                self.reload()
+                self.cancelFileSelection()
+            }
+        )
+        
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func cancelFileSelection() {
+        
+        selectedCell?.borderEnabled = false
+        selectedCell = nil
+        
+        fileSelectionMode = false
+        
+        navigationItem.rightBarButtonItems = [searchButton, syncButton]
+        navigationItem.leftBarButtonItem = sidebarButton
+        navigationItem.titleView = filterLabel
     }
     
     
     /** Calls the Sync function of the dataManager */
     @IBAction func sync(){
         //dataManager.fetchFilesInFolder()
-        dataManager.startSync()
+        if dataManager.startSync() {
+            startSyncAnimation(.CurveEaseIn)
+        }
+    }
+    
+    func startSyncAnimation(options: UIViewAnimationOptions) {
+        
+        syncButton.customView!.tintColor = UIColor.redColor()
+        
+        
+        UIView.animateWithDuration(
+            1.0,
+            delay: 0.0,
+            options: options,
+            animations: {
+                self.syncButton.customView!.transform =  CGAffineTransformRotate(self.syncButton.customView!.transform,
+                    CGFloat(M_PI ))
+            },
+            completion: { (finished: Bool) in
+                
+                if finished {
+                    
+                    if self.dataManager.syncing {
+                        // continue spinning animation
+                        self.startSyncAnimation(.CurveLinear)
+                    } else if options != .CurveEaseOut {
+                        // end animation spin
+                        //self.startSyncAnimation(.CurveEaseOut)
+                        self.syncButton.customView?.tintColor = self.dataManager.defaultBlue
+                    }
+                }
+            })
     }
     
     func listAllLocalFiles(){
         let fileNames = dataManager.listAllLocalFiles()
         print("Filenames: " + fileNames)
     }
+    
+    
     
     //TableView Delegate and DataSource functions
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -255,9 +381,81 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // cell selected code here
+        
+        if fileSelectionMode {
+            selectFile(indexPath)
+        } else {
+            
+            let file = dataManager.filteredFiles[indexPath.row]
+            dataManager.currentFile = file
+            showPDFInReader(file.filename)
+        }
+        
+    }
+    
+    // MARK: UICollectionView Delegate & Datasource functions
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataManager.filteredFiles.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    
+        if fileSelectionMode {
+            selectFile(indexPath)
+        } else {
+            
+            let file = dataManager.filteredFiles[indexPath.row]
+            dataManager.currentFile = file
+            showPDFInReader(file.filename)
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SheetThumbCell
+        cell.backgroundColor = UIColor.whiteColor()
+        
         let file = dataManager.filteredFiles[indexPath.row]
-        dataManager.currentFile = file
-        showPDFInReader(file.filename)
+        
+        if file.thumbnail == nil {
+            file.thumbnail = dataManager.getThumbnailForFile(file)
+        }
+        
+        cell.imageView.image = file.thumbnail
+        
+        // configure the cell
+        return cell
+    }
+    
+    // MARK: UICollectionViewDelegateFlowLayout
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        // Determines the size of a given cell
+        let file = dataManager.filteredFiles[indexPath.row]
+        
+        if let thumb = file.thumbnail {
+            return thumb.size
+        } else {
+            return dataManager.thumbnailSize
+        }
+        
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+    
+    // MARK: - SearchbarDelegate methods
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+
+        let searchText = searchBar.text
+        if searchText == "" {
+            filterPicked("All")
+        } else {
+            filterPicked(searchText!)
+        }
     }
     
     // Helper for showing an alert
@@ -272,6 +470,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UIWebViewDelega
             style: UIAlertActionStyle.Default,
             handler: nil
         )
+        
         alert.addAction(ok)
         presentViewController(alert, animated: true, completion: nil)
     }

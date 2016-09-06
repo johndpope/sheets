@@ -1,20 +1,20 @@
 
 Implementation:
 
-( ) Change File Name
- L ( ) Make sure files sync correctly after changes
- L ( ) Autocomplete metadata info
- L ( ) Auto naming
- L ( ) Check double filenames
+(X) Change File Name
+ L (X) Make sure files sync correctly after changes
+ L (X) Autocomplete metadata info
+ L (X) Auto naming
+ L (X) Check double filenames
 
 (X) Check Internet connection
 
-( ) Delete Files
+(X) Delete Files
 
 ( ) Synchronization
  L ( ) Import files setting 
     L ( ) Parse file metadata from filename
- L ( ) button (manual)
+ L (X) button (manual)
 
 ( ) Settings
  L (X) Setup Google Drive Sync
@@ -22,15 +22,15 @@ Implementation:
 
 ( ) File display shelf
 
-( ) Filter Files
- L ( ) Name
- L ( ) Composer
- L ( ) musical Form
- L ( ) tempo
+(X) Filter Files
+ L (X) Name
+ L (X) Composer
+ L (X) musical Form
+ L (X) tempo
 
 ( ) Search for files
 
-( ) Webview for downloading Sheet in App
+(X) Webview for downloading Sheet in App
 ( ) Choose composer picture from internet
 
 

@@ -9,6 +9,7 @@
 import GoogleAPIClient
 import GTMOAuth2
 import Foundation
+import QuartzCore
 
 /**
  This class is responsible for keeping all of the data available to the ViewControllers.
@@ -50,7 +51,18 @@ class DataManager : FolderSearchDelegate {
     
     let service = GTLServiceDrive()
     
-    var syncEnabled: Bool!
+    let userDefaults = NSUserDefaults()
+    
+    var syncEnabled: Bool? {
+        didSet {
+            if let enabled = syncEnabled {
+                userDefaults.setBool(enabled, forKey: "syncEnabled")
+            } else {
+                userDefaults.setBool(false, forKey: "syncEnabled")
+            }
+            
+        }
+    }
     
     var mainFolderName: String!
     var mainFolderID: String?
@@ -62,18 +74,26 @@ class DataManager : FolderSearchDelegate {
     var completeDownloadSize : CGFloat = 0    // in bytes
     var currentDownloadProgress : CGFloat = 1
     
-    private var syncProgress = Dictionary<GTMSessionFetcher,(CGFloat,CGFloat)>()
+    //private var syncProgress = Dictionary<GTMSessionFetcher,(CGFloat,CGFloat)>()
+    /** String = filename that is being synced. Bool = sync for this file finished or not. */
+    private var syncProgress = Dictionary<String,Bool>()
     
-    let userDefaults = NSUserDefaults()
+    /** Is true if the app is currently syncing the files with Google Drive. */
+    var syncing = false
     
     var semaphor: dispatch_semaphore_t
     
+    var thumbnailSize = CGSize(width: 150, height: 200)
+    
+    var defaultBlue = UIColor(red: 6/255, green: 31/255, blue: 39/255, alpha: 1)
     /** Contains the File objects of all of the files ( incl. locally deleted) */
     var allFiles: [File]!
     /** Contains the File objects of all of the local files */
     var files: [File]!
-    
+    /** The File objects after a filter was applied to "files" */
     var filteredFiles: [File]!
+    /** The files that were deleted locally but exists in the Google Drive. */
+    var deletedFiles: [File]!
     /** The currently opened file */
     var currentFile: File!
     /** The currently active filter */
@@ -107,7 +127,7 @@ class DataManager : FolderSearchDelegate {
         
         files = [File]()
         allFiles = [File]()
-        
+        deletedFiles = [File]()
         
         loadData()
         
@@ -139,6 +159,7 @@ class DataManager : FolderSearchDelegate {
         files = [File]()
         allFiles = [File]()
         filteredFiles = [File]()
+        deletedFiles = [File]()
         //create File objects from Metadata file
         let metadataFilePath = createDocumentURLFromFilename(metadataFilename)
         
@@ -155,6 +176,9 @@ class DataManager : FolderSearchDelegate {
                         
                         if (file.status != File.STATUS.DELETED) {
                             files.append(file)
+                        } else {
+                            // File was deleted locally
+                            deletedFiles.append(file)
                         }
                     }
                 }
@@ -166,6 +190,100 @@ class DataManager : FolderSearchDelegate {
         }
         
         filterFiles(currentFilter)
+    }
+    
+    /** 
+        Creates the pdf thumbnails from all local files and refreshes the collectionView.
+    */
+    func loadPDFThumbnails(collectionView: UICollectionView?){
+        
+        for file in files {
+            
+            let image = getThumbnailForFile(file)
+            
+            file.thumbnail = image
+            
+            collectionView?.reloadData()
+        }
+    }
+    
+    /** 
+        Returns the thumbnail for a given file. If the thumbnail doesn't already exist
+        it is created and stored in the documents directory. The Url path to that image is
+        added to a dictionary in the userDefaults for later access.
+    */
+    func getThumbnailForFile(file: File) -> UIImage {
+        var thumbDict = userDefaults.valueForKey("thumbnailDictionary") as? [String:String]
+        // check if thumbnail for this file already exists
+        if thumbDict != nil {
+            
+            if let thumbPath = thumbDict?[file.filename], let data = NSData(contentsOfFile: thumbPath) {
+                // load the thumbnail from the url
+                let thumb = UIImage(data: data)
+                return thumb!
+            }
+        } else {
+            thumbDict = [String:String]()
+        }
+        
+        // create thumbnail
+        // Draw the first page
+        let pdfRef = CGPDFDocumentCreateWithURL(file.getUrl())
+        let pageRef = CGPDFDocumentGetPage(pdfRef, 1)
+        
+        let pdfRect = CGPDFPageGetBoxRect(pageRef, CGPDFBox.MediaBox)
+        //print("PDFSize: \(file.filename) :  width \(pdfRect.width) height \(pdfRect.height)")
+        let thumbHeight = ((thumbnailSize.width / pdfRect.width) * pdfRect.height) - 3
+        //let thumbHeight = thumbnailSize.height
+        //let thumbWidth = (thumbnailSize.height / pdfRect.height) * pdfRect.width - 3
+        let thumbWidth = thumbnailSize.width
+        
+        UIGraphicsBeginImageContext(thumbnailSize)
+        //UIGraphicsBeginImageContext(CGSizeMake(thumbWidth, thumbHeight))
+        
+        let contextRef = UIGraphicsGetCurrentContext()
+        
+        CGContextTranslateCTM(contextRef, 0.0, thumbHeight);
+        CGContextScaleCTM(contextRef, 1, -1);
+        
+        let pdfTransform = CGPDFPageGetDrawingTransform(
+            pageRef,
+            CGPDFBox.MediaBox,
+            CGRectMake(3, 0, thumbWidth - 4, thumbHeight),
+            0,
+            true)
+        
+        // And apply the transform.
+        CGContextConcatCTM(contextRef, pdfTransform);
+        
+        CGContextDrawPDFPage(contextRef, pageRef)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // clean up
+        UIGraphicsEndImageContext()
+        
+        // save image to documentsdirectory
+        let thumbFilename = file.filename.stringByDeletingPathExtension() + "_thumbnail.png"
+        let thumbURL = createDocumentURLFromFilename(thumbFilename)
+        let imageData = UIImagePNGRepresentation(image)
+        
+        // write the data to the documents directory
+        var success = true
+        do {
+            try imageData?.writeToFile(thumbURL.path!, options: .DataWritingAtomic)
+        } catch {
+            print("Could not store thumbnail \(error)")
+            success = false
+        }
+        
+        if success {
+            // add the entry to the file dictionary
+            thumbDict![file.filename] = thumbURL.path!
+            userDefaults.setObject(thumbDict, forKey: "thumbnailDictionary")
+        }
+        
+        return image
     }
     
     /**
@@ -269,14 +387,15 @@ class DataManager : FolderSearchDelegate {
     */
     func startSync() -> Bool{
         // Only sync if syncing is enabled
-        if let syncEnabled = syncEnabled where !syncEnabled {
-            //return false      // TODO Implement syncEnabled = true
+        if let enabled = syncEnabled where !enabled || syncing {
+            return false      // TODO Implement syncEnabled = true
         }
         
         let qualityOfServiceClass = QOS_CLASS_BACKGROUND
         let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
         dispatch_async(backgroundQueue, {
             // This is run on the background thread
+            self.syncing = true
             self.sync()
             //self.searchForMetadataFolder()
             //self.uploadMetadataFile()
@@ -292,7 +411,7 @@ class DataManager : FolderSearchDelegate {
         Syncs alls of the sheet (pdf) files and metadata files with the specified folder in Google Drive.
         Has to be run on background thread. Don't run on the main thread!
     */
-    func sync(){
+    private func sync(){
         
         print("Syncing")
         
@@ -305,6 +424,8 @@ class DataManager : FolderSearchDelegate {
         
         var success = true
         var metadataFileExists = true
+        
+        syncProgress.removeAll()
         
         // Create a dispatch group for downloading the driveFiles and the remoteMetadataFile
         let group = dispatch_group_create()
@@ -603,22 +724,36 @@ class DataManager : FolderSearchDelegate {
             updateRemoteFilename(file)
         }
         
+        // check if syncing was finished
+        if self.getSyncProgress() == 1 {
+            self.syncing = false
+        }
+        
         //printMetaDataFile()
         
     }
     
-    
+    /** 
+        Returns the current sync progress. 0 at the beginning and 1 when finished.
+    */
     func getSyncProgress() -> CGFloat {
         
-        var totalProgress : CGFloat = 0
-        var totalSize : CGFloat = 0
+        var totalFinished = 0
         
-        for progress in syncProgress.values {
-            totalProgress += progress.0
-            totalSize += progress.1
+        for finished in syncProgress.values {
+            if finished {
+                
+                totalFinished += 1
+            }
         }
         
-        return totalProgress/totalSize
+        let fileCount = syncProgress.count
+        
+        if fileCount == 0 {
+            return 1
+        } else {
+            return CGFloat(totalFinished/syncProgress.values.count)
+        }
     }
     
     /** 
@@ -631,12 +766,14 @@ class DataManager : FolderSearchDelegate {
         driveFile.name = file.filename
         driveFile.parents = [mainFolderID!]
         
+        syncProgress[file.filename] = false
+        
         let fileURL = file.getUrl()
         
         let uploadParameters = GTLUploadParameters(fileURL: fileURL, MIMEType: "application/pdf")
         let query = GTLQueryDrive.queryForFilesCreateWithObject(driveFile, uploadParameters: uploadParameters)
         
-        let ticket = service.executeQuery(query, completionHandler: { (ticket: GTLServiceTicket!, updatedFile: AnyObject!, error: NSError?) in
+        service.executeQuery(query, completionHandler: { (ticket: GTLServiceTicket!, updatedFile: AnyObject!, error: NSError?) in
             
             if let error = error {
                 print("Error while uploading file \(file.filename): \(error.localizedDescription)")
@@ -649,14 +786,14 @@ class DataManager : FolderSearchDelegate {
                 self.writeMetadataFile()
                 self.uploadMetadataFile({})
             }
-        })
-        
-        ticket.uploadProgressBlock = { (ticket: GTLServiceTicket!, bytes_Written: UInt64, totalBytesWritten: UInt64) in
-            self.currentDownloadProgress = (CGFloat(totalBytesWritten) * 100)/self.completeDownloadSize
             
-            self.syncProgress[ticket.objectFetcher] = ((CGFloat(totalBytesWritten) * 100),CGFloat(ticket.objectFetcher.bodyLength))
-        }
-        
+            self.syncProgress[file.filename] = true
+            
+            // check if syncing was finished
+            if self.getSyncProgress() == 1 {
+                self.syncing = false
+            }
+        })
     }
     
     /** 
@@ -666,8 +803,8 @@ class DataManager : FolderSearchDelegate {
         
         let file = GTLDriveFile()
         file.name = localFile.filename
-        //file.identifier = localFile.fileID
-        //let uploadParameters =
+        
+        syncProgress[file.name] = false
         
         let query = GTLQueryDrive.queryForFilesUpdateWithObject(file, fileId: localFile.fileID, uploadParameters: nil)
         
@@ -680,6 +817,32 @@ class DataManager : FolderSearchDelegate {
                 // Set the local file status to synced
                 localFile.status = File.STATUS.SYNCED
                 self.writeMetadataFile()
+            }
+            
+            self.syncProgress[file.name] = true
+            
+            // check if syncing was finished
+            if self.getSyncProgress() == 1 {
+                self.syncing = false
+            }
+        })
+    }
+    
+    /** Updates the remote metadata entries with the local metadata file. */
+    func updateRemoteMetadata(file: GTLDriveFile) {
+        let driveFile = GTLDriveFile()
+        
+        let uploadParameters = GTLUploadParameters(data: NSData(contentsOfURL: self.createDocumentURLFromFilename(self.metadataFilename))!, MIMEType: "*/*")
+        
+        let query = GTLQueryDrive.queryForFilesUpdateWithObject(driveFile, fileId: file.identifier, uploadParameters: uploadParameters)
+        
+        service.executeQuery(query, completionHandler: { (ticket: GTLServiceTicket!, updatedFile: AnyObject!, error: NSError?) in
+            
+            if let error = error {
+                print("Error while updating the remote metadata entries: \(error.localizedDescription)")
+            } else {
+                print("Updated the remote metadata file. ")
+
             }
         })
     }
@@ -710,6 +873,8 @@ class DataManager : FolderSearchDelegate {
                 
                 self.writeMetadataFile()    // Write the metadata file to make sure it exists
                 
+                self.updateRemoteMetadata(mfile!)
+                /**
                 self.forceUploadMetadataFile({
                     // Delete the current file
                     let query = GTLQueryDrive.queryForFilesDeleteWithFileId(mfile?.identifier)
@@ -726,6 +891,7 @@ class DataManager : FolderSearchDelegate {
                         completionHandler()
                     })
                 })
+                     */
                 
             } else {
                 // The file doesn't exist anyway
@@ -772,7 +938,6 @@ class DataManager : FolderSearchDelegate {
     /** Disables the Google Drive sync functionality. */
     func disableSync(){
         syncEnabled = false
-        userDefaults.setBool(false, forKey: "syncEnabled")
     }
     
     
@@ -820,30 +985,42 @@ class DataManager : FolderSearchDelegate {
         print("Downloading \(file.name)")
         let url = "https://www.googleapis.com/drive/v3/files/\(file.identifier)?alt=media"
         
+        syncProgress[file.name] = false
+        
         let fetcher = service.fetcherService.fetcherWithURLString(url)
         
         fetcher.beginFetchWithCompletionHandler({ (data: NSData?, error: NSError?) in
             
             if let error = error {
                 print("Error \(error.localizedDescription)")
-                fatalError()
+                //fatalError()
+            } else {
+            
+                if let data = data {
+                    let localFile = self.saveFileToDocumentsDirectory(data,file: file)
+                    localFile.status = File.STATUS.SYNCED
+                    self.writeMetadataFile()
+                
+                    print("Finished Download of \(localFile.filename)")
+                }
             }
             
-            if let data = data {
-                let localFile = self.saveFileToDocumentsDirectory(data,file: file)
-                localFile.status = File.STATUS.SYNCED
-                self.writeMetadataFile()
-                
-                print("Finished Download of \(localFile.filename)")
+            self.syncProgress[file.name] = true
+            
+            // check if syncing was finished
+            if self.getSyncProgress() == 1 {
+                self.syncing = false
             }
         })
+    }
+    
+    func downloadFile(file: File){
+        // setup the GTLDriveFile object 
+        let driveFile = GTLDriveFile()
+        driveFile.name = file.filename
+        driveFile.identifier = file.fileID
         
-        fetcher.receivedProgressBlock = { (bytes_Written: __int64_t, totalBytesWritten: __int64_t) in
-            self.currentDownloadProgress = (CGFloat(totalBytesWritten) * 100)/self.completeDownloadSize
-            
-            self.syncProgress[fetcher] = ((CGFloat(totalBytesWritten) * 100),CGFloat(fetcher.bodyLength))
-        }
-        
+        downloadFile(driveFile)
     }
     
     /** Downloads the file data from the url to the Documents directory and creates a new file object for it and stores it in the currentFile. */
@@ -1147,11 +1324,47 @@ class DataManager : FolderSearchDelegate {
             return false
         }
         
+        // Update the entry for the file thumbnail in the user defaults dictionary
+        var thumbDict = userDefaults.valueForKey("thumbnailDictionary") as? [String:String]
+        let thumbPath = thumbDict?[oldFilename]
+        thumbDict?.removeValueForKey(oldFilename)
+        thumbDict?[newFilename] = thumbPath
+        // Store the dictionary in the user defaults
+        userDefaults.setObject(thumbDict, forKey: "thumbnailDictionary")
+        
         return true
         
     }
     
-    /** 
+    /**
+        Deletes the file in the local documents directory and sets the metadata entry to DELETED.
+    */
+    func deleteFile(file: File) {
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(createDocumentURLFromFilename(file.filename))
+        } catch {
+            print("Could not remove \(file.filename)")
+        }
+        
+        file.status = File.STATUS.DELETED
+        writeMetadataFile()
+        
+        // Delete the file thumbnail from the thumbnialDictionary
+        var thumbDict = userDefaults.valueForKey("thumbnailDictionary") as? [String:String]
+        let thumbPath = thumbDict?[file.filename]
+        thumbDict?.removeValueForKey(file.filename)
+        // Store the dictionary in the user defaults
+        userDefaults.setObject(thumbDict, forKey: "thumbnailDictionary")
+        
+        // Delete the thumbnail locally
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(NSURL(fileURLWithPath: thumbPath!))
+        } catch {
+            print("Could not remove the thumbnail for \(file.filename)")
+        }
+    }
+    
+    /**
         Deletes all of the files in the documents directory, and empties the metadata file
     */
     func deleteAllFiles(){
@@ -1187,9 +1400,7 @@ class DataManager : FolderSearchDelegate {
         
     }*/
     
-    func createDocumentURLFromFilename(filename: String) -> NSURL {
-        return NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename)
-    }
+    
     
     func listAllLocalFiles() -> String {
         var fileString = ""
@@ -1219,11 +1430,22 @@ class DataManager : FolderSearchDelegate {
     
     
     
+    
+    
+    
+}
+
+extension DataManager {
+
+    func createDocumentURLFromFilename(filename: String) -> NSURL {
+        return NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename)
+    }
+    
     /**
-        Returns the path to the Documents Directory.
+     Returns the path to the Documents Directory.
      
-        - Returns: path to Documents Directory
-    */
+     - Returns: path to Documents Directory
+     */
     func applicationDocumentDirectory() -> String {
         return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
     }

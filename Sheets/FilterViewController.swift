@@ -58,7 +58,7 @@ class FilterViewController : UIViewController, UIPickerViewDelegate, UIPickerVie
         let dataManager = DataManager.sharedInstance
         self.preferredContentSize = preferredSize
     
-        var composerNames = dataManager.composerNames
+        let composerNames = dataManager.composerNames
         let musicalForms = dataManager.musicalFormNames
         let tempos = dataManager.tempoNames
         let keys = dataManager.keys
