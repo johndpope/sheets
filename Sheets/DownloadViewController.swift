@@ -76,7 +76,7 @@ class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnect
         
         DataManager.sharedInstance.downloadFileFromURL((self.webView.request?.URL)!)
         
-        VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile.filename)
+        VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile!.filename)
     }
     
     /**

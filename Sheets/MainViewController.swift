@@ -18,11 +18,16 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     let userDefaults = NSUserDefaults()
     
+    var refreshControl: UIRefreshControl?
+    
+    var longPressGR: UILongPressGestureRecognizer?
+    
     var tableView: UITableView!
     
     @IBOutlet var collectionView: UICollectionView!
     private let reuseIdentifier = "SheetCell"
-    private let sectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
+    private let sectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
+    private let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
     private var selectedCell: SheetThumbCell?
     
     private var fileSelectionMode = false
@@ -91,6 +96,9 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        dataManager.collectionView = self.collectionView
+        dataManager.tableView = self.tableView
+        
         // Load Thumbnails
         //let qualityOfServiceClass = QOS_CLASS_BACKGROUND
         //let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
@@ -138,22 +146,36 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             //printMetaDataFile()
         }
         dataManager.loadLocalFiles()
-        tableView.reloadData()
+        reload()
         
         // DEBUG
         tableView.hidden = true
         
         // Add long press gesture recognizer for the collectionView cells
-        let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        lpgr.minimumPressDuration = 0.5
-        lpgr.delegate = self
-        lpgr.delaysTouchesBegan = true
-        self.collectionView?.addGestureRecognizer(lpgr)
+        longPressGR = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGR!.minimumPressDuration = 0.5
+        longPressGR!.delegate = self
+        longPressGR!.delaysTouchesBegan = true
+        self.collectionView?.addGestureRecognizer(longPressGR!)
+        
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(reload), forControlEvents: .ValueChanged)
+        self.collectionView.addSubview(refreshControl!)
+        
+        if dataManager.syncing {
+            startSyncAnimation(.CurveEaseIn)
+        }
+        
+        dataManager.collectionView = self.collectionView
+        dataManager.tableView = self.tableView
     }
     
     func reload(){
+        dataManager.loadLocalFiles()
+        dataManager.filterFiles(dataManager.currentFilter)
         tableView.reloadData()
         collectionView.reloadData()
+        refreshControl?.endRefreshing()
     }
     
     func setupGoogleDriveSync(){
@@ -185,7 +207,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             self.navigationItem.titleView = self.searchBar
             
             }, completion: { finished in
-                //self.searchBar.becomeFirstResponder()
+                self.searchBar?.becomeFirstResponder()
                 
         })
     }
@@ -237,17 +259,50 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
         
-        if (gestureRecognizer.state != .Began){
-            return
-        }
-        
-        let p = gestureRecognizer.locationInView(self.collectionView)
-        
-        if let indexPath : NSIndexPath = (self.collectionView?.indexPathForItemAtPoint(p)){
-            selectFile(indexPath)
+        switch(gestureRecognizer.state) {
             
-        } else {
-            print("Couldn't find index path.")
+        case UIGestureRecognizerState.Began:
+            guard let selectedIndexPath = self.collectionView.indexPathForItemAtPoint(gestureRecognizer.locationInView(self.collectionView)) else {
+                break
+            }
+            
+            selectFile(selectedIndexPath)
+            
+            // You should not be able to move files around when a filter is applied
+            if dataManager.currentFilter != "All" {
+                return
+            }
+            
+            // in file selection mode you should be able to change the order without needing a long press
+            gestureRecognizer.minimumPressDuration = 0
+            
+            
+            
+            if #available(iOS 9.0, *) {
+                collectionView.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath)
+            } else {
+                // Fallback on earlier versions
+            }
+            
+        case UIGestureRecognizerState.Changed:
+            if #available(iOS 9.0, *) {
+                collectionView.updateInteractiveMovementTargetPosition(gestureRecognizer.locationInView(gestureRecognizer.view!))
+            } else {
+                // Fallback on earlier versions
+            }
+            
+        case UIGestureRecognizerState.Ended:
+            if #available(iOS 9.0, *) {
+                collectionView.endInteractiveMovement()
+            } else {
+                // Fallback on earlier versions
+            }
+        default:
+            if #available(iOS 9.0, *) {
+                collectionView.cancelInteractiveMovement()
+            } else {
+                // Fallback on earlier versions
+            }
         }
         
     }
@@ -268,6 +323,13 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         fileChosen()
     }
     
+    func selectFile(file: File) {
+        let index = dataManager.filteredFiles.indexOf({ $0.filename == file.filename })
+        let indexPath = NSIndexPath(forItem: index!, inSection: 0)
+        
+        selectFile(indexPath)
+    }
+    
     func fileChosen() {
         
         let deleteButton = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: #selector(deleteChosenFile))
@@ -282,10 +344,14 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         let chosenFile = dataManager.currentFile
         
+        if chosenFile == nil {
+            return
+        }
+        
         // Show Safety question
         let alert = UIAlertController(
-            title: "Delete \(chosenFile.filename)?",
-            message: "Are you sure you want to delete \(chosenFile.filename) from the device?",
+            title: "Delete \(chosenFile!.filename)?",
+            message: "Are you sure you want to delete \(chosenFile!.filename) from the device?",
             preferredStyle: UIAlertControllerStyle.Alert
         )
         let cancel = UIAlertAction(
@@ -297,7 +363,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             title: "Delete",
             style: .Destructive,
             handler: { (action: UIAlertAction) in
-                self.dataManager.deleteFile(chosenFile)
+                self.dataManager.deleteFile(chosenFile!)
                 self.dataManager.loadLocalFiles()
                 self.reload()
                 self.cancelFileSelection()
@@ -315,6 +381,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         selectedCell = nil
         
         fileSelectionMode = false
+        longPressGR?.minimumPressDuration = 0.5
         
         navigationItem.rightBarButtonItems = [searchButton, syncButton]
         navigationItem.leftBarButtonItem = sidebarButton
@@ -427,6 +494,34 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        // reordering code here
+        print("movedFrom: \(sourceIndexPath.row) to \(destinationIndexPath.row)")
+        
+        // find the index of the moved cell in the allFiles array
+        let file = dataManager.filteredFiles[sourceIndexPath.row]
+        let oldIndex = dataManager.allFiles.indexOf({ $0.filename == file.filename && $0.fileID == file.fileID })
+        dataManager.allFiles.removeAtIndex(oldIndex!)
+        dataManager.filteredFiles.removeAtIndex(sourceIndexPath.row)
+        
+        // if the file was moved to the beginning insert it at the beginning
+        if destinationIndexPath.row == 0 {
+            dataManager.allFiles.insert(file, atIndex: 0)
+            
+        } else {
+            // find the file before the destination of the moved file
+            let fileBefore = dataManager.filteredFiles[destinationIndexPath.row - 1]
+            let newIndex = dataManager.allFiles.indexOf({ $0.filename == fileBefore.filename && $0.fileID == fileBefore.fileID })! + 1
+            dataManager.allFiles.insert(file, atIndex: newIndex)
+        }
+        
+        dataManager.writeMetadataFile()
+        
+        reload()
+        dataManager.currentFile = nil
+        selectedCell?.borderEnabled = false
+    }
+    
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
@@ -443,7 +538,15 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return sectionInsets
+        let screenScale = UIScreen.mainScreen().scale
+        if screenScale > 1.0 {
+            // retina screen
+            return retinaSectionInsets
+        } else {
+            // non retina
+            return sectionInsets
+        }
+        
     }
     
     // MARK: - SearchbarDelegate methods

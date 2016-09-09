@@ -64,6 +64,11 @@ class DataManager : FolderSearchDelegate {
         }
     }
     
+    /** The collection view to update after a download finishes. */
+    var collectionView: UICollectionView?
+    /** The table view to update after a download finishes. */
+    var tableView: UITableView?
+    
     var mainFolderName: String!
     var mainFolderID: String?
     
@@ -95,7 +100,7 @@ class DataManager : FolderSearchDelegate {
     /** The files that were deleted locally but exists in the Google Drive. */
     var deletedFiles: [File]!
     /** The currently opened file */
-    var currentFile: File!
+    var currentFile: File?
     /** The currently active filter */
     var currentFilter = "All"
     
@@ -696,8 +701,10 @@ class DataManager : FolderSearchDelegate {
             result.append(fileEntry)
         }
         
+        // order the files
+        allFiles = reorderFiles(result, ref: allFiles, toDownload: toDownload, toUpload: toUpload)
         // store the file information locally
-        allFiles = result
+        //allFiles = result
         writeMetadataFile()
         
         // Perform all of the uploads, downloads, filename changes and metadata uploads
@@ -782,6 +789,17 @@ class DataManager : FolderSearchDelegate {
                 // Set the local file status to synced
                 file.status = File.STATUS.SYNCED
                 file.fileID = (updatedFile as! GTLDriveFile).identifier
+                
+                
+                // TODO: File ID seems to not be set correctly causing redownload
+                print("FileID: \(file.fileID)")
+                var filesContainID = false
+                for localFile in self.allFiles {
+                    if localFile.fileID == file.fileID {
+                        filesContainID = true
+                    }
+                }
+                print("ID in all Files: \(filesContainID)")
                 
                 self.writeMetadataFile()
                 self.uploadMetadataFile({})
@@ -899,9 +917,6 @@ class DataManager : FolderSearchDelegate {
                 self.forceUploadMetadataFile(completionHandler)
             }
         })
-        
-        
-
     }
     
     /** 
@@ -938,6 +953,41 @@ class DataManager : FolderSearchDelegate {
     /** Disables the Google Drive sync functionality. */
     func disableSync(){
         syncEnabled = false
+    }
+    
+    /** 
+        Reorders the entries of the list toOrder, keeping the order of ref and putting new files to the beginning.
+        
+        - Returns: an ordered list
+    */
+    func reorderFiles(toOrder: [File], ref: [File], toDownload: [File], toUpload: [File]) -> [File] {
+    
+        var result = [File]()
+        
+        // first add the files that have to be downloaded
+        result.appendContentsOf(toDownload)
+        
+        for refFile in ref {
+            
+            if toUpload.contains({ $0.filename == refFile.filename }) {
+                // all local file data
+                result.append(refFile)
+            } else {
+                // search for the file entry in the toOrder array
+                for file in toOrder {
+                    
+                    if file.filename == refFile.filename && file.fileID == refFile.fileID {
+                        result.append(file)
+                        break
+                    }
+                }
+            }
+        }
+        
+        // make sure result has the same dimensions as toOrder (no files are lost)
+        assert(result.count == toOrder.count, "Result and toOrder don't contain the same number of files.")
+        
+        return result
     }
     
     
@@ -1002,6 +1052,15 @@ class DataManager : FolderSearchDelegate {
                     self.writeMetadataFile()
                 
                     print("Finished Download of \(localFile.filename)")
+                    
+                    // refresh table and collection view if needed
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.loadLocalFiles()
+                        self.filterFiles(self.currentFilter)
+                        self.collectionView?.reloadData()
+                        self.tableView?.reloadData()
+                    })
+                    
                 }
             }
             
@@ -1426,16 +1485,23 @@ class DataManager : FolderSearchDelegate {
             return ""
         }
     }
-    
-    
-    
-    
-    
-    
-    
 }
 
 extension DataManager {
+    
+    func matchesForRegexInText(regex: String, text: String) -> [String] {
+        
+        do {
+            let regex = try NSRegularExpression(pattern: regex, options: [])
+            let nsString = text as NSString
+            let results = regex.matchesInString(text,
+                                                options: [], range: NSMakeRange(0, nsString.length))
+            return results.map { nsString.substringWithRange($0.range)}
+        } catch let error as NSError {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
+    }
 
     func createDocumentURLFromFilename(filename: String) -> NSURL {
         return NSURL(fileURLWithPath: applicationDocumentDirectory()).URLByAppendingPathComponent(filename)

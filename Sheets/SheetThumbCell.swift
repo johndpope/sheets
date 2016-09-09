@@ -17,8 +17,8 @@ class SheetThumbCell: UICollectionViewCell {
         }
     }
     
-    let borderWidth: CGFloat = 5
-    let borderColor = UIColor.redColor()//UIColor(red: 148, green: 202, blue: 209, alpha: 1)
+    let borderWidth: CGFloat = 7
+    let borderColor = UIColor(red: 240/255, green: 102/255, blue: 109/255, alpha: 1)
     
     @IBOutlet var imageView: UIImageView! {
         didSet {
