@@ -197,7 +197,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         navigationItem.titleView = searchBar
         navigationItem.setLeftBarButtonItem(nil, animated: true)
         
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(searchBarCancelButtonClicked(_:)))
+        let cancelButton = UIBarButtonItem(title: "Done", style: .Done, target: self, action: #selector(searchBarCancelButtonClicked(_:)))
         navigationItem.setRightBarButtonItems([cancelButton], animated: true)
         
         UIView.animateWithDuration(0.2, animations: {
@@ -250,7 +250,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     func filterPicked(filter: String) {
         filterLabel.text = filter
-        DataManager.sharedInstance.filterFiles(filter)
+        dataManager.filterFiles(filter)
         tableView.reloadData()
         collectionView.reloadData()
     }
@@ -267,11 +267,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             }
             
             selectFile(selectedIndexPath)
-            
-            // You should not be able to move files around when a filter is applied
-            if dataManager.currentFilter != "All" {
-                return
-            }
             
             // in file selection mode you should be able to change the order without needing a long press
             gestureRecognizer.minimumPressDuration = 0
@@ -506,7 +501,10 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         // if the file was moved to the beginning insert it at the beginning
         if destinationIndexPath.row == 0 {
-            dataManager.allFiles.insert(file, atIndex: 0)
+            // find the file after the destination
+            let fileAfter = dataManager.filteredFiles[destinationIndexPath.row]
+            let newIndex = dataManager.allFiles.indexOf({ $0.filename == fileAfter.filename && $0.fileID == fileAfter.fileID })! - 1
+            dataManager.allFiles.insert(file, atIndex: newIndex)
             
         } else {
             // find the file before the destination of the moved file
@@ -559,6 +557,16 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         } else {
             filterPicked(searchText!)
         }
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        let searchText = searchBar.text
+        if searchText == "" {
+            filterPicked("All")
+        } else {
+            filterPicked(searchText!)
+        }
+        hideSearchBar()
     }
     
     // Helper for showing an alert

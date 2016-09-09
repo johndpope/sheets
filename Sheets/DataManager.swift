@@ -379,6 +379,7 @@ class DataManager : FolderSearchDelegate {
     }
     
     func filterFiles(filter: String) {
+        self.currentFilter = filter
         filteredFiles = filteredFiles(filter)
     }
     
