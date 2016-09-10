@@ -238,7 +238,7 @@ class DataManager : FolderSearchDelegate {
         
         let pdfRect = CGPDFPageGetBoxRect(pageRef, CGPDFBox.MediaBox)
         //print("PDFSize: \(file.filename) :  width \(pdfRect.width) height \(pdfRect.height)")
-        let thumbHeight = ((thumbnailSize.width / pdfRect.width) * pdfRect.height) - 3
+        let thumbHeight = (((thumbnailSize.width / pdfRect.width) * pdfRect.height) - 3)
         //let thumbHeight = thumbnailSize.height
         //let thumbWidth = (thumbnailSize.height / pdfRect.height) * pdfRect.width - 3
         let thumbWidth = thumbnailSize.width
@@ -1067,7 +1067,7 @@ class DataManager : FolderSearchDelegate {
     func downloadFile(file: GTLDriveFile){
         
         // don't download if the filename already exists locally
-        if NamingManager.sharedInstance.filenameAlreadyExists(file.name) {
+        if NamingManager.sharedInstance.filenameAlreadyExists(file.name.stringByDeletingPathExtension()) {
             return
         }
         
