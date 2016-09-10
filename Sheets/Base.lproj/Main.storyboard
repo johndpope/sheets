@@ -67,19 +67,22 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="composers_icon" translatesAutoresizingMaskIntoConstraints="NO" id="mdz-vw-BTg">
+                                            <rect key="frame" x="28" y="0.0" width="38" height="38"/>
+                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Composers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLh-3B-fK9">
                                             <rect key="frame" x="67" y="0.0" width="152" height="32.5"/>
                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="25"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="composers_icon" translatesAutoresizingMaskIntoConstraints="NO" id="mdz-vw-BTg">
-                                            <rect key="frame" x="28" y="0.0" width="38" height="38"/>
-                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" red="0.022010065950000001" green="0.1214040831" blue="0.1523642016" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.022010065950000001" green="0.1214040831" blue="0.1523642016" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <segue destination="naZ-fi-ytb" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="8he-Da-itm"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="filter" id="SX1-J0-FqC">
                                 <rect key="frame" x="0.0" y="196" width="600" height="56"/>
@@ -346,44 +349,131 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXS-Gf-Y5I">
-                                <rect key="frame" x="133" y="88" width="335" height="52"/>
+                                <rect key="frame" x="76" y="89" width="448" height="52"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="335" id="IT3-46-LVp"/>
-                                    <constraint firstAttribute="height" constant="52" id="lWg-JT-keV"/>
+                                    <constraint firstAttribute="height" constant="52" id="ae4-Ou-s2B"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="27"/>
                                 <state key="normal" title="Setup Google Drive Sync &amp; Backup"/>
                                 <connections>
                                     <action selector="setupGDSync" destination="jqW-DR-FNF" eventType="touchUpInside" id="rqH-br-odZ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohl-HE-g07">
-                                <rect key="frame" x="190" y="406" width="221" height="36"/>
+                                <rect key="frame" x="190" y="800" width="221" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="JJB-h9-0dm"/>
-                                    <constraint firstAttribute="width" constant="221" id="ibT-Ia-1bg"/>
+                                    <constraint firstAttribute="height" constant="36" id="WZb-Kk-YpB"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="22"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="32"/>
                                 <state key="normal" title="Reset">
                                     <color key="titleColor" red="0.66674679487179489" green="0.094711848211870439" blue="0.099247190980832928" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="deleteAllLocalFiles" destination="jqW-DR-FNF" eventType="touchUpInside" id="zgr-wq-Gnq"/>
+                                    <action selector="reset" destination="jqW-DR-FNF" eventType="touchUpInside" id="78Z-Gc-ER6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7u7-WB-tuj">
+                                <rect key="frame" x="190" y="726" width="221" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="2mn-0y-YP4"/>
+                                    <constraint firstAttribute="width" constant="221" id="Jy6-Va-Yhm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="32"/>
+                                <state key="normal" title="Delete all files">
+                                    <color key="titleColor" red="0.66674679489999999" green="0.094711848210000005" blue="0.099247190979999997" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteAllFiles" destination="jqW-DR-FNF" eventType="touchUpInside" id="eVp-hT-y39"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Leave empty for none" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Roz-l7-FJM">
+                                <rect key="frame" x="149" y="222" width="304" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="304" id="ebj-zP-beS"/>
+                                    <constraint firstAttribute="height" constant="30" id="i3O-3d-80k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="21"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="defaultInstrumentChanged:" destination="jqW-DR-FNF" eventType="editingChanged" id="U28-4h-rFB"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Instrument" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SM4-WU-qJs">
+                                <rect key="frame" x="185" y="181" width="231" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="DFN-jJ-7r8"/>
+                                    <constraint firstAttribute="width" constant="231" id="upM-fU-FVq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="24"/>
+                                <color key="textColor" red="0.12549019607843137" green="0.19607843137254902" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1LY-K5-S62">
+                                <rect key="frame" x="276" y="437" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchChanged:" destination="jqW-DR-FNF" eventType="valueChanged" id="Gq8-Lc-P0Z"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prioritize local file order when syncing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UhO-zI-A4K">
+                                <rect key="frame" x="92" y="392" width="418" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="ZBo-f6-We8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="24"/>
+                                <color key="textColor" red="0.12549019610000001" green="0.1960784314" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-84-ptf">
+                                <rect key="frame" x="75" y="476" width="450" height="120"/>
+                                <string key="text">(Leave on if you only have one device)  Devices where this switch is set to "off" will automatically recieve the file order of devices where the switch is set to "on"</string>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <color key="textColor" red="0.12549019610000001" green="0.1960784314" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBI-0E-cen">
+                                <rect key="frame" x="86" y="249" width="429" height="77"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="24"/>
+                                <state key="normal" title="Set default instrument for all files">
+                                    <color key="titleColor" red="0.66674679489999999" green="0.094711848210000005" blue="0.099247190979999997" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="setInstrumentForAll" destination="jqW-DR-FNF" eventType="touchUpInside" id="WQ2-hn-qSg"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oCv-Jp-4qt" firstAttribute="top" secondItem="ohl-HE-g07" secondAttribute="bottom" constant="158" id="2NX-xu-Km8"/>
-                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="top" secondItem="wTO-7c-88I" secondAttribute="bottom" constant="24" id="DWw-Rp-Kro"/>
-                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="centerX" secondItem="ohl-HE-g07" secondAttribute="centerX" id="qXl-MM-IhX"/>
-                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="centerX" secondItem="8Cr-B3-eFt" secondAttribute="centerX" id="x2L-0J-ARV"/>
+                            <constraint firstItem="LBI-0E-cen" firstAttribute="top" secondItem="SM4-WU-qJs" secondAttribute="bottom" constant="47" id="0WG-ef-VcA"/>
+                            <constraint firstItem="1LY-K5-S62" firstAttribute="top" secondItem="LBI-0E-cen" secondAttribute="bottom" constant="67" id="74K-JH-Sa9"/>
+                            <constraint firstItem="7u7-WB-tuj" firstAttribute="top" secondItem="Gmu-84-ptf" secondAttribute="bottom" constant="130" id="Dkj-6O-Sgw"/>
+                            <constraint firstItem="7u7-WB-tuj" firstAttribute="top" secondItem="Gmu-84-ptf" secondAttribute="top" constant="250" id="Ft6-ne-7jv"/>
+                            <constraint firstItem="UhO-zI-A4K" firstAttribute="centerX" secondItem="1LY-K5-S62" secondAttribute="centerX" id="LSR-ts-XGm"/>
+                            <constraint firstItem="LBI-0E-cen" firstAttribute="trailing" secondItem="7u7-WB-tuj" secondAttribute="trailing" constant="104" id="LjX-O1-Hcz"/>
+                            <constraint firstItem="1LY-K5-S62" firstAttribute="top" secondItem="UhO-zI-A4K" secondAttribute="bottom" constant="13" id="N5H-SR-voh"/>
+                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="leading" secondItem="8Cr-B3-eFt" secondAttribute="leadingMargin" constant="56" id="S8Q-e6-Gen"/>
+                            <constraint firstItem="7u7-WB-tuj" firstAttribute="trailing" secondItem="ohl-HE-g07" secondAttribute="trailing" id="Tzq-ng-afO"/>
+                            <constraint firstItem="Roz-l7-FJM" firstAttribute="centerX" secondItem="UhO-zI-A4K" secondAttribute="centerX" id="Wt1-3C-Bqo"/>
+                            <constraint firstItem="LBI-0E-cen" firstAttribute="leading" secondItem="7u7-WB-tuj" secondAttribute="leading" constant="-104" id="YLI-4l-8e3"/>
+                            <constraint firstItem="Roz-l7-FJM" firstAttribute="top" secondItem="SM4-WU-qJs" secondAttribute="bottom" constant="20" id="ZTJ-Nl-H48"/>
+                            <constraint firstItem="Gmu-84-ptf" firstAttribute="centerX" secondItem="7u7-WB-tuj" secondAttribute="centerX" id="dQI-x8-dVF"/>
+                            <constraint firstItem="Gmu-84-ptf" firstAttribute="top" secondItem="1LY-K5-S62" secondAttribute="bottom" constant="8" id="edl-4j-wtv"/>
+                            <constraint firstItem="7u7-WB-tuj" firstAttribute="leading" secondItem="ohl-HE-g07" secondAttribute="leading" id="fOs-7f-KAc"/>
+                            <constraint firstItem="ohl-HE-g07" firstAttribute="top" secondItem="7u7-WB-tuj" secondAttribute="bottom" constant="20" id="gy2-pO-rce"/>
+                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="centerX" secondItem="8Cr-B3-eFt" secondAttribute="centerX" id="jjk-ay-HSN"/>
+                            <constraint firstItem="UhO-zI-A4K" firstAttribute="top" secondItem="Roz-l7-FJM" secondAttribute="bottom" constant="140" id="kvX-sQ-D5s"/>
+                            <constraint firstItem="Gmu-84-ptf" firstAttribute="leading" secondItem="8Cr-B3-eFt" secondAttribute="leadingMargin" constant="55" id="mR6-zk-xVF"/>
+                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="top" secondItem="wTO-7c-88I" secondAttribute="bottom" constant="25" id="pQh-kw-dYK"/>
+                            <constraint firstItem="SM4-WU-qJs" firstAttribute="top" secondItem="bXS-Gf-Y5I" secondAttribute="bottom" constant="40" id="pfz-Vs-GFL"/>
+                            <constraint firstItem="SM4-WU-qJs" firstAttribute="centerX" secondItem="Roz-l7-FJM" secondAttribute="centerX" id="pqu-I1-kwP"/>
+                            <constraint firstItem="1LY-K5-S62" firstAttribute="centerX" secondItem="Gmu-84-ptf" secondAttribute="centerX" id="tNR-h6-re3"/>
+                            <constraint firstItem="bXS-Gf-Y5I" firstAttribute="centerX" secondItem="SM4-WU-qJs" secondAttribute="centerX" id="xrW-Z2-wTv"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ZdO-Jy-TKe">
+                    <navigationItem key="navigationItem" title="Settings" id="ZdO-Jy-TKe">
                         <barButtonItem key="leftBarButtonItem" image="Sandwich-Button" style="plain" id="33G-XW-fuJ"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="defaultInstrumentTextField" destination="Roz-l7-FJM" id="ahb-br-rJE"/>
                         <outlet property="sidebarButton" destination="33G-XW-fuJ" id="jSN-kB-PEL"/>
                     </connections>
                 </viewController>
@@ -470,9 +560,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Main" id="cHN-oq-7nj">
-                        <barButtonItem key="leftBarButtonItem" image="Sandwich-Button" style="plain" id="tkX-Bn-VaY">
-                            <color key="tintColor" red="0.022010065950000001" green="0.1214040831" blue="0.1523642016" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem image="Sandwich-Button" style="plain" id="tkX-Bn-VaY">
+                                <color key="tintColor" red="0.022010065950000001" green="0.1214040831" blue="0.1523642016" alpha="1" colorSpace="calibratedRGB"/>
+                            </barButtonItem>
+                            <barButtonItem image="table_icon" id="2T4-za-DYT">
+                                <connections>
+                                    <action selector="changeDisplayType" destination="BYZ-38-t0r" id="dLP-Lj-811"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem image="search_icon" style="plain" id="beO-zE-SU9">
                                 <color key="tintColor" red="0.022010065950000001" green="0.1214040831" blue="0.1523642016" alpha="1" colorSpace="calibratedRGB"/>
@@ -490,6 +587,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="01v-aL-KS6" id="JYy-Aj-Ev9"/>
+                        <outlet property="displayTypeButton" destination="2T4-za-DYT" id="sQd-Be-jud"/>
                         <outlet property="searchButton" destination="beO-zE-SU9" id="kxs-Hg-geD"/>
                         <outlet property="sidebarButton" destination="tkX-Bn-VaY" id="g2e-ig-r9J"/>
                         <outlet property="syncButton" destination="CaI-Sx-xEL" id="0vh-yc-eTd"/>
@@ -517,7 +615,7 @@
                                     <constraint firstAttribute="height" constant="55" id="AFU-o0-l3j"/>
                                 </constraints>
                             </pickerView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4JZ-Ru-3yK" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4JZ-Ru-3yK" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="64" y="170" width="472" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -565,7 +663,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rJ9-gA-kUr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1763" y="506"/>
+            <point key="canvasLocation" x="3335" y="-265"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DkM-h7-UnT">
@@ -596,13 +694,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aHl-3o-FHL">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="aHl-3o-FHL">
                                 <rect key="frame" x="255" y="189" width="291" height="30"/>
                                 <color key="textColor" red="0.088913666181017301" green="0.13555037213840582" blue="0.1361778846153846" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IW0-Cf-VKp" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="IW0-Cf-VKp" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="227" width="291" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -610,7 +708,7 @@
                                     <outlet property="suggestionsTableView" destination="kcq-Om-LQd" id="Xtg-9T-b80"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E9F-GQ-nyg" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="E9F-GQ-nyg" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="265" width="291" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -652,7 +750,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zjp-hd-kzK">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Zjp-hd-kzK">
                                 <rect key="frame" x="255" y="325" width="148" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="148" id="Rfz-4f-kY9"/>
@@ -666,7 +764,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wEt-qt-A0H" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wEt-qt-A0H" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="405" width="148" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -680,7 +778,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xHx-u7-3uw">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xHx-u7-3uw">
                                 <rect key="frame" x="255" y="363" width="148" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -709,7 +807,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JPm-Rb-M4M" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JPm-Rb-M4M" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="546" width="148" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -717,7 +815,7 @@
                                     <outlet property="suggestionsTableView" destination="kcq-Om-LQd" id="7JL-h7-zge"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NQr-V5-jyp">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="NQr-V5-jyp">
                                 <rect key="frame" x="54" y="146" width="492" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Buu-pZ-eyD"/>
@@ -729,7 +827,7 @@
                                     <action selector="filenameInputChanged" destination="aHt-bB-rGR" eventType="editingChanged" id="bmi-MZ-bJJ"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vZe-uX-CxA" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vZe-uX-CxA" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="503" width="148" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -754,7 +852,7 @@
                                 <rect key="frame" x="424" y="325" width="122" height="250"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7EO-8J-isI" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7EO-8J-isI" customClass="AutocompleteUITextField" customModule="Sheets" customModuleProvider="target">
                                 <rect key="frame" x="255" y="443" width="148" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -855,7 +953,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bxl-ur-mG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="947" y="506"/>
+            <point key="canvasLocation" x="2519" y="-265"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gnx-dR-eei">
@@ -884,50 +982,146 @@
                     <view key="view" contentMode="scaleToFill" id="hFI-t4-NAW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="vMI-aN-bfZ">
-                                <rect key="frame" x="20" y="72" width="560" height="2"/>
-                            </progressView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="vMI-aN-bfZ" firstAttribute="leading" secondItem="hFI-t4-NAW" secondAttribute="leadingMargin" id="7Ob-Zs-Uwt"/>
-                            <constraint firstItem="vMI-aN-bfZ" firstAttribute="trailing" secondItem="hFI-t4-NAW" secondAttribute="trailingMargin" id="bor-Zz-fxy"/>
-                            <constraint firstItem="vMI-aN-bfZ" firstAttribute="top" secondItem="7Gq-ZJ-HPr" secondAttribute="bottom" constant="8" symbolic="YES" id="cPD-Cj-DcE"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="2lf-Pd-KgZ">
+                    <navigationItem key="navigationItem" title="Locally deleted files" id="2lf-Pd-KgZ">
                         <barButtonItem key="leftBarButtonItem" image="Sandwich-Button" style="plain" id="Frc-tL-Fko"/>
-                        <barButtonItem key="rightBarButtonItem" title="Download" id="e7x-Vz-ZTT">
-                            <color key="tintColor" red="0.022010065950000001" green="0.1214040831" blue="0.1523642016" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="downloadButtonPressed:" destination="4EE-Yc-RFg" id="GxO-Ij-DHp"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Download" id="e7x-Vz-ZTT">
+                                <color key="tintColor" red="0.022010065950000001" green="0.1214040831" blue="0.1523642016" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="downloadButtonPressed:" destination="4EE-Yc-RFg" id="GxO-Ij-DHp"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="sync_icon" id="a28-cl-rhJ"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="downloadButton" destination="e7x-Vz-ZTT" id="lMX-Tf-jv9"/>
-                        <outlet property="progressView" destination="vMI-aN-bfZ" id="N0t-0p-81w"/>
                         <outlet property="sidebarButton" destination="Frc-tL-Fko" id="Wcm-pz-s2D"/>
+                        <outlet property="syncButton" destination="a28-cl-rhJ" id="TVl-q2-iTB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CKR-Lr-byU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2519" y="-2553"/>
         </scene>
+        <!--Composers-->
+        <scene sceneID="pbk-3t-uK5">
+            <objects>
+                <viewController id="UuG-Uy-nX3" customClass="ComposersViewController" customModule="Sheets" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cPl-aA-KNM"/>
+                        <viewControllerLayoutGuide type="bottom" id="7oA-hc-gfm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vKg-WC-EOb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="g5p-CQ-xYi">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.027450980390000001" green="0.090196078430000007" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="60" minimumInteritemSpacing="40" id="SHz-jB-lJC">
+                                    <size key="itemSize" width="150" height="200"/>
+                                    <size key="headerReferenceSize" width="50" height="59"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="20" minY="40" maxX="20" maxY="40"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SheetCell" id="anI-Hz-9hl" customClass="SheetThumbCell" customModule="Sheets" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="163" width="150" height="200"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WCP-Ku-8hs">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="WCP-Ku-8hs" firstAttribute="top" secondItem="anI-Hz-9hl" secondAttribute="top" id="EPF-2J-whk"/>
+                                            <constraint firstItem="WCP-Ku-8hs" firstAttribute="leading" secondItem="anI-Hz-9hl" secondAttribute="leading" id="Wzu-Cp-Gho"/>
+                                            <constraint firstAttribute="bottom" secondItem="WCP-Ku-8hs" secondAttribute="bottom" id="iET-9Q-b4i"/>
+                                            <constraint firstAttribute="trailing" secondItem="WCP-Ku-8hs" secondAttribute="trailing" id="s9X-Nb-D87"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="WCP-Ku-8hs" id="Eud-K1-zWm"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="composerHeader" id="uJG-eS-nfy" customClass="SheetSectionHeader" customModule="Sheets" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="64" width="600" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Composer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6W-ac-Boh">
+                                            <rect key="frame" x="20" y="22" width="572" height="37"/>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="31"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <connections>
+                                        <outlet property="label" destination="c6W-ac-Boh" id="byI-gi-rLS"/>
+                                    </connections>
+                                </collectionReusableView>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="g5p-CQ-xYi" secondAttribute="trailing" id="MXo-EC-0la"/>
+                            <constraint firstItem="g5p-CQ-xYi" firstAttribute="top" secondItem="cPl-aA-KNM" secondAttribute="bottom" constant="-64" id="OJm-fu-ckU"/>
+                            <constraint firstItem="g5p-CQ-xYi" firstAttribute="leading" secondItem="vKg-WC-EOb" secondAttribute="leading" id="gnz-zK-V0i"/>
+                            <constraint firstItem="g5p-CQ-xYi" firstAttribute="bottom" secondItem="7oA-hc-gfm" secondAttribute="top" id="ofu-ne-noU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Composers" id="NOf-BQ-gZo">
+                        <barButtonItem key="leftBarButtonItem" image="Sandwich-Button" style="plain" id="0Mx-yf-qeZ">
+                            <color key="tintColor" red="0.022010065950000001" green="0.1214040831" blue="0.1523642016" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="g5p-CQ-xYi" id="sft-fS-IVI"/>
+                        <outlet property="sidebarButton" destination="0Mx-yf-qeZ" id="H0m-Yc-Ajn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vFp-gJ-G5I" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1763" y="521"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Gu8-0n-sE8">
+            <objects>
+                <navigationController useStoryboardIdentifierAsRestorationIdentifier="YES" id="naZ-fi-ytb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="pXq-HK-PYT"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eK1-Kr-3yk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="UuG-Uy-nX3" kind="relationship" relationship="rootViewController" id="0d2-j1-tr8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Err-cj-t76" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="947" y="521"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Sandwich-Button" width="40" height="40"/>
-        <image name="composers_icon" width="84" height="84"/>
-        <image name="download_icon" width="84" height="84"/>
-        <image name="filter_icon" width="84" height="84"/>
+        <image name="composers_icon" width="50" height="50"/>
+        <image name="download_icon" width="50" height="50"/>
+        <image name="filter_icon" width="50" height="50"/>
         <image name="next_arrow" width="26" height="26"/>
-        <image name="note_icon" width="84" height="84"/>
+        <image name="note_icon" width="50" height="50"/>
         <image name="previous_arrow" width="26" height="26"/>
         <image name="search_icon" width="50" height="50"/>
-        <image name="settings_icon" width="84" height="84"/>
+        <image name="settings_icon" width="50" height="50"/>
         <image name="sync_icon" width="50" height="50"/>
+        <image name="table_icon" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="g6H-96-Kul"/>

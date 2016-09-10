@@ -11,16 +11,16 @@ Implementation:
 
 (X) Delete Files
 
-( ) Synchronization
- L ( ) Import files setting 
-    L ( ) Parse file metadata from filename
+(X) Synchronization
+ L (X) Import files setting 
+    L (X) Parse file metadata from filename
  L (X) button (manual)
 
 ( ) Settings
  L (X) Setup Google Drive Sync
  L ( ) custom Auto naming convention
 
-( ) File display shelf
+(X) File display shelf
 
 (X) Filter Files
  L (X) Name
@@ -28,7 +28,7 @@ Implementation:
  L (X) musical Form
  L (X) tempo
 
-( ) Search for files
+(X) Search for files
 
 (X) Webview for downloading Sheet in App
 ( ) Choose composer picture from internet

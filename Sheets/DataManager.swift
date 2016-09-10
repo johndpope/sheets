@@ -291,6 +291,30 @@ class DataManager : FolderSearchDelegate {
         return image
     }
     
+    /** 
+        Returns a dictionary that maps composer names to a list of files that belong to this composer
+    */
+    func getFilesByComposer() -> [String:[File]] {
+        
+        var result = [String:[File]]()
+        
+        for file in files {
+            
+            let composer = file.composer == "" ? "Other" : file.composer
+            
+            if result[composer] != nil {
+                // list already initialized -> append to list
+                print("append \(file.filename)")
+                result[composer]!.append(file)
+            } else {
+                // intialize new list
+                result[composer] = [file]
+            }
+        }
+        
+        return result
+    }
+    
     /**
         Returns a File array from the entries of the Metadata textfile located in the local Documents Directory.
      
@@ -393,6 +417,8 @@ class DataManager : FolderSearchDelegate {
     */
     func startSync() -> Bool{
         // Only sync if syncing is enabled
+        print(syncing)
+        print(syncEnabled)
         if let enabled = syncEnabled where !enabled || syncing {
             return false      // TODO Implement syncEnabled = true
         }
@@ -703,7 +729,12 @@ class DataManager : FolderSearchDelegate {
         }
         
         // order the files
-        allFiles = reorderFiles(result, ref: allFiles, toDownload: toDownload, toUpload: toUpload)
+        if userDefaults.boolForKey("localOrderPriority") {
+            allFiles = reorderFiles(result, ref: allFiles, toDownload: toDownload, toUpload: toUpload)
+        } else {
+            allFiles = result
+        }
+        
         // store the file information locally
         //allFiles = result
         writeMetadataFile()
@@ -755,9 +786,10 @@ class DataManager : FolderSearchDelegate {
             }
         }
         
-        let fileCount = syncProgress.count
+        let fileCount = syncProgress.values.count
         
         if fileCount == 0 {
+            print("no files in sync progress")
             return 1
         } else {
             return CGFloat(totalFinished/syncProgress.values.count)
@@ -1033,6 +1065,14 @@ class DataManager : FolderSearchDelegate {
         Donwloads the data of a GTLDriveFile from Google Drive and stores them to the documents directory.
     */
     func downloadFile(file: GTLDriveFile){
+        
+        // don't download if the filename already exists locally
+        if NamingManager.sharedInstance.filenameAlreadyExists(file.name) {
+            return
+        }
+        
+        syncing = true
+        
         print("Downloading \(file.name)")
         let url = "https://www.googleapis.com/drive/v3/files/\(file.identifier)?alt=media"
         
@@ -1406,10 +1446,21 @@ class DataManager : FolderSearchDelegate {
             print("Could not remove \(file.filename)")
         }
         
-        file.status = File.STATUS.DELETED
+        // if the file hadn't been synced with the google drive before
+        // if not it can't be downloaded again and should therefore have its
+        // metadata entry removed
+        if file.status == File.STATUS.NEW {
+            
+            let index = allFiles.indexOf(file)
+            allFiles.removeAtIndex(index!)
+        } else {
+            // otherwise just set the status to DELETED
+            file.status = File.STATUS.DELETED
+        }
+        
         writeMetadataFile()
         
-        // Delete the file thumbnail from the thumbnialDictionary
+        // Delete the file thumbnail from the thumbnailDictionary
         var thumbDict = userDefaults.valueForKey("thumbnailDictionary") as? [String:String]
         let thumbPath = thumbDict?[file.filename]
         thumbDict?.removeValueForKey(file.filename)
@@ -1427,19 +1478,20 @@ class DataManager : FolderSearchDelegate {
     /**
         Deletes all of the files in the documents directory, and empties the metadata file
     */
-    func deleteAllFiles(){
-        for file in allFiles {
-            do {
-                try NSFileManager.defaultManager().removeItemAtURL(createDocumentURLFromFilename(file.filename))
-            } catch {
-                print("Could not remove \(file.filename)")
-            }
-        }
-        
-        allFiles = [File]()
-        files = [File]()
+    func reset(){
+        deleteAllFiles()
         
         resetMetaDataFile()
+    }
+    
+    /** 
+        Deletes all of the files in the documents directory and sets their state to DELETED so they can be downloaded again.
+    */
+    func deleteAllFiles(){
+        
+        for file in allFiles {
+            deleteFile(file)
+        }
     }
     
     /*

@@ -54,6 +54,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         }
     }
     
+    @IBOutlet var displayTypeButton: UIBarButtonItem!
+    
     var searchBar: UISearchBar?
     var navTitle: String!
     var navTitleView: UIView!
@@ -92,6 +94,19 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         recognizer.delegate = self
         titleView.addGestureRecognizer(recognizer)
         
+        // Setup table view
+        let offset : CGFloat = 50
+        let navHeight = (self.navigationController?.navigationBar.frame.height)! + offset
+        let height = CGRectGetHeight(self.view.frame) - navHeight
+        tableView = UITableView(frame: CGRectMake(0, navHeight, UIScreen.mainScreen().bounds.width, height ),
+                                style: .Plain)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        self.view.addSubview(tableView)
+        
+        tableView.hidden = true
+        
         // setup Collection View
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -125,19 +140,12 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     func generalSetup(){
         
         //files = [File]()
-        let offset : CGFloat = 50
-        let navHeight = (self.navigationController?.navigationBar.frame.height)! + offset
-        let height = CGRectGetHeight(self.view.frame) - navHeight
-        tableView = UITableView(frame: CGRectMake(0, navHeight, UIScreen.mainScreen().bounds.width, height ),
-                                style: .Plain)
-        tableView.delegate = self
-        tableView.dataSource = self
         
-        self.view.addSubview(tableView)
         
         //check if first time launch
         if (userDefaults.valueForKey("firstTime") == nil) {
             userDefaults.setBool(false, forKey: "firstTime")
+            userDefaults.setBool(true, forKey: "localOrderPriority")
             //setupSheetFolder()
             setupGoogleDriveSync()
         }else{
@@ -148,8 +156,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         dataManager.loadLocalFiles()
         reload()
         
-        // DEBUG
-        tableView.hidden = true
+        
+        
         
         // Add long press gesture recognizer for the collectionView cells
         longPressGR = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
@@ -228,6 +236,24 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     func showPDFInReader(filename: String){
         VFRController.sharedInstance.showPDFInReader(filename)
+    }
+    
+    @IBAction func changeDisplayType() {
+        
+        // check which display type is active currently
+        if collectionView.hidden {
+            // show the collectionView
+            tableView.hidden = true
+            collectionView.hidden = false
+            // change the barbutton image
+            displayTypeButton.image = UIImage(named: "table_icon")
+        } else {
+            // show the table view
+            collectionView.hidden = true
+            tableView.hidden = false
+            // change the barbutton image
+            displayTypeButton.image = UIImage(named: "collection_icon")
+        }
     }
     
     
@@ -319,7 +345,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     }
     
     func selectFile(file: File) {
-        let index = dataManager.filteredFiles.indexOf({ $0.filename == file.filename })
+        let index = dataManager.filteredFiles.indexOf(file)
         let indexPath = NSIndexPath(forItem: index!, inSection: 0)
         
         selectFile(indexPath)
@@ -389,6 +415,17 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         //dataManager.fetchFilesInFolder()
         if dataManager.startSync() {
             startSyncAnimation(.CurveEaseIn)
+        } else {
+            // check to see if the sync was enabled or not
+            // If not ask the user if they would like to setup Google Drive sync
+            if !dataManager.syncEnabled! {
+                let alert = UIAlertController(title: "Google Drive Sync not enabled.", message: "Google drive sync isn't enabled yet. Would you like to set it up now?", preferredStyle: .Alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+                    
+                    self.presentViewController(SetupViewController(), animated: true, completion: nil)
+                }))
+            }
         }
     }
     
@@ -437,6 +474,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
+        cell.textLabel?.font = UIFont(name: "Futura", size: 20)
         cell.textLabel?.text = dataManager.filteredFiles[indexPath.row].filename.stringByDeletingPathExtension()
         return cell
     }
@@ -495,7 +533,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         // find the index of the moved cell in the allFiles array
         let file = dataManager.filteredFiles[sourceIndexPath.row]
-        let oldIndex = dataManager.allFiles.indexOf({ $0.filename == file.filename && $0.fileID == file.fileID })
+        let oldIndex = dataManager.allFiles.indexOf(file)
         dataManager.allFiles.removeAtIndex(oldIndex!)
         dataManager.filteredFiles.removeAtIndex(sourceIndexPath.row)
         
@@ -503,13 +541,13 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         if destinationIndexPath.row == 0 {
             // find the file after the destination
             let fileAfter = dataManager.filteredFiles[destinationIndexPath.row]
-            let newIndex = dataManager.allFiles.indexOf({ $0.filename == fileAfter.filename && $0.fileID == fileAfter.fileID })! - 1
+            let newIndex = dataManager.allFiles.indexOf(fileAfter)! - 1
             dataManager.allFiles.insert(file, atIndex: newIndex)
             
         } else {
             // find the file before the destination of the moved file
             let fileBefore = dataManager.filteredFiles[destinationIndexPath.row - 1]
-            let newIndex = dataManager.allFiles.indexOf({ $0.filename == fileBefore.filename && $0.fileID == fileBefore.fileID })! + 1
+            let newIndex = dataManager.allFiles.indexOf(fileBefore)! + 1
             dataManager.allFiles.insert(file, atIndex: newIndex)
         }
         

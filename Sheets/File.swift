@@ -143,6 +143,11 @@ class File {
             }
         }
         
+        // if instrument couldn't be guessed, choose default instrument if it exists
+        if let defaultInstrument = dataManager.userDefaults.valueForKey("defaultInstrument") {
+            self.instrument = defaultInstrument as! String
+        }
+        
         // Guess Opus
         // try between 1 and 6 digits
         var results = dataManager.matchesForRegexInText("op.[0-9]{1,6}", text: lowerFilename)
@@ -222,10 +227,13 @@ class File {
         self.fileID = parts[12]
         self.filename = parts[13]
     }
-    
-    
 }
 
+extension File : Equatable {}
+
+func ==(lhs: File, rhs: File) -> Bool {
+    return lhs.getDataAsString() == rhs.getDataAsString()
+}
 
 
 

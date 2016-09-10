@@ -12,7 +12,24 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var sidebarButton: UIBarButtonItem!
     @IBOutlet var downloadButton: UIBarButtonItem!
-    @IBOutlet var progressView: UIProgressView!
+    
+    @IBOutlet var syncButton: UIBarButtonItem! {
+        didSet {
+            let icon = UIImage(named: "sync_icon")?.imageWithRenderingMode(.AlwaysTemplate)
+            let iconSize = CGRect(origin: CGPointZero, size: icon!.size)
+            //let iconButton = UIButton(frame: iconSize)
+            let iconButton = UIButton(type: .System)
+            
+            iconButton.frame = iconSize
+            iconButton.setBackgroundImage(icon, forState: .Normal)
+            iconButton.tintColor = dataManager.defaultBlue
+            //iconButton.addTarget(self, action: #selector(sync), forControlEvents: .TouchUpInside)
+            
+            syncButton.customView = iconButton
+            
+            syncButton.customView!.transform = CGAffineTransformIdentity
+        }
+    }
     
     var timer: NSTimer?
     
@@ -37,7 +54,9 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(animated: Bool) {
         
-        
+        if dataManager.syncing {
+            startSyncAnimation(.CurveEaseIn)
+        }
     }
     
     func generalSetup() {
@@ -47,6 +66,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         let height = CGRectGetHeight(self.view.frame) - navHeight
         tableView = UITableView(frame: CGRectMake(0, navHeight, UIScreen.mainScreen().bounds.width, height ),
                                 style: .Plain)
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -55,27 +75,54 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Setup download button
         downloadButton.enabled = false
         
-        // Setup progressView 
-        /*
-        progressView.progress = Float(dataManager.getSyncProgress())
-        
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: NSBlockOperation(block: {
-            
-            //progressBar.progress = Float(self.dataManager.currentDownloadProgress)
-            self.progressView.progress = Float(self.dataManager.getSyncProgress())
-            
-            if self.progressView.progress >= 0.99 {
-                self.timer!.invalidate()
-            }
-            
-        }), selector: #selector(NSOperation.main), userInfo: nil, repeats: true)
-        */
     }
     
     
     @IBAction func downloadButtonPressed(button: UIBarButtonItem) {
         
-        dataManager.downloadFile(selectedFile!)
+        // check if the filename exists locally. If it does, show an alert
+        if NamingManager.sharedInstance.filenameAlreadyExists(selectedFile!.filename) {
+            // show the alert asking the user to change the filename of the local file so 
+            // that the remote file can be downloaded
+            let alert = UIAlertController(title: "Filename already exists locally.", message: "A file called \(selectedFile?.filename) already exists locally. Change the local filename to be able to donwload the new file from the Drive.", preferredStyle: .Alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            
+        } else {
+            dataManager.downloadFile(selectedFile!)
+            startSyncAnimation(.CurveEaseIn)
+        }
+    }
+    
+    func startSyncAnimation(options: UIViewAnimationOptions) {
+        
+        syncButton.customView!.tintColor = UIColor.redColor()
+        
+        
+        UIView.animateWithDuration(
+            1.0,
+            delay: 0.0,
+            options: options,
+            animations: {
+                self.syncButton.customView!.transform =  CGAffineTransformRotate(self.syncButton.customView!.transform,
+                    CGFloat(M_PI ))
+            },
+            completion: { (finished: Bool) in
+                
+                if finished {
+                    
+                    if self.dataManager.syncing {
+                        // continue spinning animation
+                        self.startSyncAnimation(.CurveLinear)
+                    } else if options != .CurveEaseOut {
+                        // end animation spin
+                        //self.startSyncAnimation(.CurveEaseOut)
+                        self.syncButton.customView?.tintColor = self.dataManager.defaultBlue
+                        // reload the table view
+                        self.tableView.reloadData()
+                    }
+                }
+        })
     }
     
     
@@ -102,7 +149,7 @@ extension SyncViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.font = UIFont(name: "Futura", size: 20)
+        cell.textLabel?.font = UIFont(name: "Futura", size: 25)
         
         if let deletedFiles = dataManager.deletedFiles {
             cell.textLabel?.text = deletedFiles[indexPath.row].filename

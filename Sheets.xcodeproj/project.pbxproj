@@ -17,6 +17,8 @@
 		BB3F49DF1D69BCAB005C9F48 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */; };
 		BB3F49E11D6A148E005C9F48 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3F49E01D6A148E005C9F48 /* Extensions.swift */; };
 		BB3F49E31D6A1554005C9F48 /* VFRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3F49E21D6A1554005C9F48 /* VFRController.swift */; };
+		BB40ED861D847CF5006A49A1 /* ComposersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB40ED851D847CF5006A49A1 /* ComposersViewController.swift */; };
+		BB40ED881D848912006A49A1 /* SheetSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB40ED871D848912006A49A1 /* SheetSectionHeader.swift */; };
 		BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41187F1D2D1A7100168B76 /* RenameViewController.swift */; };
 		BB4118821D2D9D4300168B76 /* SheetReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */; };
 		BB5B07191D5F8BF20036E194 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */; };
@@ -80,6 +82,8 @@
 		BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		BB3F49E01D6A148E005C9F48 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BB3F49E21D6A1554005C9F48 /* VFRController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFRController.swift; sourceTree = "<group>"; };
+		BB40ED851D847CF5006A49A1 /* ComposersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposersViewController.swift; sourceTree = "<group>"; };
+		BB40ED871D848912006A49A1 /* SheetSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetSectionHeader.swift; sourceTree = "<group>"; };
 		BB41187F1D2D1A7100168B76 /* RenameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenameViewController.swift; sourceTree = "<group>"; };
 		BB4118811D2D9D4300168B76 /* SheetReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetReaderViewController.swift; sourceTree = "<group>"; };
 		BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				BB5E09601D7C24F600FB6FFF /* SyncViewController.swift */,
 				BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */,
 				BBF397251D63B26B0023C298 /* DownloadViewController.swift */,
+				BB40ED851D847CF5006A49A1 /* ComposersViewController.swift */,
 				BB41187F1D2D1A7100168B76 /* RenameViewController.swift */,
 				BBF5AFEC1D60AB4900A0645F /* FilterViewController.swift */,
 				BBF467F81D5E683A00913CAD /* SidebarViewController.swift */,
@@ -201,6 +206,7 @@
 				BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */,
 				BB3F49E01D6A148E005C9F48 /* Extensions.swift */,
 				BBF6DBF71D7A1834005DC2E9 /* SheetThumbCell.swift */,
+				BB40ED871D848912006A49A1 /* SheetSectionHeader.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -527,6 +533,7 @@
 				BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */,
 				BB5E09611D7C24F600FB6FFF /* SyncViewController.swift in Sources */,
 				BB4118821D2D9D4300168B76 /* SheetReaderViewController.swift in Sources */,
+				BB40ED861D847CF5006A49A1 /* ComposersViewController.swift in Sources */,
 				BBF5AFED1D60AB4A00A0645F /* FilterViewController.swift in Sources */,
 				BB00B9501D213948008B1135 /* MainViewController.swift in Sources */,
 				BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */,
@@ -536,6 +543,7 @@
 				BBF467F91D5E683A00913CAD /* SidebarViewController.swift in Sources */,
 				BBF0A2CE1D67771B00D65ECB /* SetupViewController.swift in Sources */,
 				BB5B07191D5F8BF20036E194 /* SettingsViewController.swift in Sources */,
+				BB40ED881D848912006A49A1 /* SheetSectionHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +700,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sheets/Sheets-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -712,6 +721,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sheets/Sheets-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

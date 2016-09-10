@@ -374,7 +374,8 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
             //dataManager.fetchFilesInFolder()
             dataManager.syncEnabled = true
             dataManager.startSync()
-            showFileImport()
+            //showFileImport()
+            showLastSetupScreen()
         } else {
             dataManager.createSheetFolder(chosenFoldername)
             showFolderCreated()
