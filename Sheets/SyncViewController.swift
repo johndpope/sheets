@@ -81,12 +81,15 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func downloadButtonPressed(button: UIBarButtonItem) {
         
         // check if the filename exists locally. If it does, show an alert
-        if NamingManager.sharedInstance.filenameAlreadyExists(selectedFile!.filename) {
+        print("Request to download \(selectedFile?.filename)")
+        if NamingManager.sharedInstance.filenameAlreadyExists(selectedFile!.filename.stringByDeletingPathExtension()) {
             // show the alert asking the user to change the filename of the local file so 
             // that the remote file can be downloaded
-            let alert = UIAlertController(title: "Filename already exists locally.", message: "A file called \(selectedFile?.filename) already exists locally. Change the local filename to be able to donwload the new file from the Drive.", preferredStyle: .Alert)
+            let alert = UIAlertController(title: "Filename already exists locally.", message: "A file called \(selectedFile!.filename) already exists locally. Change the local filename to be able to donwload the new file from the Drive.", preferredStyle: .Alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
             
         } else {
             dataManager.downloadFile(selectedFile!)

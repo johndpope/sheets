@@ -58,14 +58,7 @@ class NamingManager {
     /** Returns true if the filename already exists in the local documents directory. */
     func filenameAlreadyExists(filename: String) -> Bool {
         
-        let filename = filename + ".pdf"
-        
-        for file in DataManager.sharedInstance.files {
-            if file.filename == filename {
-                return true
-            }
-        }
-        return false
+        return filenameAlreadyExistsInArray(DataManager.sharedInstance.allFiles, filename: filename)
     }
     
     /** Returns true if the filename already exists in the array of file objects. */
@@ -75,7 +68,7 @@ class NamingManager {
         if let files = files {
             
             for file in files {
-                if file.filename == filename {
+                if file.status != File.STATUS.DELETED && file.filename == filename {
                     return true
                 }
             }

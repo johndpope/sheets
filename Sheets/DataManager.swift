@@ -1459,6 +1459,7 @@ class DataManager : FolderSearchDelegate {
         }
         
         writeMetadataFile()
+        loadLocalFiles()
         
         // Delete the file thumbnail from the thumbnailDictionary
         var thumbDict = userDefaults.valueForKey("thumbnailDictionary") as? [String:String]
@@ -1468,10 +1469,12 @@ class DataManager : FolderSearchDelegate {
         userDefaults.setObject(thumbDict, forKey: "thumbnailDictionary")
         
         // Delete the thumbnail locally
-        do {
-            try NSFileManager.defaultManager().removeItemAtURL(NSURL(fileURLWithPath: thumbPath!))
-        } catch {
-            print("Could not remove the thumbnail for \(file.filename)")
+        if thumbPath != nil {
+            do {
+                try NSFileManager.defaultManager().removeItemAtURL(NSURL(fileURLWithPath: thumbPath!))
+            } catch {
+                print("Could not remove the thumbnail for \(file.filename)")
+            }
         }
     }
     
@@ -1479,6 +1482,7 @@ class DataManager : FolderSearchDelegate {
         Deletes all of the files in the documents directory, and empties the metadata file
     */
     func reset(){
+        deleteDocumentsDirectory()
         deleteAllFiles()
         
         resetMetaDataFile()
@@ -1494,7 +1498,7 @@ class DataManager : FolderSearchDelegate {
         }
     }
     
-    /*
+    
     /** deletes all of the content of the Document Directory */
     func deleteDocumentsDirectory(){
         let fileManager = NSFileManager.defaultManager()
@@ -1510,7 +1514,7 @@ class DataManager : FolderSearchDelegate {
         }
         
         
-    }*/
+    }
     
     
     
