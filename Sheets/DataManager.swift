@@ -730,6 +730,7 @@ class DataManager : FolderSearchDelegate {
         
         // order the files
         if userDefaults.boolForKey("localOrderPriority") {
+            print("reordered")
             allFiles = reorderFiles(result, ref: allFiles, toDownload: toDownload, toUpload: toUpload)
         } else {
             allFiles = result
@@ -1173,9 +1174,12 @@ class DataManager : FolderSearchDelegate {
             }
         }
         
-        updateMetadataFile(file)
-        allFiles.append(file)
-        files.append(file)
+        //updateMetadataFile(file)
+        //allFiles.append(file)
+        //files.append(file)
+        allFiles.insert(file, atIndex: 0)
+        files.insert(file, atIndex: 0)
+        writeMetadataFile()
         return file
     }
     

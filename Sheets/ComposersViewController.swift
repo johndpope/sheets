@@ -37,7 +37,7 @@ class ComposersViewController : UIViewController {
         collectionView.dataSource = self
         
         // get files ordered by composer
-        filesByComposer = dataManager.getFilesByComposer().sort { $0.0 < $1.0 }
+        filesByComposer = dataManager.getFilesByComposer().sort { $0.0.componentsSeparatedByString(" ").last! < $1.0.componentsSeparatedByString(" ").last! }
     }
     
 }
