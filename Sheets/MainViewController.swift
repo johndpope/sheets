@@ -551,11 +551,14 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             dataManager.allFiles.insert(file, atIndex: newIndex)
         }
         
+        cancelFileSelection()
+        
         dataManager.writeMetadataFile()
         
         reload()
         dataManager.currentFile = nil
-        selectedCell?.borderEnabled = false
+        //selectedCell?.borderEnabled = false
+        
     }
     
     // MARK: UICollectionViewDelegateFlowLayout
