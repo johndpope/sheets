@@ -12,6 +12,7 @@ class SettingsViewController : UIViewController {
     
     @IBOutlet var sidebarButton: UIBarButtonItem!
     @IBOutlet var defaultInstrumentTextField: UITextField!
+    @IBOutlet var prioSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +26,12 @@ class SettingsViewController : UIViewController {
         
         // setup default Instrument
         if let defaultInstrument = NSUserDefaults().valueForKey("defaultInstrument") {
-            defaultInstrumentTextField.text = defaultInstrument as! String
+            defaultInstrumentTextField.text = defaultInstrument as? String
         }
+        
+        // setup prio switch
+        prioSwitch.setOn(NSUserDefaults().boolForKey("localOrderPriority"), animated: false)
+        
     }
     
     /** Starts the setup process. */

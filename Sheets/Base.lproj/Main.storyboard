@@ -474,6 +474,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="defaultInstrumentTextField" destination="Roz-l7-FJM" id="ahb-br-rJE"/>
+                        <outlet property="prioSwitch" destination="1LY-K5-S62" id="STy-WN-tnz"/>
                         <outlet property="sidebarButton" destination="33G-XW-fuJ" id="jSN-kB-PEL"/>
                     </connections>
                 </viewController>

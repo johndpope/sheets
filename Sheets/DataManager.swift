@@ -419,8 +419,8 @@ class DataManager : FolderSearchDelegate {
         // Only sync if syncing is enabled
         print(syncing)
         print(syncEnabled)
-        if let enabled = syncEnabled where !enabled || syncing {
-            return false      // TODO Implement syncEnabled = true
+        if let enabled = syncEnabled where !enabled || syncing || !Reachability.isConnectedToNetwork() {
+            return false
         }
         
         let qualityOfServiceClass = QOS_CLASS_BACKGROUND
