@@ -247,6 +247,10 @@ class DataManager : FolderSearchDelegate {
         pdfRefURL = file.getUrl() as NSURL
         
         let pdfRef = CGPDFDocument.init(pdfRefURL!)
+        if pdfRef == nil {
+            print("PDFref for \(file.filename) is nil.")
+            return UIImage()
+        }
         
         let pageRef = pdfRef?.page(at: 1)
         

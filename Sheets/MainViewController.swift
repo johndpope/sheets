@@ -152,7 +152,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         //Test
         //dataManager.searchForAllFilesAndParents()
-        
+        /*
         dataManager.searchForMetadataFileInFolder(folderID: dataManager.mainFolderID!, onCompletion: {
             (found: Bool, file: GTLDriveFile?, error: Error?) in
             
@@ -161,7 +161,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             } else {
                 print("Not found")
             }
-        })
+        })*/
         
         //check if first time launch
         if (userDefaults.value(forKey: "firstTime") == nil) {

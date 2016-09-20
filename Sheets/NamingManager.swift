@@ -31,7 +31,9 @@ class NamingManager {
         // prepare the presets to make them readable
         if let presets = presets {
             for preset in presets {
-                presetsToDisplay?.append(presetForDisplay(preset))
+                if preset != "" {
+                    presetsToDisplay?.append(presetForDisplay(preset))
+                }
             }
         }
     }
@@ -83,13 +85,14 @@ class NamingManager {
         dict["Composer"] = file.composer.components(separatedBy: " ").last
         dict["Composer (full name)"] = file.composer
         dict["Title"] = file.title
-        dict["Arranger"] = file.arranger
+        dict["Arranger"] = file.arranger.components(separatedBy: " ").last
         dict["Musical Form"] = file.musicalForm
         dict["Op."] = file.opus == -1 ? "" : "Op.\(file.opus)"
         dict["No."] = file.number == -1 ? "" : "No.\(file.number)"
         dict["Key"] = file.key
         
-        dict["/"] = "/"
+        dict["("] = "("
+        dict[")"] = ")"
         dict["-"] = "-"
         
         return dict

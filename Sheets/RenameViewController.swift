@@ -122,11 +122,14 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func updateMetadata(){
         
         writeInputsToFile(file,onFilenameChange: { (oldFilename: String, newFilename: String) in
-            // TODO check for duplicate filename
-            DataManager.sharedInstance.changeFilenameInDocumentsDirectory(oldFilename, newFilename: newFilename)
+            // if filename couldn't be changed keep the old filename
+            if !DataManager.sharedInstance.changeFilenameInDocumentsDirectory(oldFilename, newFilename: newFilename) {
+                print("Filename changed back.")
+                self.file?.filename = oldFilename
+            }
         })
         
-        // TODO: Add unknown values to constants files evt.
+        // TODO: Add unknown values to constants files
         
         // Update metadata file
         DataManager.sharedInstance.writeMetadataFile()
