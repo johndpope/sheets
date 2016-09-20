@@ -30,13 +30,13 @@ class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnect
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
         
-        webAdress.frame = CGRectMake(0, 0, 600, webAdress.frame.height)
+        webAdress.frame = CGRect(x: 0, y: 0, width: 600, height: webAdress.frame.height)
         webAdress.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         loadDefaultPage()
-        openInButton.enabled = false
+        openInButton.isEnabled = false
     }
     
     /** loads the defaut webpage in the UIWebView */
@@ -44,17 +44,17 @@ class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnect
         loadPage(defaultAddress)
     }
     
-    func loadPage(address: String){
+    func loadPage(_ address: String){
         let validString = turnStringToValidURL(address)
-        let url = NSURL(string: validString)
-        let request = NSURLRequest(URL: url!)
+        let url = URL(string: validString)
+        let request = URLRequest(url: url!)
         webView.loadRequest(request)
     }
     
-    func turnStringToValidURL(urlString: String) -> String {
-        if !urlString.containsString("http://www.") &&
-            !urlString.containsString("https://www.") {
-            if urlString.containsString("www.") {
+    func turnStringToValidURL(_ urlString: String) -> String {
+        if !urlString.contains("http://www.") &&
+            !urlString.contains("https://www.") {
+            if urlString.contains("www.") {
                 return "http://" + urlString
             } else {
                 return "http://www." + urlString
@@ -64,7 +64,7 @@ class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnect
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
         if let text = textField.text {
             self.loadPage(text)
@@ -74,25 +74,25 @@ class DownloadViewController : UIViewController, UIWebViewDelegate, NSURLConnect
     
     @IBAction func download(){
         
-        DataManager.sharedInstance.downloadFileFromURL((self.webView.request?.URL)!)
+        DataManager.sharedInstance.downloadFileFromURL((self.webView.request?.url)!)
         
-        VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile!.filename)
+        VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile!)
     }
     
     /**
      Checks if the UIWebView is currently displaying a pdf file
     */
     func isPDFDisplayedInView() -> Bool {
-        return self.webView.request?.URL?.pathExtension?.lowercaseString == "pdf"
+        return (self.webView.request as NSURLRequest?)?.url?.pathExtension.lowercased() == "pdf"
     }
     
     /** enables the DownloadButton if a pdf file is being displayed */
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         if isPDFDisplayedInView() {
             //activate the Open In Button
-            openInButton.enabled = true
+            openInButton.isEnabled = true
         } else {
-            openInButton.enabled = false
+            openInButton.isEnabled = false
         }
     }
     

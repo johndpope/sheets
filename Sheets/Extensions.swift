@@ -9,7 +9,7 @@
 import Foundation
 
 extension UIApplication {
-    class func topViewController(base: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController) -> UIViewController? {
+    class func topViewController(_ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(nav.visibleViewController)
         }
@@ -28,11 +28,11 @@ extension UIApplication {
 extension String {
     /** Removes all of the leading and ending whitespaces from a string. */
     func trim() -> String {
-        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        return self.trimmingCharacters(in: CharacterSet.whitespaces)
     }
     
     func stringByDeletingPathExtension() -> String {
-        return (self as NSString).stringByDeletingPathExtension
+        return (self as NSString).deletingPathExtension
     }
     
 }

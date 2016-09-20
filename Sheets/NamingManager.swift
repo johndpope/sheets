@@ -37,13 +37,13 @@ class NamingManager {
     }
     
     /** Generates a filename based on the preset string and the metadata of the file. */
-    func generateFilenameFromPreset(file: File, preset: String) -> String {
+    func generateFilenameFromPreset(_ file: File, preset: String) -> String {
         // split the preset string
-        let parts = preset.componentsSeparatedByString("%")
+        let parts = preset.components(separatedBy: "%")
         let namingDict = generateNamingDictionary(file)
         var filename = ""
         
-        for (index,part) in parts.enumerate() {
+        for (index,part) in parts.enumerated() {
             if index != 0 {
                 if namingDict[part] != "" {
                     filename += " "
@@ -56,13 +56,13 @@ class NamingManager {
     }
     
     /** Returns true if the filename already exists in the local documents directory. */
-    func filenameAlreadyExists(filename: String) -> Bool {
+    func filenameAlreadyExists(_ filename: String) -> Bool {
         
         return filenameAlreadyExistsInArray(DataManager.sharedInstance.allFiles, filename: filename)
     }
     
     /** Returns true if the filename already exists in the array of file objects. */
-    func filenameAlreadyExistsInArray(files: [File]?, filename: String) -> Bool {
+    func filenameAlreadyExistsInArray(_ files: [File]?, filename: String) -> Bool {
         let filename = filename + ".pdf"
         
         if let files = files {
@@ -77,10 +77,10 @@ class NamingManager {
         return false
     }
     
-    func generateNamingDictionary(file: File) -> Dictionary<String,String> {
+    func generateNamingDictionary(_ file: File) -> Dictionary<String,String> {
         
         var dict = Dictionary<String,String>()
-        dict["Composer"] = file.composer.componentsSeparatedByString(" ").last
+        dict["Composer"] = file.composer.components(separatedBy: " ").last
         dict["Composer (full name)"] = file.composer
         dict["Title"] = file.title
         dict["Arranger"] = file.arranger
@@ -99,8 +99,8 @@ class NamingManager {
         Takes a preset string from the file and returns it in a presentable form.
         The % signs are replaced by whitespaces.
     */
-    func presetForDisplay(preset: String) -> String {
-        return preset.stringByReplacingOccurrencesOfString("%", withString: " ")
+    func presetForDisplay(_ preset: String) -> String {
+        return preset.replacingOccurrences(of: "%", with: " ")
     }
     
     

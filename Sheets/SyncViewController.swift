@@ -15,23 +15,23 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var syncButton: UIBarButtonItem! {
         didSet {
-            let icon = UIImage(named: "sync_icon")?.imageWithRenderingMode(.AlwaysTemplate)
-            let iconSize = CGRect(origin: CGPointZero, size: icon!.size)
+            let icon = UIImage(named: "sync_icon")?.withRenderingMode(.alwaysTemplate)
+            let iconSize = CGRect(origin: CGPoint.zero, size: icon!.size)
             //let iconButton = UIButton(frame: iconSize)
-            let iconButton = UIButton(type: .System)
+            let iconButton = UIButton(type: .system)
             
             iconButton.frame = iconSize
-            iconButton.setBackgroundImage(icon, forState: .Normal)
+            iconButton.setBackgroundImage(icon, for: UIControlState())
             iconButton.tintColor = dataManager.defaultBlue
             //iconButton.addTarget(self, action: #selector(sync), forControlEvents: .TouchUpInside)
             
             syncButton.customView = iconButton
             
-            syncButton.customView!.transform = CGAffineTransformIdentity
+            syncButton.customView!.transform = CGAffineTransform.identity
         }
     }
     
-    var timer: NSTimer?
+    var timer: Timer?
     
     var tableView: UITableView!
     
@@ -52,10 +52,10 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         generalSetup()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         if dataManager.syncing {
-            startSyncAnimation(.CurveEaseIn)
+            startSyncAnimation(.curveEaseIn)
         }
     }
     
@@ -63,9 +63,9 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let offset : CGFloat = 50
         let navHeight = (self.navigationController?.navigationBar.frame.height)! + offset
-        let height = CGRectGetHeight(self.view.frame) - navHeight
-        tableView = UITableView(frame: CGRectMake(0, navHeight, UIScreen.mainScreen().bounds.width, height ),
-                                style: .Plain)
+        let height = self.view.frame.height - navHeight
+        tableView = UITableView(frame: CGRect(x: 0, y: navHeight, width: UIScreen.main.bounds.width, height: height ),
+                                style: .plain)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -73,42 +73,41 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.view.addSubview(tableView)
         
         // Setup download button
-        downloadButton.enabled = false
+        downloadButton.isEnabled = false
         
     }
     
     
-    @IBAction func downloadButtonPressed(button: UIBarButtonItem) {
+    @IBAction func downloadButtonPressed(_ button: UIBarButtonItem) {
         
         // check if the filename exists locally. If it does, show an alert
-        print("Request to download \(selectedFile?.filename)")
+        print("Request to download \(selectedFile!.filename)")
         if NamingManager.sharedInstance.filenameAlreadyExists(selectedFile!.filename.stringByDeletingPathExtension()) {
             // show the alert asking the user to change the filename of the local file so 
             // that the remote file can be downloaded
-            let alert = UIAlertController(title: "Filename already exists locally.", message: "A file called \(selectedFile!.filename) already exists locally. Change the local filename to be able to donwload the new file from the Drive.", preferredStyle: .Alert)
+            let alert = UIAlertController(title: "Filename already exists locally.", message: "A file called \(selectedFile!.filename) already exists locally. Change the local filename to be able to donwload the new file from the Drive.", preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             
         } else {
             dataManager.downloadFile(selectedFile!)
-            startSyncAnimation(.CurveEaseIn)
+            startSyncAnimation(.curveEaseIn)
         }
     }
     
-    func startSyncAnimation(options: UIViewAnimationOptions) {
+    func startSyncAnimation(_ options: UIViewAnimationOptions) {
         
-        syncButton.customView!.tintColor = UIColor.redColor()
+        syncButton.customView!.tintColor = UIColor.red
         
         
-        UIView.animateWithDuration(
-            1.0,
+        UIView.animate(
+            withDuration: 1.0,
             delay: 0.0,
             options: options,
             animations: {
-                self.syncButton.customView!.transform =  CGAffineTransformRotate(self.syncButton.customView!.transform,
-                    CGFloat(M_PI ))
+                self.syncButton.customView!.transform =  self.syncButton.customView!.transform.rotated(by: CGFloat(M_PI ))
             },
             completion: { (finished: Bool) in
                 
@@ -116,8 +115,8 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     if self.dataManager.syncing {
                         // continue spinning animation
-                        self.startSyncAnimation(.CurveLinear)
-                    } else if options != .CurveEaseOut {
+                        self.startSyncAnimation(.curveLinear)
+                    } else if options != .curveEaseOut {
                         // end animation spin
                         //self.startSyncAnimation(.CurveEaseOut)
                         self.syncButton.customView?.tintColor = self.dataManager.defaultBlue
@@ -134,28 +133,28 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
 // UITableViewDelegate functions
 extension SyncViewController {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataManager.deletedFiles.count
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Selected a cell
-        selectedFile = dataManager.deletedFiles[indexPath.row]
-        print("Selected \(selectedFile?.filename)")
-        downloadButton.enabled = true
+        selectedFile = dataManager.deletedFiles[(indexPath as NSIndexPath).row]
+        print("Selected \(selectedFile!.filename)")
+        downloadButton.isEnabled = true
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    @objc(tableView:didDeselectRowAtIndexPath:) func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         selectedFile = nil
-        downloadButton.enabled = false
+        downloadButton.isEnabled = false
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    @objc(tableView:cellForRowAtIndexPath:) func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.font = UIFont(name: "Futura", size: 25)
         
         if let deletedFiles = dataManager.deletedFiles {
-            cell.textLabel?.text = deletedFiles[indexPath.row].filename
+            cell.textLabel?.text = deletedFiles[(indexPath as NSIndexPath).row].filename
         }
         
         return cell

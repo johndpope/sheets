@@ -15,8 +15,8 @@ class ComposersViewController : UIViewController {
     
     var dataManager = DataManager.sharedInstance
     
-    private let sectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
-    private let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
+    fileprivate let sectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
+    fileprivate let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
     
     let reuseIdentifier = "SheetCell"
     let reuseIdentifierHeader = "composerHeader"
@@ -37,32 +37,32 @@ class ComposersViewController : UIViewController {
         collectionView.dataSource = self
         
         // get files ordered by composer
-        filesByComposer = dataManager.getFilesByComposer().sort { $0.0.componentsSeparatedByString(" ").last! < $1.0.componentsSeparatedByString(" ").last! }
+        filesByComposer = dataManager.getFilesByComposer().sorted { $0.0.components(separatedBy: " ").last! < $1.0.components(separatedBy: " ").last! }
     }
     
 }
 
 extension ComposersViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return filesByComposer.count
     }
     
-    @objc func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    @objc func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filesByComposer[section].1.count
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // VFRController show document
-        let filename = filesByComposer[indexPath.section].1[indexPath.row].filename
-        VFRController.sharedInstance.showPDFInReader(filename)
+        let file = filesByComposer[(indexPath as NSIndexPath).section].1[(indexPath as NSIndexPath).row]
+        VFRController.sharedInstance.showPDFInReader(file)
     }
     
-    @objc func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SheetThumbCell
-        cell.backgroundColor = UIColor.whiteColor()
+    @objc func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SheetThumbCell
+        cell.backgroundColor = UIColor.white
         
-        let file = filesByComposer[indexPath.section].1[indexPath.row]
+        let file = filesByComposer[(indexPath as NSIndexPath).section].1[(indexPath as NSIndexPath).row]
         
         if file.thumbnail == nil {
             file.thumbnail = dataManager.getThumbnailForFile(file)
@@ -74,21 +74,21 @@ extension ComposersViewController : UICollectionViewDelegate, UICollectionViewDa
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: reuseIdentifierHeader, forIndexPath: indexPath) as! SheetSectionHeader
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifierHeader, for: indexPath) as! SheetSectionHeader
         
-        header.text = filesByComposer[indexPath.section].0
+        header.text = filesByComposer[(indexPath as NSIndexPath).section].0
         
         return header
         
     }
     
     // MARK: UICollectionViewDelegateFlowLayout
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         // Determines the size of a given cell
-        let file = filesByComposer[indexPath.section].1[indexPath.row]
+        let file = filesByComposer[(indexPath as NSIndexPath).section].1[(indexPath as NSIndexPath).row]
         
         if let thumb = file.thumbnail {
             return thumb.size
@@ -97,8 +97,8 @@ extension ComposersViewController : UICollectionViewDelegate, UICollectionViewDa
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        let screenScale = UIScreen.mainScreen().scale
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let screenScale = UIScreen.main.scale
         if screenScale > 1.0 {
             // retina screen
             return retinaSectionInsets

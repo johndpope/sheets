@@ -9,7 +9,7 @@
 import Foundation
 
 protocol FilterViewDelegate {
-    func filterPicked(filter: String)
+    func filterPicked(_ filter: String)
 }
 
 class FilterViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate,
@@ -25,9 +25,9 @@ class FilterViewController : UIViewController, UIPickerViewDelegate, UIPickerVie
     
     var delegate: FilterViewDelegate?
     
-    var preferredSize = CGSizeMake(400,450)
+    var preferredSize = CGSize(width: 400,height: 450)
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -71,28 +71,28 @@ class FilterViewController : UIViewController, UIPickerViewDelegate, UIPickerVie
         filterDict["Instrument"] = instruments
         
         var allCompletions = composerNames
-        allCompletions?.appendContentsOf(musicalForms!)
-        allCompletions?.appendContentsOf(tempos!)
-        allCompletions?.appendContentsOf(keys!)
-        allCompletions?.appendContentsOf(instruments!)
+        allCompletions?.append(contentsOf: musicalForms!)
+        allCompletions?.append(contentsOf: tempos!)
+        allCompletions?.append(contentsOf: keys!)
+        allCompletions?.append(contentsOf: instruments!)
         
         filterDict["All"] = allCompletions
     }
     
     // MARK: UIPickerView Delegate and Datasource methods
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return filterOptions.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return filterOptions[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         // Set the correct autocomplete strings array for the textField
         if row == 0 {
             tableViewSelectedRow(filterOptions[0])
@@ -103,7 +103,7 @@ class FilterViewController : UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     // Mark: UITableView action target
-    func tableViewSelectedRow(entry: String) {
+    func tableViewSelectedRow(_ entry: String) {
         // Only insert if not "all"
         if entry != "All" {
             textField.text = entry

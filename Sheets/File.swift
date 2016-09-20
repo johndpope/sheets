@@ -20,7 +20,7 @@ class File {
         case DELETED = "DELETED"
     }
     
-    var status: STATUS!
+    var status = STATUS.NEW
     
     /** The name of the piece (not the filename) */
     var title = ""
@@ -44,7 +44,7 @@ class File {
     var fileID = " "
     
     /** The filename of the file in the local documents directory */
-    var filename: String!
+    var filename = "DefaultFile.pdf"
     
     var thumbnail: UIImage?
     
@@ -65,7 +65,7 @@ class File {
     init(filename: String){
         self.filename = filename
         self.status = STATUS.NEW
-        let date = NSDate()
+        let date = Date()
         saveDateAsString(date)
         
         guessMetadataFromFilename()
@@ -76,10 +76,10 @@ class File {
      
         - Parameter date: the date to be saved
     */
-    func saveDateAsString(date: NSDate){
-        let dateFormatter = NSDateFormatter()
+    func saveDateAsString(_ date: Date){
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyy(HH:mm:ss)"
-        self.dateOfCreation = dateFormatter.stringFromDate(date)
+        self.dateOfCreation = dateFormatter.string(from: date)
     }
     
     /** 
@@ -87,11 +87,11 @@ class File {
     */
     func guessMetadataFromFilename() {
         let dataManager = DataManager.sharedInstance
-        let lowerFilename = filename.lowercaseString
+        let lowerFilename = filename.lowercased()
         // Guess the composer
         for comp in dataManager.composerNames! {
             
-            if lowerFilename.containsString(comp.lowercaseString) {
+            if lowerFilename.contains(comp.lowercased()) {
                 self.composer = comp
                 break
             }
@@ -101,7 +101,7 @@ class File {
         if composer == "" {
             for comp in dataManager.composerNames! {
                 
-                if lowerFilename.containsString(comp.componentsSeparatedByString(" ").last!.lowercaseString) {
+                if lowerFilename.contains(comp.components(separatedBy: " ").last!.lowercased()) {
                     self.composer = comp
                     break
                 }
@@ -110,7 +110,7 @@ class File {
         
         // Guess the musical form
         for mForm in dataManager.musicalFormNames! {
-            if lowerFilename.containsString(mForm.lowercaseString) {
+            if lowerFilename.contains(mForm.lowercased()) {
                 self.musicalForm = mForm
                 break
             }
@@ -118,7 +118,7 @@ class File {
         
         // Guess the tempo
         for temp in dataManager.tempoNames! {
-            if lowerFilename.containsString(temp.lowercaseString) {
+            if lowerFilename.contains(temp.lowercased()) {
                 self.tempo = temp
                 break
             }
@@ -126,7 +126,7 @@ class File {
         
         // Guess the key
         for currentKey in dataManager.keys! {
-            if lowerFilename.containsString(currentKey.lowercaseString) {
+            if lowerFilename.contains(currentKey.lowercased()) {
                 self.key = currentKey
                 break
             }
@@ -134,9 +134,9 @@ class File {
         
         // Guess the instrument
         for instrument in dataManager.instruments! {
-            if lowerFilename.containsString(instrument.lowercaseString) {
+            if lowerFilename.contains(instrument.lowercased()) {
                 // make sure it didn't interpret sharp as "harp"
-                if !lowerFilename.containsString("sharp") {
+                if !lowerFilename.contains("sharp") {
                     self.instrument = instrument
                     break
                 }
@@ -144,19 +144,19 @@ class File {
         }
         
         // if instrument couldn't be guessed, choose default instrument if it exists
-        if let defaultInstrument = dataManager.userDefaults.valueForKey("defaultInstrument") {
+        if let defaultInstrument = dataManager.userDefaults.value(forKey: "defaultInstrument") {
             self.instrument = defaultInstrument as! String
         }
         
         // Guess Opus
         // try between 1 and 6 digits
         var results = dataManager.matchesForRegexInText("op.[0-9]{1,6}", text: lowerFilename)
-        results.sortInPlace { $0.characters.count > $1.characters.count }
+        results.sort { $0.characters.count > $1.characters.count }
         // check if something was found at all
         if var opusResult = results.first {
             
-            let index = opusResult.startIndex.advancedBy(3)
-            opusResult = opusResult.substringFromIndex(index)
+            let index = opusResult.characters.index(opusResult.startIndex, offsetBy: 3)
+            opusResult = opusResult.substring(from: index)
             // try to convert it to a number
             if let opNum = Int(opusResult) {
                 self.opus = opNum
@@ -165,12 +165,12 @@ class File {
         
         // Guess Number
         results = dataManager.matchesForRegexInText("no.[0-9]{1,6}", text: lowerFilename)
-        results.sortInPlace { $0.characters.count > $1.characters.count }
+        results.sort { $0.characters.count > $1.characters.count }
         // check if something was found at all
         if var numberResult = results.first {
             
-            let index = numberResult.startIndex.advancedBy(3)
-            numberResult = numberResult.substringFromIndex(index)
+            let index = numberResult.characters.index(numberResult.startIndex, offsetBy: 3)
+            numberResult = numberResult.substring(from: index)
             // try to convert it to a number
             if let num = Int(numberResult) {
                 self.number = num
@@ -178,12 +178,12 @@ class File {
         }
     }
     
-    func getUrl() -> NSURL {
+    func getUrl() -> URL {
         return DataManager.sharedInstance.createDocumentURLFromFilename(filename)
     }
     
     func getFilterString() -> String {
-        return "\(filename) \(composer) \(musicalForm) \(tempo) \(key) \(instrument)\n".lowercaseString
+        return "\(filename) \(composer) \(musicalForm) \(tempo) \(key) \(instrument)\n".lowercased()
     }
     
     /** 
@@ -208,10 +208,10 @@ class File {
         - Parameter data: The metadata string in the following form: 
             title % composer % arranger % opus % number % musicalForm % tempo % key % instrument % dateOfCreation % namingPresetID % fileID % url
     */
-    func setupMetaDataFromString(data: String){
-        let parts = data.componentsSeparatedByString("%")
+    func setupMetaDataFromString(_ data: String){
+        let parts = data.components(separatedBy: "%")
         
-        self.status = STATUS(rawValue: parts[0])
+        self.status = STATUS(rawValue: parts[0])!
         
         self.title = parts[1]
         self.composer = parts[2]

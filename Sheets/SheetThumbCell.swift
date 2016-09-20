@@ -39,10 +39,10 @@ class SheetThumbCell: UICollectionViewCell {
     func drawBorder(){
         
         if borderEnabled {
-            imageView.layer.borderColor = borderColor.CGColor
+            imageView.layer.borderColor = borderColor.cgColor
             imageView.layer.borderWidth = borderWidth
         } else {
-            imageView.layer.borderColor = UIColor.clearColor().CGColor
+            imageView.layer.borderColor = UIColor.clear.cgColor
             imageView.layer.borderWidth = 0
         }
         

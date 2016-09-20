@@ -16,7 +16,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     var dataManager = DataManager.sharedInstance
     
-    let userDefaults = NSUserDefaults()
+    let userDefaults = UserDefaults()
     
     var refreshControl: UIRefreshControl?
     
@@ -25,12 +25,12 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     var tableView: UITableView!
     
     @IBOutlet var collectionView: UICollectionView!
-    private let reuseIdentifier = "SheetCell"
-    private let sectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
-    private let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
-    private var selectedCell: SheetThumbCell?
+    fileprivate let reuseIdentifier = "SheetCell"
+    fileprivate let sectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
+    fileprivate let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
+    fileprivate var selectedCell: SheetThumbCell?
     
-    private var fileSelectionMode = false
+    fileprivate var fileSelectionMode = false
     
     //UINavigationItems
     @IBOutlet var sidebarButton: UIBarButtonItem!
@@ -38,19 +38,19 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     @IBOutlet var syncButton: UIBarButtonItem! {
         didSet {
-            let icon = UIImage(named: "sync_icon")?.imageWithRenderingMode(.AlwaysTemplate)
-            let iconSize = CGRect(origin: CGPointZero, size: icon!.size)
+            let icon = UIImage(named: "sync_icon")?.withRenderingMode(.alwaysTemplate)
+            let iconSize = CGRect(origin: CGPoint.zero, size: icon!.size)
             //let iconButton = UIButton(frame: iconSize)
-            let iconButton = UIButton(type: .System)
+            let iconButton = UIButton(type: .system)
             
             iconButton.frame = iconSize
-            iconButton.setBackgroundImage(icon, forState: .Normal)
+            iconButton.setBackgroundImage(icon, for: UIControlState())
             iconButton.tintColor = dataManager.defaultBlue
-            iconButton.addTarget(self, action: #selector(sync), forControlEvents: .TouchUpInside)
+            iconButton.addTarget(self, action: #selector(sync), for: .touchUpInside)
             
             syncButton.customView = iconButton
             
-            syncButton.customView!.transform = CGAffineTransformIdentity
+            syncButton.customView!.transform = CGAffineTransform.identity
         }
     }
     
@@ -79,11 +79,11 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         // Setup Navigation Bar Title Label
         let titleView = UILabel()
         titleView.text = dataManager.currentFilter
-        titleView.textAlignment = .Center
+        titleView.textAlignment = .center
         titleView.font = UIFont(name: "Futura-Medium", size: 20)
         let width : CGFloat = 400//titleView.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
-        titleView.frame = CGRect(origin:CGPointZero, size:CGSizeMake(width, 500))
-        titleView.userInteractionEnabled = true
+        titleView.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: width, height: 500))
+        titleView.isUserInteractionEnabled = true
         self.navigationItem.titleView = titleView
         navTitleView = titleView
         filterLabel = titleView
@@ -97,15 +97,15 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         // Setup table view
         let offset : CGFloat = 50
         let navHeight = (self.navigationController?.navigationBar.frame.height)! + offset
-        let height = CGRectGetHeight(self.view.frame) - navHeight
-        tableView = UITableView(frame: CGRectMake(0, navHeight, UIScreen.mainScreen().bounds.width, height ),
-                                style: .Plain)
+        let height = self.view.frame.height - navHeight
+        tableView = UITableView(frame: CGRect(x: 0, y: navHeight, width: UIScreen.main.bounds.width, height: height ),
+                                style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
         
         self.view.addSubview(tableView)
         
-        tableView.hidden = true
+        tableView.isHidden = true
         
         // setup Collection View
         collectionView.delegate = self
@@ -126,7 +126,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     // When the view appears, ensure that the Drive API service is authorized
     // and perform API calls
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         //self.navigationController!.navigationBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 80.0)
         
@@ -141,11 +141,32 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         //files = [File]()
         
+        // check if can authenticate
+        if let authorizer = dataManager.service.authorizer , let canAuthorize = authorizer.canAuthorize, canAuthorize {
+            print("Can authenticate, syncing enabled")
+            dataManager.syncEnabled = true
+        } else {
+            print("Cannot authenticate, syncing disabled")
+            dataManager.syncEnabled = false
+        }
+        
+        //Test
+        //dataManager.searchForAllFilesAndParents()
+        
+        dataManager.searchForMetadataFileInFolder(folderID: dataManager.mainFolderID!, onCompletion: {
+            (found: Bool, file: GTLDriveFile?, error: Error?) in
+            
+            if found {
+                print("Found")
+            } else {
+                print("Not found")
+            }
+        })
         
         //check if first time launch
-        if (userDefaults.valueForKey("firstTime") == nil) {
-            userDefaults.setBool(false, forKey: "firstTime")
-            userDefaults.setBool(true, forKey: "localOrderPriority")
+        if (userDefaults.value(forKey: "firstTime") == nil) {
+            userDefaults.set(false, forKey: "firstTime")
+            userDefaults.set(true, forKey: "localOrderPriority")
             //setupSheetFolder()
             setupGoogleDriveSync()
         }else{
@@ -167,11 +188,11 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         self.collectionView?.addGestureRecognizer(longPressGR!)
         
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(reload), forControlEvents: .ValueChanged)
+        refreshControl?.addTarget(self, action: #selector(reload), for: .valueChanged)
         self.collectionView.addSubview(refreshControl!)
         
         if dataManager.syncing {
-            startSyncAnimation(.CurveEaseIn)
+            startSyncAnimation(.curveEaseIn)
         }
         
         dataManager.collectionView = self.collectionView
@@ -187,14 +208,14 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     }
     
     func setupGoogleDriveSync(){
-        presentViewController(SetupViewController(), animated: true, completion: nil)
+        present(SetupViewController(), animated: true, completion: nil)
     }
     
-    @IBAction func searchButtonPressed(sender: AnyObject){
+    @IBAction func searchButtonPressed(_ sender: AnyObject){
         showSearchBar()
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         hideSearchBar()
     }
     
@@ -203,12 +224,12 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         navTitle = navigationItem.title
         navTitleView = navigationItem.titleView
         navigationItem.titleView = searchBar
-        navigationItem.setLeftBarButtonItem(nil, animated: true)
+        navigationItem.setLeftBarButton(nil, animated: true)
         
-        let cancelButton = UIBarButtonItem(title: "Done", style: .Done, target: self, action: #selector(searchBarCancelButtonClicked(_:)))
+        let cancelButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(searchBarCancelButtonClicked(_:)))
         navigationItem.setRightBarButtonItems([cancelButton], animated: true)
         
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.searchBar = UISearchBar()
             self.searchBar!.delegate = self
             self.searchBar!.alpha = 1
@@ -223,34 +244,34 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     func hideSearchBar(){
         
         self.searchBar!.alpha = 0
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
                 //self.searchBar.alpha = 0
             
             }, completion: { finished in
                 self.navigationItem.titleView = self.navTitleView
                 
         })
-        navigationItem.setLeftBarButtonItem(sidebarButton, animated: true)
+        navigationItem.setLeftBarButton(sidebarButton, animated: true)
         navigationItem.setRightBarButtonItems([searchButton,syncButton], animated: true)
     }
     
-    func showPDFInReader(filename: String){
-        VFRController.sharedInstance.showPDFInReader(filename)
+    func showPDFInReader(_ file: File){
+        VFRController.sharedInstance.showPDFInReader(file)
     }
     
     @IBAction func changeDisplayType() {
         
         // check which display type is active currently
-        if collectionView.hidden {
+        if collectionView.isHidden {
             // show the collectionView
-            tableView.hidden = true
-            collectionView.hidden = false
+            tableView.isHidden = true
+            collectionView.isHidden = false
             // change the barbutton image
             displayTypeButton.image = UIImage(named: "table_icon")
         } else {
             // show the table view
-            collectionView.hidden = true
-            tableView.hidden = false
+            collectionView.isHidden = true
+            tableView.isHidden = false
             // change the barbutton image
             displayTypeButton.image = UIImage(named: "collection_icon")
         }
@@ -260,21 +281,21 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     func showFilterView(){
         
         let popoverY = self.navTitleView.frame.origin.y + 300
-        let popoverRect = CGRectMake(CGRectGetMidX(self.view.bounds), popoverY, 0, 0)
+        let popoverRect = CGRect(x: self.view.bounds.midX, y: popoverY, width: 0, height: 0)
         
-        let filterView = self.storyboard?.instantiateViewControllerWithIdentifier("FilterVC") as! FilterViewController
+        let filterView = self.storyboard?.instantiateViewController(withIdentifier: "FilterVC") as! FilterViewController
         filterView.delegate = self
         
         let nav = UINavigationController(rootViewController: filterView)
-        nav.modalPresentationStyle = .Popover
+        nav.modalPresentationStyle = .popover
         let popover = nav.popoverPresentationController
         popover?.sourceView = self.view
         popover?.sourceRect = popoverRect
         
-        self.presentViewController(nav, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
     }
     
-    func filterPicked(filter: String) {
+    func filterPicked(_ filter: String) {
         filterLabel.text = filter
         dataManager.filterFiles(filter)
         tableView.reloadData()
@@ -283,12 +304,12 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     // Choose and delete files
     
-    func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
+    func handleLongPress(_ gestureRecognizer : UILongPressGestureRecognizer){
         
         switch(gestureRecognizer.state) {
             
-        case UIGestureRecognizerState.Began:
-            guard let selectedIndexPath = self.collectionView.indexPathForItemAtPoint(gestureRecognizer.locationInView(self.collectionView)) else {
+        case UIGestureRecognizerState.began:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gestureRecognizer.location(in: self.collectionView)) else {
                 break
             }
             
@@ -300,19 +321,19 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             
             
             if #available(iOS 9.0, *) {
-                collectionView.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath)
+                collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
             } else {
                 // Fallback on earlier versions
             }
             
-        case UIGestureRecognizerState.Changed:
+        case UIGestureRecognizerState.changed:
             if #available(iOS 9.0, *) {
-                collectionView.updateInteractiveMovementTargetPosition(gestureRecognizer.locationInView(gestureRecognizer.view!))
+                collectionView.updateInteractiveMovementTargetPosition(gestureRecognizer.location(in: gestureRecognizer.view!))
             } else {
                 // Fallback on earlier versions
             }
             
-        case UIGestureRecognizerState.Ended:
+        case UIGestureRecognizerState.ended:
             if #available(iOS 9.0, *) {
                 collectionView.endInteractiveMovement()
             } else {
@@ -328,9 +349,9 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
     }
     
-    func selectFile(indexPath: NSIndexPath){
-        let selectedFile = dataManager.filteredFiles[indexPath.row]
-        let newSelectedCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? SheetThumbCell
+    func selectFile(_ indexPath: IndexPath){
+        let selectedFile = dataManager.filteredFiles[(indexPath as NSIndexPath).row]
+        let newSelectedCell = self.collectionView.cellForItem(at: indexPath) as? SheetThumbCell
         
         dataManager.currentFile = selectedFile
         
@@ -344,18 +365,18 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         fileChosen()
     }
     
-    func selectFile(file: File) {
-        let index = dataManager.filteredFiles.indexOf(file)
-        let indexPath = NSIndexPath(forItem: index!, inSection: 0)
+    func selectFile(_ file: File) {
+        let index = dataManager.filteredFiles.index(of: file)
+        let indexPath = IndexPath(item: index!, section: 0)
         
         selectFile(indexPath)
     }
     
     func fileChosen() {
         
-        let deleteButton = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: #selector(deleteChosenFile))
+        let deleteButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteChosenFile))
             
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(cancelFileSelection))
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelFileSelection))
             
         navigationItem.rightBarButtonItems = [deleteButton]
         navigationItem.leftBarButtonItem = cancelButton
@@ -373,16 +394,16 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         let alert = UIAlertController(
             title: "Delete \(chosenFile!.filename)?",
             message: "Are you sure you want to delete \(chosenFile!.filename) from the device?",
-            preferredStyle: UIAlertControllerStyle.Alert
+            preferredStyle: UIAlertControllerStyle.alert
         )
         let cancel = UIAlertAction(
             title: "Cancel",
-            style: .Cancel,
+            style: .cancel,
             handler: nil
         )
         let ok = UIAlertAction(
             title: "Delete",
-            style: .Destructive,
+            style: .destructive,
             handler: { (action: UIAlertAction) in
                 self.dataManager.deleteFile(chosenFile!)
                 self.dataManager.loadLocalFiles()
@@ -393,7 +414,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         alert.addAction(ok)
         alert.addAction(cancel)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     func cancelFileSelection() {
@@ -414,33 +435,32 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     @IBAction func sync(){
         //dataManager.fetchFilesInFolder()
         if dataManager.startSync() {
-            startSyncAnimation(.CurveEaseIn)
+            startSyncAnimation(.curveEaseIn)
         } else {
             // check to see if the sync was enabled or not
             // If not ask the user if they would like to setup Google Drive sync
             if !dataManager.syncEnabled! {
-                let alert = UIAlertController(title: "Google Drive Sync not enabled.", message: "Google drive sync isn't enabled yet. Would you like to set it up now?", preferredStyle: .Alert)
+                let alert = UIAlertController(title: "Google Drive Sync not enabled.", message: "Google drive sync isn't enabled yet. Would you like to set it up now?", preferredStyle: .alert)
                 
-                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction) in
                     
-                    self.presentViewController(SetupViewController(), animated: true, completion: nil)
+                    self.present(SetupViewController(), animated: true, completion: nil)
                 }))
             }
         }
     }
     
-    func startSyncAnimation(options: UIViewAnimationOptions) {
+    func startSyncAnimation(_ options: UIViewAnimationOptions) {
         
-        syncButton.customView!.tintColor = UIColor.redColor()
+        syncButton.customView!.tintColor = UIColor.red
         
         
-        UIView.animateWithDuration(
-            1.0,
+        UIView.animate(
+            withDuration: 1.0,
             delay: 0.0,
             options: options,
             animations: {
-                self.syncButton.customView!.transform =  CGAffineTransformRotate(self.syncButton.customView!.transform,
-                    CGFloat(M_PI ))
+                self.syncButton.customView!.transform =  self.syncButton.customView!.transform.rotated(by: CGFloat(M_PI ))
             },
             completion: { (finished: Bool) in
                 
@@ -448,8 +468,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
                     
                     if self.dataManager.syncing {
                         // continue spinning animation
-                        self.startSyncAnimation(.CurveLinear)
-                    } else if options != .CurveEaseOut {
+                        self.startSyncAnimation(.curveLinear)
+                    } else if options != .curveEaseOut {
                         // end animation spin
                         //self.startSyncAnimation(.CurveEaseOut)
                         self.syncButton.customView?.tintColor = self.dataManager.defaultBlue
@@ -466,56 +486,56 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     
     //TableView Delegate and DataSource functions
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //number of cells
         return dataManager.filteredFiles.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
         cell.textLabel?.font = UIFont(name: "Futura", size: 20)
-        cell.textLabel?.text = dataManager.filteredFiles[indexPath.row].filename.stringByDeletingPathExtension()
+        cell.textLabel?.text = dataManager.filteredFiles[(indexPath as NSIndexPath).row].filename.stringByDeletingPathExtension()
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // cell selected code here
         
         if fileSelectionMode {
             selectFile(indexPath)
         } else {
             
-            let file = dataManager.filteredFiles[indexPath.row]
+            let file = dataManager.filteredFiles[(indexPath as NSIndexPath).row]
             dataManager.currentFile = file
-            showPDFInReader(file.filename)
+            showPDFInReader(file)
         }
         
     }
     
     // MARK: UICollectionView Delegate & Datasource functions
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataManager.filteredFiles.count
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
         if fileSelectionMode {
             selectFile(indexPath)
         } else {
             
-            let file = dataManager.filteredFiles[indexPath.row]
+            let file = dataManager.filteredFiles[(indexPath as NSIndexPath).row]
             dataManager.currentFile = file
-            showPDFInReader(file.filename)
+            showPDFInReader(file)
         }
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SheetThumbCell
-        cell.backgroundColor = UIColor.whiteColor()
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SheetThumbCell
+        cell.backgroundColor = UIColor.white
         
-        let file = dataManager.filteredFiles[indexPath.row]
+        let file = dataManager.filteredFiles[(indexPath as NSIndexPath).row]
         
         if file.thumbnail == nil {
             file.thumbnail = dataManager.getThumbnailForFile(file)
@@ -527,28 +547,29 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // reordering code here
-        print("movedFrom: \(sourceIndexPath.row) to \(destinationIndexPath.row)")
+        print("movedFrom: \((sourceIndexPath as NSIndexPath).row) to \((destinationIndexPath as NSIndexPath).row)")
         
         // find the index of the moved cell in the allFiles array
-        let file = dataManager.filteredFiles[sourceIndexPath.row]
-        let oldIndex = dataManager.allFiles.indexOf(file)
-        dataManager.allFiles.removeAtIndex(oldIndex!)
-        dataManager.filteredFiles.removeAtIndex(sourceIndexPath.row)
+        let file = dataManager.filteredFiles[(sourceIndexPath as NSIndexPath).row]
+        let oldIndex = dataManager.allFiles.index(of: file)
+        dataManager.allFiles.remove(at: oldIndex!)
+        dataManager.filteredFiles.remove(at: (sourceIndexPath as NSIndexPath).row)
         
         // if the file was moved to the beginning insert it at the beginning
-        if destinationIndexPath.row == 0 {
+        if (destinationIndexPath as NSIndexPath).row == 0 {
             // find the file after the destination
-            let fileAfter = dataManager.filteredFiles[destinationIndexPath.row]
-            let newIndex = dataManager.allFiles.indexOf(fileAfter)! - 1
-            dataManager.allFiles.insert(file, atIndex: newIndex)
+            let fileAfter = dataManager.filteredFiles[(destinationIndexPath as NSIndexPath).row]
+            var newIndex = dataManager.allFiles.index(of: fileAfter)!
+            newIndex = newIndex == 0 ? 0 : newIndex - 1
+            dataManager.allFiles.insert(file, at: newIndex)
             
         } else {
             // find the file before the destination of the moved file
-            let fileBefore = dataManager.filteredFiles[destinationIndexPath.row - 1]
-            let newIndex = dataManager.allFiles.indexOf(fileBefore)! + 1
-            dataManager.allFiles.insert(file, atIndex: newIndex)
+            let fileBefore = dataManager.filteredFiles[(destinationIndexPath as NSIndexPath).row - 1]
+            let newIndex = dataManager.allFiles.index(of: fileBefore)! + 1
+            dataManager.allFiles.insert(file, at: newIndex)
         }
         
         cancelFileSelection()
@@ -562,10 +583,10 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     }
     
     // MARK: UICollectionViewDelegateFlowLayout
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         // Determines the size of a given cell
-        let file = dataManager.filteredFiles[indexPath.row]
+        let file = dataManager.filteredFiles[(indexPath as NSIndexPath).row]
         
         if let thumb = file.thumbnail {
             return thumb.size
@@ -576,8 +597,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        let screenScale = UIScreen.mainScreen().scale
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let screenScale = UIScreen.main.scale
         if screenScale > 1.0 {
             // retina screen
             return retinaSectionInsets
@@ -590,7 +611,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     
     // MARK: - SearchbarDelegate methods
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         let searchText = searchBar.text
         if searchText == "" {
@@ -600,7 +621,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         }
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let searchText = searchBar.text
         if searchText == "" {
             filterPicked("All")
@@ -611,20 +632,20 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     }
     
     // Helper for showing an alert
-    func showAlert(title : String, message: String) {
+    func showAlert(_ title : String, message: String) {
         let alert = UIAlertController(
             title: title,
             message: message,
-            preferredStyle: UIAlertControllerStyle.Alert
+            preferredStyle: UIAlertControllerStyle.alert
         )
         let ok = UIAlertAction(
             title: "OK",
-            style: UIAlertActionStyle.Default,
+            style: UIAlertActionStyle.default,
             handler: nil
         )
         
         alert.addAction(ok)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -632,7 +653,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         // Dispose of any resources that can be recreated.
     }
     
-    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController{
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController{
         return self
     }
     

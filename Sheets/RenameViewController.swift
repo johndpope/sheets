@@ -32,36 +32,36 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     // UIPickerview
     @IBOutlet weak var namingPickerView: UIPickerView!
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        self.preferredContentSize = CGSizeMake(700, 580)
+        self.preferredContentSize = CGSize(width: 700, height: 580)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        self.preferredContentSize = CGSizeMake(700, 580)
+        self.preferredContentSize = CGSize(width: 700, height: 580)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // UIBarButtonItems
-        saveButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(updateMetadata))
+        saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(updateMetadata))
         self.navigationItem.rightBarButtonItem = saveButton
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(dismiss))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissSelf))
         
         // Setup UIPickerView
         self.namingPickerView.delegate = self
         self.namingPickerView.dataSource = self
         
-        filenameInput.addTarget(self, action: #selector(filenameInputChanged), forControlEvents: .EditingChanged)
+        filenameInput.addTarget(self, action: #selector(filenameInputChanged), for: .editingChanged)
         
         NamingManager.sharedInstance.loadPresets()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupInputFields()
@@ -75,7 +75,7 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         // filenameInput.text = ((file?.title)! as NSString).stringByDeletingPathExtension
         filenameInput.text = (file?.filename)!.stringByDeletingPathExtension()
         
-        alreadyExistsLabel.hidden = true
+        alreadyExistsLabel.isHidden = true
         
         titleInput.text = file?.title
         
@@ -85,15 +85,15 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         arrangerInput.text = file?.arranger
         arrangerInput.autocompleteStrings = DataManager.sharedInstance.composerNames
         
-        if let opus = file?.opus where opus != -1 {
-            opusInput.text = "\(opus)"
+        if let opus = file?.opus , opus != -1 {
+            opusInput.text = String(opus)
         } else {
             opusInput.text = ""
             
         }
         
-        if let number = file?.number where number != -1{
-            numberInput.text = "\(number)"
+        if let number = file?.number , number != -1{
+            numberInput.text = String(number)
         } else {
             numberInput.text = ""
         }
@@ -132,11 +132,11 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         DataManager.sharedInstance.writeMetadataFile()
         DataManager.sharedInstance.printMetaDataFile()
         //close
-        dismiss()
+        dismissSelf()
     }
     
     /** Writes the entries of the inputfields into the file. */
-    func writeInputsToFile(file: File?, onFilenameChange: ((oldFilename: String, newFilename: String) -> Void)?){
+    func writeInputsToFile(_ file: File?, onFilenameChange: ((_ oldFilename: String, _ newFilename: String) -> Void)?){
         
         let oldFilename = file?.filename
         file?.filename = filenameInput.text! + ".pdf"
@@ -170,7 +170,7 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         if let onFilenameChange = onFilenameChange {
             if oldFilename != file?.filename {
                 print("filename changed")
-                onFilenameChange(oldFilename: oldFilename!,newFilename: (file?.filename)!)
+                onFilenameChange(oldFilename!,(file?.filename)!)
             }
         }
     }
@@ -180,8 +180,8 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let filename = filenameInput.text
         
         if filename?.trim() == "" {
-            saveButton.enabled = false
-            alreadyExistsLabel.hidden = false
+            saveButton.isEnabled = false
+            alreadyExistsLabel.isHidden = false
             alreadyExistsLabel.text = "Filename required"
             return
         }
@@ -189,34 +189,35 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         if NamingManager.sharedInstance.filenameAlreadyExists(filename!)
             && filename != file?.filename.stringByDeletingPathExtension() {
             
-            saveButton.enabled = false
-            alreadyExistsLabel.hidden = false
+            saveButton.isEnabled = false
+            alreadyExistsLabel.isHidden = false
             alreadyExistsLabel.text = "Alredy exists!"
         } else {
-            saveButton.enabled = true
-            alreadyExistsLabel.hidden = true
+            saveButton.isEnabled = true
+            alreadyExistsLabel.isHidden = true
         }
     }
     
-    func dismiss(){
-        self.dismissViewControllerAnimated(true, completion: nil)
+    
+    func dismissSelf(){
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: PickerView Delegate & DataSource methods
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return NamingManager.sharedInstance.presetsToDisplay!.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return NamingManager.sharedInstance.presetsToDisplay![row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         selectedPreset = row
         
