@@ -32,6 +32,12 @@ class SettingsViewController : UIViewController {
         // setup prio switch
         prioSwitch.setOn(UserDefaults().bool(forKey: "localOrderPriority"), animated: false)
         
+        // add copyright notice
+        let copyright = UILabel(frame: CGRect(x: 20, y: view.frame.height - 30, width: 250, height: 25))
+        copyright.text = "© 2016 Keiwan Donyagard"
+        copyright.font = UIFont(name: "Futura", size: 13)
+        self.view.addSubview(copyright)
+        
     }
     
     /** Starts the setup process. */

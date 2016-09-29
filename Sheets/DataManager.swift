@@ -374,6 +374,11 @@ class DataManager : FolderSearchDelegate {
         musicalFormNames = arrayFromContentsOfFileWithName(musicalFormsFilename)
         instruments = arrayFromContentsOfFileWithName(instrumentsFilename)
         keys = arrayFromContentsOfFileWithName(keysFilename)
+        
+        // add custom composer names
+        if let customComposers = userDefaults.value(forKey: "customComposers") {
+            composerNames?.append(contentsOf: customComposers as! [String])
+        }
     }
     
     

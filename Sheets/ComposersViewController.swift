@@ -12,6 +12,9 @@ class ComposersViewController : UIViewController {
     
     @IBOutlet var sidebarButton: UIBarButtonItem!
     @IBOutlet var collectionView: UICollectionView!
+    var tableView: UITableView!
+    
+    var displayTypeButton: UIBarButtonItem!
     
     var dataManager = DataManager.sharedInstance
     
@@ -32,12 +35,48 @@ class ComposersViewController : UIViewController {
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
         
+        // setup table view
+        // Setup table view
+        let offset : CGFloat = 50
+        let navHeight = (self.navigationController?.navigationBar.frame.height)! + offset
+        let height = self.view.frame.height - navHeight
+        tableView = UITableView(frame: CGRect(x: 0, y: navHeight, width: UIScreen.main.bounds.width, height: height ),
+                                style: .plain)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        self.view.addSubview(tableView)
+        
+        tableView.isHidden = true
+        
         // setup Collection View
         collectionView.delegate = self
         collectionView.dataSource = self
         
         // get files ordered by composer
         filesByComposer = dataManager.getFilesByComposer().sorted { $0.0.components(separatedBy: " ").last! < $1.0.components(separatedBy: " ").last! }
+        
+        // setup displaytype button
+        displayTypeButton = UIBarButtonItem(image: UIImage(named: "table_icon") , style: .plain, target: self, action: #selector(changeDisplayType))
+        navigationItem.leftBarButtonItems = [sidebarButton, displayTypeButton]
+    }
+    
+    @IBAction func changeDisplayType() {
+        
+        // check which display type is active currently
+        if collectionView.isHidden {
+            // show the collectionView
+            tableView.isHidden = true
+            collectionView.isHidden = false
+            // change the barbutton image
+            displayTypeButton.image = UIImage(named: "table_icon")
+        } else {
+            // show the table view
+            collectionView.isHidden = true
+            tableView.isHidden = false
+            // change the barbutton image
+            displayTypeButton.image = UIImage(named: "collection_icon")
+        }
     }
     
 }
@@ -108,6 +147,43 @@ extension ComposersViewController : UICollectionViewDelegate, UICollectionViewDa
         }
         
     }
+}
+
+extension ComposersViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // VFRController show document
+        let file = filesByComposer[(indexPath as NSIndexPath).section].1[(indexPath as NSIndexPath).row]
+        VFRController.sharedInstance.showPDFInReader(file)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filesByComposer[section].1.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return filesByComposer[section].0
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.font = UIFont(name: "Futura", size: 38)!
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell()
+        cell.textLabel?.font = UIFont(name: "Futura", size: 20)
+        cell.textLabel?.text = filesByComposer[(indexPath as NSIndexPath).section].1[indexPath.row].filename.stringByDeletingPathExtension()
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return filesByComposer.count
+    }
     
 }

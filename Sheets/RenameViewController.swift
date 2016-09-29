@@ -176,6 +176,23 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 onFilenameChange(oldFilename!,(file?.filename)!)
             }
         }
+        
+        // add potentially new composer names to the composers list
+        if let composer = file?.composer {
+            if DataManager.sharedInstance.composerNames!.contains(composer) {
+                let userDefaults = UserDefaults.standard
+                
+                if var customComposers = userDefaults.value(forKey: "customComposers") as? [String] {
+                    
+                    customComposers.append(composer)
+                    userDefaults.set(customComposers, forKey: "customComposers")
+                } else {
+                    
+                    userDefaults.set([composer], forKey: "customComposers")
+                }
+                DataManager.sharedInstance.composerNames?.append(composer)
+            }
+        }
     }
     
     @IBAction func filenameInputChanged(){
