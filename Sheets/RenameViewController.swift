@@ -11,7 +11,12 @@ import UIKit
 
 class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var file: File?
+    var file: File? {
+        didSet {
+            oldFilename = file?.filename
+        }
+    }
+    var oldFilename: String!
     
     @IBOutlet weak var filenameInput: UITextField!
     @IBOutlet weak var titleInput: UITextField!
@@ -71,7 +76,9 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         Sets up the inputFields from the file metadata.
     */
     func setupInputFields(){
+        
         // filename
+        oldFilename = file?.filename
         // filenameInput.text = ((file?.title)! as NSString).stringByDeletingPathExtension
         filenameInput.text = (file?.filename)!.stringByDeletingPathExtension()
         
@@ -133,7 +140,7 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         // Update metadata file
         DataManager.sharedInstance.writeMetadataFile()
-        DataManager.sharedInstance.printMetaDataFile()
+        //DataManager.sharedInstance.printMetaDataFile()
         //close
         dismissSelf()
     }
@@ -174,12 +181,18 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             if oldFilename != file?.filename {
                 print("filename changed")
                 onFilenameChange(oldFilename!,(file?.filename)!)
+                
+                if oldFilename != file?.filename {
+                    
+                    dismissSelf()
+                    VFRController.sharedInstance.reopenFileInReader(file!)
+                }
             }
         }
         
         // add potentially new composer names to the composers list
         if let composer = file?.composer {
-            if DataManager.sharedInstance.composerNames!.contains(composer) {
+            if !DataManager.sharedInstance.composerNames!.contains(composer) {
                 let userDefaults = UserDefaults.standard
                 
                 if var customComposers = userDefaults.value(forKey: "customComposers") as? [String] {

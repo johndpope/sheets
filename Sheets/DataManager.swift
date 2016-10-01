@@ -118,6 +118,7 @@ class DataManager : FolderSearchDelegate {
         
        
         //printMetaDataFile()
+        //print(listAllLocalFiles())
         //print()
         
         generalSetup()
@@ -142,6 +143,12 @@ class DataManager : FolderSearchDelegate {
         deletedFiles = [File]()
         
         loadData()
+        
+        // DEBUG
+        // change filename of list
+        /*let file = files.first(where: { $0.filename == "Franz Liszt - La Campanella.pdf" } )!
+        file.filename = "Liszt - La Campanella.pdf"
+        writeMetadataFile()*/
         
     }
     
@@ -229,12 +236,15 @@ class DataManager : FolderSearchDelegate {
         // check if thumbnail for this file already exists
         if thumbDict != nil {
             
-            if let thumbPath = thumbDict?[file.filename], let data = try? Data(contentsOf: URL(fileURLWithPath: thumbPath)) {
+            if let thumbName = thumbDict?[file.filename],
+                let thumb = UIImage(contentsOfFile: createDocumentURLFromFilename(thumbName).path) {
                 // load the thumbnail from the url
-                let thumb = UIImage(data: data)
-                return thumb!
+                return thumb
+            } else {
+                print("Thumb path not known.")
             }
         } else {
+            print("Created new thumb dict.")
             thumbDict = [String:String]()
         }
         
@@ -291,8 +301,12 @@ class DataManager : FolderSearchDelegate {
         
         // write the data to the documents directory
         var success = true
+        
         do {
-            try imageData?.write(to: URL(fileURLWithPath: thumbURL.path), options: .atomic)
+            //print("Thumburl: \(thumbURL)")
+            try imageData!.write(to: thumbURL, options: [.atomic])
+            let img = UIImage(contentsOfFile: thumbURL.path)
+            //print("Image reloaded after storing: \(img) in \npath: \(thumbURL.path)")
         } catch {
             print("Could not store thumbnail \(error)")
             success = false
@@ -300,7 +314,7 @@ class DataManager : FolderSearchDelegate {
         
         if success {
             // add the entry to the file dictionary
-            thumbDict![file.filename] = thumbURL.path
+            thumbDict![file.filename] = thumbFilename
             userDefaults.set(thumbDict, forKey: "thumbnailDictionary")
         }
         
@@ -320,7 +334,6 @@ class DataManager : FolderSearchDelegate {
             
             if result[composer] != nil {
                 // list already initialized -> append to list
-                print("append \(file.filename)")
                 result[composer]!.append(file)
             } else {
                 // intialize new list
@@ -378,6 +391,8 @@ class DataManager : FolderSearchDelegate {
         // add custom composer names
         if let customComposers = userDefaults.value(forKey: "customComposers") {
             composerNames?.append(contentsOf: customComposers as! [String])
+        } else {
+            print("No custom composers.")
         }
     }
     
@@ -1556,9 +1571,9 @@ class DataManager : FolderSearchDelegate {
         
         // Update the entry for the file thumbnail in the user defaults dictionary
         var thumbDict = userDefaults.value(forKey: "thumbnailDictionary") as? [String:String]
-        let thumbPath = thumbDict?[oldFilename]
+        let thumbName = thumbDict?[oldFilename]
         thumbDict?.removeValue(forKey: oldFilename)
-        thumbDict?[newFilename] = thumbPath
+        thumbDict?[newFilename] = thumbName
         // Store the dictionary in the user defaults
         userDefaults.set(thumbDict, forKey: "thumbnailDictionary")
         
@@ -1616,6 +1631,8 @@ class DataManager : FolderSearchDelegate {
         deleteAllFiles()
         
         resetMetaDataFile()
+        
+        userDefaults.set(nil, forKey: "thumbnailDictionary")
     }
     
     /** 
@@ -1651,7 +1668,8 @@ class DataManager : FolderSearchDelegate {
     func listAllLocalFiles() -> String {
         var fileString = ""
         // Get the document directory url
-        let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        //let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentsUrl = URL(string: applicationDocumentDirectory())!
         
         do {
             // Get the directory contents urls (including subfolders urls)

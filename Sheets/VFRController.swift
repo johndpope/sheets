@@ -13,23 +13,54 @@ class VFRController : NSObject, ReaderViewControllerDelegate {
     
     static let sharedInstance = VFRController()
     
+    var readerViewController: ReaderViewController?
+    var presentingVC: UIViewController?
+    
+    var fileToReopen: File?
+    
     func showPDFInReader(_ file: File){
+        
+        showPDFInReader(file, presentedBy: UIApplication.topViewController()!)
+    }
+    
+    func showPDFInReader(_ file: File, presentedBy viewController: UIViewController) {
         
         DataManager.sharedInstance.currentFile = file
         
         let readerDocument = ReaderDocument(filePath: file.getUrl().path, password: "")
-        let readerViewController = ReaderViewController(readerDocument: readerDocument)
+        readerViewController = ReaderViewController(readerDocument: readerDocument)
         
         if let readerViewController = readerViewController, readerDocument != nil {
-            UIApplication.topViewController()!.present(readerViewController, animated: true, completion: nil)
+            presentingVC = viewController
+            presentingVC!.present(readerViewController, animated: true, completion: nil)
             readerViewController.delegate = self
         }else {
-            print("Reader document could not be created!")
+            print("Reader document for \(file.filename) could not be created!")
         }
     }
     
     @objc func dismiss(_ viewController: ReaderViewController!) {
-        viewController.dismiss(animated: true, completion: nil)
+        viewController.dismiss(animated: true, completion: {
+            
+            if let fileToReopen = self.fileToReopen {
+                
+                self.showPDFInReader(fileToReopen)
+                self.fileToReopen = nil
+            }
+        })
+    }
+    
+    func reopenFileInReader(_ file: File) {
+        
+        if let readerViewController = readerViewController, let presentingVC = presentingVC {
+            
+            fileToReopen = file
+            
+            readerViewController.closeDocument()
+            
+        } else {
+            print("Current reader viewController nil")
+        }
     }
     
     @objc func showRenameView(_ viewController: ReaderViewController!, nameLabel: UILabel, document: ReaderDocument) {
