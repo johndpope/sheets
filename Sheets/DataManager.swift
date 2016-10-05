@@ -299,7 +299,6 @@ class DataManager : FolderSearchDelegate {
         contextRef?.drawPDFPage(pageRef!)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
-        //let image = UIImageFromCGPDFPageRef(pageRef!, CGPDFBox., 0.7)
         
         // Debug
         if file.composer == "George Gershwin" {
@@ -337,7 +336,6 @@ class DataManager : FolderSearchDelegate {
             userDefaults.set(thumbDict, forKey: "thumbnailDictionary")
         }
         
-        //return image!//.imageWithSize(size: thumbnailSize)   //.resizedImage(thumbnailSize, interpolationQuality: .high)
         return UIImage(data: UIImageJPEGRepresentation(image!, 0.7)!)!
     }
     

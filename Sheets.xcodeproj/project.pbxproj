@@ -12,8 +12,6 @@
 		BB00B9531D213948008B1135 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9511D213948008B1135 /* Main.storyboard */; };
 		BB00B9551D213948008B1135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9541D213948008B1135 /* Assets.xcassets */; };
 		BB00B9581D213948008B1135 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB00B9561D213948008B1135 /* LaunchScreen.storyboard */; };
-		BB3DF5F81DA5018D009BD3EC /* UIImage+ProportionalFill.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3DF5F41DA5018D009BD3EC /* UIImage+ProportionalFill.m */; };
-		BB3DF5F91DA5018D009BD3EC /* UIImage+Tint.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3DF5F51DA5018D009BD3EC /* UIImage+Tint.m */; };
 		BB3F49DF1D69BCAB005C9F48 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */; };
 		BB3F49E11D6A148E005C9F48 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3F49E01D6A148E005C9F48 /* Extensions.swift */; };
 		BB3F49E31D6A1554005C9F48 /* VFRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3F49E21D6A1554005C9F48 /* VFRController.swift */; };
@@ -40,9 +38,6 @@
 		BBF69E6D1D78CEE90038DD3D /* Keys.txt in Resources */ = {isa = PBXBuildFile; fileRef = BBF69E6C1D78CEE90038DD3D /* Keys.txt */; };
 		BBF6DBF81D7A1834005DC2E9 /* SheetThumbCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF6DBF71D7A1834005DC2E9 /* SheetThumbCell.swift */; };
 		BBFBB3BF1DA43D3300C6372D /* UIImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBB3BE1DA43D3300C6372D /* UIImage+Scale.swift */; };
-		BBFBB3C31DA448B800C6372D /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFBB3C11DA448B800C6372D /* UIImage+Resize.m */; };
-		BBFBB3C81DA449B600C6372D /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFBB3C41DA449B600C6372D /* UIImage+Alpha.m */; };
-		BBFBB3C91DA449B600C6372D /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFBB3C51DA449B600C6372D /* UIImage+RoundedCorner.m */; };
 		F335D8FB3930858798FEE27F /* Pods_Sheets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ED0341CC43A387ABAC40C75 /* Pods_Sheets.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,10 +58,6 @@
 		BB00B96D1D213948008B1135 /* SheetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetsUITests.swift; sourceTree = "<group>"; };
 		BB00B96F1D213948008B1135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB08F07B1D33909F00D1ABCE /* Sheets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sheets-Bridging-Header.h"; sourceTree = "<group>"; };
-		BB3DF5F41DA5018D009BD3EC /* UIImage+ProportionalFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ProportionalFill.m"; sourceTree = "<group>"; };
-		BB3DF5F51DA5018D009BD3EC /* UIImage+Tint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Tint.m"; sourceTree = "<group>"; };
-		BB3DF5F61DA5018D009BD3EC /* UIImage+ProportionalFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ProportionalFill.h"; sourceTree = "<group>"; };
-		BB3DF5F71DA5018D009BD3EC /* UIImage+Tint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Tint.h"; sourceTree = "<group>"; };
 		BB3F49DE1D69BCAB005C9F48 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		BB3F49E01D6A148E005C9F48 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BB3F49E21D6A1554005C9F48 /* VFRController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFRController.swift; sourceTree = "<group>"; };
@@ -94,12 +85,6 @@
 		BBF69E6C1D78CEE90038DD3D /* Keys.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Keys.txt; sourceTree = "<group>"; };
 		BBF6DBF71D7A1834005DC2E9 /* SheetThumbCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetThumbCell.swift; sourceTree = "<group>"; };
 		BBFBB3BE1DA43D3300C6372D /* UIImage+Scale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Scale.swift"; sourceTree = "<group>"; };
-		BBFBB3C11DA448B800C6372D /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		BBFBB3C21DA448B800C6372D /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		BBFBB3C41DA449B600C6372D /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		BBFBB3C51DA449B600C6372D /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
-		BBFBB3C61DA449B600C6372D /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		BBFBB3C71DA449B600C6372D /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
 		DB8C99F99D13F66371AE4635 /* Pods-Sheets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sheets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sheets/Pods-Sheets.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -231,16 +216,6 @@
 		BBFBB3C01DA447D300C6372D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BB3DF5F41DA5018D009BD3EC /* UIImage+ProportionalFill.m */,
-				BB3DF5F51DA5018D009BD3EC /* UIImage+Tint.m */,
-				BB3DF5F61DA5018D009BD3EC /* UIImage+ProportionalFill.h */,
-				BB3DF5F71DA5018D009BD3EC /* UIImage+Tint.h */,
-				BBFBB3C41DA449B600C6372D /* UIImage+Alpha.m */,
-				BBFBB3C51DA449B600C6372D /* UIImage+RoundedCorner.m */,
-				BBFBB3C61DA449B600C6372D /* UIImage+RoundedCorner.h */,
-				BBFBB3C71DA449B600C6372D /* UIImage+Alpha.h */,
-				BBFBB3C11DA448B800C6372D /* UIImage+Resize.m */,
-				BBFBB3C21DA448B800C6372D /* UIImage+Resize.h */,
 				BB3F49E01D6A148E005C9F48 /* Extensions.swift */,
 				BBFBB3BE1DA43D3300C6372D /* UIImage+Scale.swift */,
 			);
@@ -392,16 +367,11 @@
 				BBF5AFED1D60AB4A00A0645F /* FilterViewController.swift in Sources */,
 				BB00B9501D213948008B1135 /* MainViewController.swift in Sources */,
 				BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */,
-				BB3DF5F91DA5018D009BD3EC /* UIImage+Tint.m in Sources */,
 				BBF397261D63B26B0023C298 /* DownloadViewController.swift in Sources */,
 				BB3F49E11D6A148E005C9F48 /* Extensions.swift in Sources */,
-				BBFBB3C91DA449B600C6372D /* UIImage+RoundedCorner.m in Sources */,
 				BB00B94E1D213948008B1135 /* AppDelegate.swift in Sources */,
 				BBF467F91D5E683A00913CAD /* SidebarViewController.swift in Sources */,
 				BBF0A2CE1D67771B00D65ECB /* SetupViewController.swift in Sources */,
-				BBFBB3C81DA449B600C6372D /* UIImage+Alpha.m in Sources */,
-				BB3DF5F81DA5018D009BD3EC /* UIImage+ProportionalFill.m in Sources */,
-				BBFBB3C31DA448B800C6372D /* UIImage+Resize.m in Sources */,
 				BB5B07191D5F8BF20036E194 /* SettingsViewController.swift in Sources */,
 				BB40ED881D848912006A49A1 /* SheetSectionHeader.swift in Sources */,
 			);
