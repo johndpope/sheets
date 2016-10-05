@@ -145,11 +145,17 @@ class DataManager : FolderSearchDelegate {
         loadData()
         
         // DEBUG
-        // change filename of list
+        // change filename of liszt
         /*let file = files.first(where: { $0.filename == "Franz Liszt - La Campanella.pdf" } )!
         file.filename = "Liszt - La Campanella.pdf"
         writeMetadataFile()*/
+        //clearThumbnailDict()
         
+    }
+    
+    func calculateThumbSize(imageSize: CGSize) -> CGSize {
+        let height = (thumbnailSize.width / imageSize.width) * imageSize.height
+        return CGSize(width: thumbnailSize.width, height: height)
     }
     
     func setupUserDefaults() {
@@ -263,24 +269,27 @@ class DataManager : FolderSearchDelegate {
         }
         
         let pageRef = pdfRef?.page(at: 1)
+        let pdfBox = CGPDFBox.artBox
         
-        let pdfRect = pageRef?.getBoxRect(CGPDFBox.mediaBox)
-        //print("PDFSize: \(file.filename) :  width \(pdfRect.width) height \(pdfRect.height)")
-        let thumbHeight = (((thumbnailSize.width / (pdfRect?.width)!) * (pdfRect?.height)!) - 3)
-        //let thumbHeight = thumbnailSize.height
-        //let thumbWidth = (thumbnailSize.height / pdfRect.height) * pdfRect.width - 3
-        let thumbWidth = thumbnailSize.width
+        let pdfRect = pageRef?.getBoxRect(pdfBox)
         
-        UIGraphicsBeginImageContext(thumbnailSize)
-        //UIGraphicsBeginImageContext(CGSizeMake(thumbWidth, thumbHeight))
+        let thumbAspect = thumbnailSize.height / thumbnailSize.width
+        
+        let mainScale: CGFloat = 0.7
+        
+        let thumbWidth = (pdfRect?.width)! * mainScale
+        let thumbHeight = min(pdfRect!.height * mainScale, thumbAspect * pdfRect!.width * mainScale)
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: thumbWidth, height: thumbHeight), false, 0.0)
+        
         
         let contextRef = UIGraphicsGetCurrentContext()
         
         contextRef?.translateBy(x: 0.0, y: thumbHeight);
         contextRef?.scaleBy(x: 1, y: -1);
         
-        let pdfTransform = pageRef?.getDrawingTransform(CGPDFBox.mediaBox,
-            rect: CGRect(x: 3, y: 0, width: thumbWidth - 4, height: thumbHeight),
+        let pdfTransform = pageRef?.getDrawingTransform(pdfBox,
+            rect: CGRect(x: 3, y: 0, width: thumbWidth, height: thumbHeight),
             rotate: 0,
             preserveAspectRatio: true)
         
@@ -290,6 +299,16 @@ class DataManager : FolderSearchDelegate {
         contextRef?.drawPDFPage(pageRef!)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
+        //let image = UIImageFromCGPDFPageRef(pageRef!, CGPDFBox., 0.7)
+        
+        // Debug
+        if file.composer == "George Gershwin" {
+            print("pdfRect size: \(pdfRect?.size)")
+            print("old aspect: \(pdfRect!.size.height / pdfRect!.size.width)")
+            print("new aspect: \(thumbHeight / thumbWidth)")
+            print("default thumbnail aspect: \(thumbAspect)")
+            print("image aspect: \(image!.size.height / image!.size.width)")
+        }
         
         // clean up
         UIGraphicsEndImageContext()
@@ -305,7 +324,7 @@ class DataManager : FolderSearchDelegate {
         do {
             //print("Thumburl: \(thumbURL)")
             try imageData!.write(to: thumbURL, options: [.atomic])
-            let img = UIImage(contentsOfFile: thumbURL.path)
+            //let img = UIImage(contentsOfFile: thumbURL.path)
             //print("Image reloaded after storing: \(img) in \npath: \(thumbURL.path)")
         } catch {
             print("Could not store thumbnail \(error)")
@@ -318,7 +337,8 @@ class DataManager : FolderSearchDelegate {
             userDefaults.set(thumbDict, forKey: "thumbnailDictionary")
         }
         
-        return image!
+        //return image!//.imageWithSize(size: thumbnailSize)   //.resizedImage(thumbnailSize, interpolationQuality: .high)
+        return UIImage(data: UIImageJPEGRepresentation(image!, 0.7)!)!
     }
     
     /** 
@@ -1632,7 +1652,7 @@ class DataManager : FolderSearchDelegate {
         
         resetMetaDataFile()
         
-        userDefaults.set(nil, forKey: "thumbnailDictionary")
+        clearThumbnailDict()
     }
     
     /** 
@@ -1661,6 +1681,10 @@ class DataManager : FolderSearchDelegate {
         }
         
         
+    }
+    
+    func clearThumbnailDict() {
+        userDefaults.set(nil, forKey: "thumbnailDictionary")
     }
     
     

@@ -108,6 +108,8 @@ extension ComposersViewController : UICollectionViewDelegate, UICollectionViewDa
         }
         
         cell.imageView.image = file.thumbnail
+        cell.imageView.contentMode = .scaleToFill
+        cell.imageView.layer.minificationFilter = kCAFilterTrilinear
         
         // configure the cell
         return cell
@@ -125,15 +127,8 @@ extension ComposersViewController : UICollectionViewDelegate, UICollectionViewDa
     
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        // Determines the size of a given cell
-        let file = filesByComposer[(indexPath as NSIndexPath).section].1[(indexPath as NSIndexPath).row]
-        
-        if let thumb = file.thumbnail {
-            return thumb.size
-        } else {
-            return dataManager.thumbnailSize
-        }
+    
+        return dataManager.thumbnailSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

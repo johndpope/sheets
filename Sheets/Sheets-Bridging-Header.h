@@ -10,5 +10,7 @@
 #define Sheets_Bridging_Header_h
 
 #import "SWRevealViewController.h"
+#import "UIImage+Resize.h"
+#import "UIImage+ProportionalFill.h"
 
 #endif /* Sheets_Bridging_Header_h */

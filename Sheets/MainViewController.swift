@@ -542,6 +542,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         }
         
         cell.imageView.image = file.thumbnail
+        cell.imageView.contentMode = .scaleToFill
+        cell.imageView.layer.minificationFilter = kCAFilterTrilinear
         
         // configure the cell
         return cell
@@ -585,16 +587,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        // Determines the size of a given cell
-        let file = dataManager.filteredFiles[(indexPath as NSIndexPath).row]
-        
-        if let thumb = file.thumbnail {
-            return thumb.size
-        } else {
-            return dataManager.thumbnailSize
-        }
-        
-        
+        return dataManager.thumbnailSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
