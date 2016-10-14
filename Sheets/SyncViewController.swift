@@ -22,7 +22,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             iconButton.frame = iconSize
             iconButton.setBackgroundImage(icon, for: UIControlState())
-            iconButton.tintColor = dataManager.defaultBlue
+            iconButton.tintColor = UIColor.clear  //dataManager.defaultBlue
             //iconButton.addTarget(self, action: #selector(sync), forControlEvents: .TouchUpInside)
             
             syncButton.customView = iconButton
@@ -75,6 +75,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Setup download button
         downloadButton.isEnabled = false
         
+        //syncButton.target =
     }
     
     
@@ -119,7 +120,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
                     } else if options != .curveEaseOut {
                         // end animation spin
                         //self.startSyncAnimation(.CurveEaseOut)
-                        self.syncButton.customView?.tintColor = self.dataManager.defaultBlue
+                        self.syncButton.customView?.tintColor = UIColor.clear
                         // reload the table view
                         self.tableView.reloadData()
                     }

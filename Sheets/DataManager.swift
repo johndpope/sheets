@@ -146,9 +146,9 @@ class DataManager : FolderSearchDelegate {
         
         // DEBUG
         // change filename of liszt
-        /*let file = files.first(where: { $0.filename == "Franz Liszt - La Campanella.pdf" } )!
-        file.filename = "Liszt - La Campanella.pdf"
-        writeMetadataFile()*/
+        //let file = files.first(where: { $0.filename == "Michael Jackson - We are the World.pdf" } )!
+        //file.status = .DELETED
+        //writeMetadataFile()
         //clearThumbnailDict()
         
     }
@@ -1607,9 +1607,10 @@ class DataManager : FolderSearchDelegate {
             try FileManager.default.removeItem(at: createDocumentURLFromFilename(file.filename))
         } catch {
             print("Could not remove \(file.filename)")
+            return
         }
         
-        // if the file hadn't been synced with the google drive before
+        // check if the file hadn't been synced with the google drive before
         // if not it can't be downloaded again and should therefore have its
         // metadata entry removed
         if file.status == File.STATUS.NEW {
@@ -1626,18 +1627,19 @@ class DataManager : FolderSearchDelegate {
         
         // Delete the file thumbnail from the thumbnailDictionary
         var thumbDict = userDefaults.value(forKey: "thumbnailDictionary") as? [String:String]
-        let thumbPath = thumbDict?[file.filename]
         thumbDict?.removeValue(forKey: file.filename)
         // Store the dictionary in the user defaults
         userDefaults.set(thumbDict, forKey: "thumbnailDictionary")
         
         // Delete the thumbnail locally
-        if thumbPath != nil {
+        if let thumbName = thumbDict?[file.filename] {
             do {
-                try FileManager.default.removeItem(at: URL(fileURLWithPath: thumbPath!))
+                try FileManager.default.removeItem(at: createDocumentURLFromFilename(thumbName))
             } catch {
                 print("Could not remove the thumbnail for \(file.filename)")
             }
+        } else {
+            print("Thumb path not known.")
         }
     }
     
