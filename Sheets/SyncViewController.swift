@@ -75,7 +75,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Setup download button
         downloadButton.isEnabled = false
         
-        //syncButton.target =
+        dataManager.tableView = self.tableView
     }
     
     

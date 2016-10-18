@@ -146,7 +146,7 @@ class DataManager : FolderSearchDelegate {
         
         // DEBUG
         // change filename of liszt
-        //let file = files.first(where: { $0.filename == "Michael Jackson - We are the World.pdf" } )!
+        //let file = files.first(where: { $0.filename == "Elton John - Levon.pdf" } )!
         //file.status = .DELETED
         //writeMetadataFile()
         //clearThumbnailDict()
@@ -1371,11 +1371,27 @@ class DataManager : FolderSearchDelegate {
         }
     }
     
+    /** Removes duplicate entries from the allFiles array. Duplications are based on file ID. */
+    func removeDuplicateEntries(){
+        
+        var result = [File]()
+        
+        for file in allFiles {
+            if file.fileID == "" || result.first(where: { $0.fileID == file.fileID }) == nil {
+                result.append(file)
+            }
+        }
+        
+        allFiles = result
+    }
+    
     /** 
         Writes the metadata of all locally known files to the local metadata file.
     */
     func writeMetadataFile() {
         resetMetaDataFile()
+        
+        removeDuplicateEntries()
         
         for file in allFiles {
             updateMetadataFile(file)
@@ -1604,7 +1620,7 @@ class DataManager : FolderSearchDelegate {
     */
     func deleteFile(_ file: File) {
         do {
-            try FileManager.default.removeItem(at: createDocumentURLFromFilename(file.filename))
+            try FileManager.default.removeItem(atPath: createDocumentURLFromFilename(file.filename).path)
         } catch {
             print("Could not remove \(file.filename)")
             return
