@@ -92,6 +92,7 @@ class DataManager : FolderSearchDelegate {
     var semaphor: DispatchSemaphore
     
     var thumbnailSize = CGSize(width: 150, height: 200)
+    //var retinaThumbnailSize = CGSize(width: 110, height: 146)
     
     var defaultBlue = UIColor(red: 6/255, green: 31/255, blue: 39/255, alpha: 1)
     /** Contains the File objects of all of the files ( incl. locally deleted) */
@@ -146,8 +147,8 @@ class DataManager : FolderSearchDelegate {
         
         // DEBUG
         // change filename of liszt
-        //let file = files.first(where: { $0.filename == "Elton John - Levon.pdf" } )!
-        //file.status = .DELETED
+        //let file = files.first(where: { $0.filename == "Beethoven - Hammerklavier Sonata Op.106 No.29.pdf" } )!
+        //file.filename = "Beethoven - Hammerklavier Sonata Op.106 No.28.pdf"
         //writeMetadataFile()
         //clearThumbnailDict()
         
@@ -280,8 +281,8 @@ class DataManager : FolderSearchDelegate {
         let thumbWidth = (pdfRect?.width)! * mainScale
         let thumbHeight = min(pdfRect!.height * mainScale, thumbAspect * pdfRect!.width * mainScale)
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: thumbWidth, height: thumbHeight), false, 0.0)
-        
+        //UIGraphicsBeginImageContextWithOptions(CGSize(width: thumbWidth, height: thumbHeight), false, 0.0)
+        UIGraphicsBeginImageContext(CGSize(width: thumbWidth, height: thumbHeight))
         
         let contextRef = UIGraphicsGetCurrentContext()
         
@@ -299,15 +300,6 @@ class DataManager : FolderSearchDelegate {
         contextRef?.drawPDFPage(pageRef!)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        // Debug
-        if file.composer == "George Gershwin" {
-            print("pdfRect size: \(pdfRect?.size)")
-            print("old aspect: \(pdfRect!.size.height / pdfRect!.size.width)")
-            print("new aspect: \(thumbHeight / thumbWidth)")
-            print("default thumbnail aspect: \(thumbAspect)")
-            print("image aspect: \(image!.size.height / image!.size.width)")
-        }
         
         // clean up
         UIGraphicsEndImageContext()
@@ -1593,12 +1585,12 @@ class DataManager : FolderSearchDelegate {
     func changeFilenameInDocumentsDirectory(_ oldFilename: String, newFilename: String) -> Bool {
         
         do {
-            let oldPath = createDocumentURLFromFilename(oldFilename)
-            let newPath = createDocumentURLFromFilename(newFilename)
+            let oldPath = createDocumentURLFromFilename(oldFilename).path
+            let newPath = createDocumentURLFromFilename(newFilename).path
             
-            try FileManager.default.moveItem(at: oldPath, to: newPath)
+            try FileManager.default.moveItem(atPath: oldPath, toPath: newPath)
             
-        } catch let error as NSError {
+        } catch {
             print(error)
             return false
         }
@@ -1702,7 +1694,6 @@ class DataManager : FolderSearchDelegate {
     func clearThumbnailDict() {
         userDefaults.set(nil, forKey: "thumbnailDictionary")
     }
-    
     
     
     func listAllLocalFiles() -> String {

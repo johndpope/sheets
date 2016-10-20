@@ -27,7 +27,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     @IBOutlet var collectionView: UICollectionView!
     fileprivate let reuseIdentifier = "SheetCell"
     fileprivate let sectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
-    fileprivate let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
+    fileprivate let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
     fileprivate var selectedCell: SheetThumbCell?
     
     fileprivate var fileSelectionMode = false
@@ -587,7 +587,15 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return dataManager.thumbnailSize
+        let screenScale = UIScreen.main.scale
+        //if screenScale > 1.0 {
+            // retina screen
+        //    return dataManager.retinaThumbnailSize
+        //} else {
+            // non retina
+            return dataManager.thumbnailSize
+        //}
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

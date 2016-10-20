@@ -14,9 +14,11 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var file: File? {
         didSet {
             oldFilename = file?.filename
+            fileIndex = DataManager.sharedInstance.allFiles.index(of: file!)!
         }
     }
     var oldFilename: String!
+    var fileIndex: Int!
     
     @IBOutlet weak var filenameInput: UITextField!
     @IBOutlet weak var titleInput: UITextField!
@@ -138,6 +140,14 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         // TODO: Add unknown values to constants files
         
+        // replace the old file entry with the new entry
+        DataManager.sharedInstance.allFiles[fileIndex] = file!
+        
+        // DEBUG - check if the files contain this file
+        //let check = DataManager.sharedInstance.allFiles.index(of: file!) != nil
+        //print("All Files contain file: \(check)")
+        
+        
         // Update metadata file
         DataManager.sharedInstance.writeMetadataFile()
         //DataManager.sharedInstance.printMetaDataFile()
@@ -180,7 +190,7 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         if let onFilenameChange = onFilenameChange {
             if oldFilename != file?.filename {
                 print("filename changed")
-                onFilenameChange(oldFilename!,(file?.filename)!)
+                onFilenameChange(oldFilename!,file!.filename)
                 
                 if oldFilename != file?.filename {
                     

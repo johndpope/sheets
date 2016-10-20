@@ -17,6 +17,7 @@ class VFRController : NSObject, ReaderViewControllerDelegate {
     var presentingVC: UIViewController?
     
     var fileToReopen: File?
+    var shouldReopen = false
     
     func showPDFInReader(_ file: File){
         
@@ -42,10 +43,16 @@ class VFRController : NSObject, ReaderViewControllerDelegate {
     @objc func dismiss(_ viewController: ReaderViewController!) {
         viewController.dismiss(animated: true, completion: {
             
-            if let fileToReopen = self.fileToReopen {
+           /*if let fileToReopen = self.fileToReopen {
                 
                 self.showPDFInReader(fileToReopen)
                 self.fileToReopen = nil
+            }*/
+            
+            if self.shouldReopen {
+                
+                self.showPDFInReader(DataManager.sharedInstance.currentFile!)
+                self.shouldReopen = false
             }
         })
     }
@@ -55,6 +62,7 @@ class VFRController : NSObject, ReaderViewControllerDelegate {
         if let readerViewController = readerViewController, let presentingVC = presentingVC {
             
             fileToReopen = file
+            shouldReopen = true
             
             readerViewController.closeDocument()
             

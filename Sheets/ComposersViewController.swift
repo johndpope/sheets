@@ -19,7 +19,7 @@ class ComposersViewController : UIViewController {
     var dataManager = DataManager.sharedInstance
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
-    fileprivate let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 40.0, bottom: 40.0, right: 40.0)
+    fileprivate let retinaSectionInsets = UIEdgeInsets(top: 40.0, left: 20.0, bottom: 40.0, right: 20.0)
     
     let reuseIdentifier = "SheetCell"
     let reuseIdentifierHeader = "composerHeader"

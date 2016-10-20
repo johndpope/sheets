@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** Actually the "DeletedViewController" */
 class SyncViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var sidebarButton: UIBarButtonItem!
@@ -61,7 +62,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func generalSetup() {
         
-        let offset : CGFloat = 50
+        let offset : CGFloat = 0
         let navHeight = (self.navigationController?.navigationBar.frame.height)! + offset
         let height = self.view.frame.height - navHeight
         tableView = UITableView(frame: CGRect(x: 0, y: navHeight, width: UIScreen.main.bounds.width, height: height ),
