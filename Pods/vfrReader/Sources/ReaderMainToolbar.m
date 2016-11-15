@@ -108,7 +108,7 @@
 
 		[self addSubview:doneButton]; leftButtonX += (doneButtonWidth + buttonSpacing);
 
-		titleX += (doneButtonWidth + buttonSpacing + 45); titleWidth -= (doneButtonWidth + buttonSpacing + 50);  // TITLE X AND WIDTH CHANGE
+		titleX += (doneButtonWidth + buttonSpacing); titleWidth -= (doneButtonWidth + buttonSpacing + 50);  // TITLE X AND WIDTH CHANGE
 
 #endif // end of READER_STANDALONE Option
 

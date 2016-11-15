@@ -88,8 +88,10 @@ class DataManager : FolderSearchDelegate {
     
     /** Is true if the app is currently syncing the files with Google Drive. */
     var syncing = false
+    // Makes sure that changing file entries of synced files is synchronized
+    var syncingGroup: DispatchGroup!
     
-    var semaphor: DispatchSemaphore
+    var semaphore: DispatchSemaphore
     
     var thumbnailSize = CGSize(width: 150, height: 200)
     //var retinaThumbnailSize = CGSize(width: 110, height: 146)
@@ -115,8 +117,8 @@ class DataManager : FolderSearchDelegate {
     var keys: [String]?
     
     init(){
-        semaphor = DispatchSemaphore(value: 0)
-        
+        semaphore = DispatchSemaphore(value: 1)
+        syncingGroup = DispatchGroup()
        
         //printMetaDataFile()
         //print(listAllLocalFiles())
@@ -200,7 +202,7 @@ class DataManager : FolderSearchDelegate {
                         let file = File(data: line)
                         allFiles.append(file)
                         
-                        if (file.status != File.STATUS.DELETED) {
+                        if (file.status != .DELETED) {
                             files.append(file)
                         } else {
                             // File was deleted locally
@@ -266,6 +268,10 @@ class DataManager : FolderSearchDelegate {
         let pdfRef = CGPDFDocument.init(pdfRefURL!)
         if pdfRef == nil {
             print("PDFref for \(file.filename) is nil.")
+            // delete the file entry
+            forceDeleteFileEntry(file: file)
+            tableView?.reloadData()
+            collectionView?.reloadData()
             return UIImage()
         }
         
@@ -429,8 +435,8 @@ class DataManager : FolderSearchDelegate {
     
     func filteredFiles(_ filter: String) -> [File] {
         
-        if filter.lowercased() == "all" {
-            return files
+        if filter.lowercased() == "all" || filter.lowercased() == "" {
+            return filterOutDeletedFiles(files: files)
         }
         
         var filtered = [File]()
@@ -448,9 +454,18 @@ class DataManager : FolderSearchDelegate {
         return filtered
     }
     
+    func filterOutDeletedFiles(files: [File]) -> [File] {
+        return files.filter({ $0.status != .DELETED })
+    }
+    
     func filterFiles(_ filter: String) {
         self.currentFilter = filter
         filteredFiles = filteredFiles(filter)
+    }
+    
+    /** Filters the files using the currently chosen filter. */
+    func filterFiles() {
+        self.filterFiles(self.currentFilter)
     }
     
     
@@ -624,19 +639,21 @@ class DataManager : FolderSearchDelegate {
             for (driveIndex,currentDriveFile) in driveFiles.enumerated() {
                 
                 if remoteFile.fileID == currentDriveFile.identifier! {
-                    print("File \(remoteFile.filename) exists in Google Drive")
+                    print("File \(remoteFile.filename) found in Google Drive")
                     fileExistsInDrive = true
                     driveFile = currentDriveFile
                     
                     // Remove the file from the driveFiles array to leave the unfound files in the array for a later download
                     driveFiles.remove(at: driveIndex)
                     break
-                } else {
-                    print("File \(remoteFile.filename) doesn't exist in Google Drive")
                 }
             }
             
-            var fileExistsLocally = false
+            if !fileExistsInDrive {
+                print("File \(remoteFile.filename) doesn't exist in Google Drive")
+            }
+            
+            var fileKnownLocally = false
             var localFile : File?
             
             // Search for the file in the local files array
@@ -644,7 +661,7 @@ class DataManager : FolderSearchDelegate {
                 
                 if currentLocalFile.fileID == remoteFile.fileID {
                     print("File \(remoteFile.filename) known locally")
-                    fileExistsLocally = true
+                    fileKnownLocally = true
                     localFile = currentLocalFile
                     // Remove the localFile from the array leaving the only locally known files in this array
                     localFiles?.remove(at: localIndex)
@@ -658,7 +675,7 @@ class DataManager : FolderSearchDelegate {
                 // Update the metadata entry filename with the actual drive filename
                 remoteFile.filename = (driveFile?.name)!
                 
-                if fileExistsLocally {
+                if fileKnownLocally {
                     // The file exists in all three places -> sync the metadata
                     if localFile!.status == File.STATUS.CHANGED {
                         
@@ -722,7 +739,7 @@ class DataManager : FolderSearchDelegate {
                 // The file doesn't exist in the Drive, but was known at some point. -> It was deleted from the drive and 
                 // needs to be reuploaded.
                 // If it doesn't exist locally on this device, it can't be uploaded.
-                if fileExistsLocally {
+                if fileKnownLocally && localFile!.status != .DELETED {
                     toUpload.append(localFile!)
                     // replace the remote file data with the local file data
                     result[remoteIndex] = localFile!
@@ -808,10 +825,22 @@ class DataManager : FolderSearchDelegate {
         }
         
         //printMetaDataFile()
+        //filterFiles()
+        
+        loadLocalFiles()
+        refreshViews()
         
     }
     
-    /** 
+    func refreshViews(){
+        DispatchQueue.main.async (execute: {
+            print("refreshing")
+            self.tableView?.reloadData()
+            self.collectionView?.reloadData()
+        })
+    }
+    
+    /**
         Returns the current sync progress. 0 at the beginning and 1 when finished.
     */
     func getSyncProgress() -> CGFloat {
@@ -861,6 +890,10 @@ class DataManager : FolderSearchDelegate {
             } else {
                 print("\(file.filename) uploaded to Google Drive")
                 // Set the local file status to synced
+                
+                // synchronize access
+                //self.semaphore.wait()
+                
                 file.status = File.STATUS.SYNCED
                 file.fileID = (updatedFile as! GTLDriveFile).identifier!
                 
@@ -877,6 +910,8 @@ class DataManager : FolderSearchDelegate {
                 
                 self.writeMetadataFile()
                 self.uploadMetadataFile({})
+                
+                //self.semaphore.signal()
             }
             
             self.syncProgress[file.filename] = true
@@ -905,10 +940,14 @@ class DataManager : FolderSearchDelegate {
             if let error = error {
                 print("Error while updating the filename of \(file.name): \(error.localizedDescription)")
             } else {
-                print("\(file.name): Updated the filename. ")
+                print("\(file.name!): Updated the filename. ")
                 // Set the local file status to synced
+                //self.semaphore.wait()
+                
                 localFile.status = File.STATUS.SYNCED
                 self.writeMetadataFile()
+                
+                self.semaphore.signal()
             }
             
             self.syncProgress[file.name] = true
@@ -1224,6 +1263,7 @@ class DataManager : FolderSearchDelegate {
         syncing = true
         
         print("Downloading " + file.name)
+        
         let url = "https://www.googleapis.com/drive/v3/files/\(file.identifier!)?alt=media"
         
         syncProgress[file.name] = false
@@ -1238,15 +1278,23 @@ class DataManager : FolderSearchDelegate {
             } else {
             
                 if let data = data {
+                    //self.semaphore.wait()
+                    
+                    // DEBUG - check which thread this code is running on
+                    //print("Completion handler for download running on main thread?: \(Thread.current.isMainThread)")
+                    
                     let localFile = self.saveFileToDocumentsDirectory(data,file: file)
                     localFile.status = File.STATUS.SYNCED
+                    localFile.isDownloading = false
                     self.writeMetadataFile()
+                    self.loadLocalFiles()
+                    self.semaphore.signal()
                 
                     print("Finished Download of \(localFile.filename)")
                     
                     // refresh table and collection view if needed
                     DispatchQueue.main.async(execute: {
-                        self.loadLocalFiles()
+                        
                         self.filterFiles(self.currentFilter)
                         self.collectionView?.reloadData()
                         self.tableView?.reloadData()
@@ -1269,6 +1317,8 @@ class DataManager : FolderSearchDelegate {
         let driveFile = GTLDriveFile()
         driveFile.name = file.filename
         driveFile.identifier = file.fileID
+        
+        file.isDownloading = true
         
         downloadFile(driveFile)
     }
@@ -1374,7 +1424,30 @@ class DataManager : FolderSearchDelegate {
             }
         }
         
+        let diff = allFiles.count - result.count
+        if(diff != 0) {
+            print("\(diff) duplicate file entries removed.")
+        }
+        
         allFiles = result
+    }
+    
+    /** Sets the file entry of a file to deleted or removes it completely if it wasn't synced yet. */
+    func forceDeleteFileEntry(file: File) {
+        if(file.status == .NEW){
+            if let index = allFiles.index(of: file) {
+                allFiles.remove(at: index)
+            } else {
+                print("File doesn't exist in all Files.")
+            }
+        } else {
+            file.status = .DELETED
+        }
+        
+        //self.semaphore.wait()
+        writeMetadataFile()
+        loadLocalFiles()
+        self.semaphore.signal()
     }
     
     /** 
@@ -1607,16 +1680,48 @@ class DataManager : FolderSearchDelegate {
         
     }
     
+    func moveFile(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        
+        // find the index of the moved cell in the allFiles array
+        let file = filteredFiles[(sourceIndexPath as NSIndexPath).row]
+        let oldIndex = allFiles.index(of: file)
+        allFiles.remove(at: oldIndex!)
+        filteredFiles.remove(at: (sourceIndexPath as NSIndexPath).row)
+        
+        // if the file was moved to the beginning insert it at the beginning
+        if (destinationIndexPath as NSIndexPath).row == 0 {
+            // find the file after the destination
+            let fileAfter = filteredFiles[(destinationIndexPath as NSIndexPath).row]
+            var newIndex = allFiles.index(of: fileAfter)!
+            newIndex = newIndex == 0 ? 0 : newIndex - 1
+            allFiles.insert(file, at: newIndex)
+            
+        } else {
+            // find the file before the destination of the moved file
+            let fileBefore = filteredFiles[(destinationIndexPath as NSIndexPath).row - 1]
+            let newIndex = allFiles.index(of: fileBefore)! + 1
+            allFiles.insert(file, at: newIndex)
+        }
+        
+        writeMetadataFile()
+        
+        currentFile = nil
+    }
+    
     /**
         Deletes the file in the local documents directory and sets the metadata entry to DELETED.
     */
-    func deleteFile(_ file: File) {
+    func deleteFile(_ fileToDelete: File) {
         do {
-            try FileManager.default.removeItem(atPath: createDocumentURLFromFilename(file.filename).path)
+            try FileManager.default.removeItem(atPath: createDocumentURLFromFilename(fileToDelete.filename).path)
         } catch {
-            print("Could not remove \(file.filename)")
+            print("Could not remove \(fileToDelete.filename)")
             return
         }
+        
+        // find the correct file entry in allFiles
+        let file = allFiles.first(where: { $0 == fileToDelete })!
         
         // check if the file hadn't been synced with the google drive before
         // if not it can't be downloaded again and should therefore have its
@@ -1627,7 +1732,8 @@ class DataManager : FolderSearchDelegate {
             allFiles.remove(at: index!)
         } else {
             // otherwise just set the status to DELETED
-            file.status = File.STATUS.DELETED
+            print("filestatus set to deleted")
+            file.status = .DELETED
         }
         
         writeMetadataFile()
@@ -1655,12 +1761,17 @@ class DataManager : FolderSearchDelegate {
         Deletes all of the files in the documents directory, and empties the metadata file
     */
     func reset(){
-        deleteDocumentsDirectory()
-        deleteAllFiles()
         
         resetMetaDataFile()
         
+        deleteDocumentsDirectory()
+        deleteAllFiles()
+        
+        clearArrays()
+        
         clearThumbnailDict()
+        
+        printMetaDataFile()
     }
     
     /** 
@@ -1693,6 +1804,14 @@ class DataManager : FolderSearchDelegate {
     
     func clearThumbnailDict() {
         userDefaults.set(nil, forKey: "thumbnailDictionary")
+    }
+    
+    func clearArrays() {
+        allFiles = []
+        files = []
+        filteredFiles = []
+        deletedFiles = []
+        currentFile = nil
     }
     
     

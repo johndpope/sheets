@@ -48,6 +48,9 @@ class File {
     
     var thumbnail: UIImage?
     
+    /** Specifies whether the file is currently being downloaded from the Google Drive. */
+    var isDownloading = false
+    
     /**
         Creates a file object from a metadata String `data`.
         

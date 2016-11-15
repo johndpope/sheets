@@ -178,8 +178,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         reload()
         
         
-        
-        
         // Add long press gesture recognizer for the collectionView cells
         longPressGR = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGR!.minimumPressDuration = 0.5
@@ -197,9 +195,17 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         dataManager.collectionView = self.collectionView
         dataManager.tableView = self.tableView
+        
+        // setup editButton
+        editButtonItem.setTitleTextAttributes([
+            NSFontAttributeName : UIFont(name: "Futura", size: 25)!,
+            NSForegroundColorAttributeName : dataManager.defaultBlue
+            ], for: .normal)
     }
     
     func reload(){
+        
+        print("reloading")
         dataManager.loadLocalFiles()
         dataManager.filterFiles(dataManager.currentFilter)
         tableView.reloadData()
@@ -268,15 +274,30 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             collectionView.isHidden = false
             // change the barbutton image
             displayTypeButton.image = UIImage(named: "table_icon")
+            
+            navigationItem.rightBarButtonItems = [searchButton, syncButton]
+            tableView.setEditing(false, animated: false)
         } else {
             // show the table view
             collectionView.isHidden = true
             tableView.isHidden = false
             // change the barbutton image
             displayTypeButton.image = UIImage(named: "collection_icon")
+            
+            // show editing button
+            let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+            spacer.width = 25
+            navigationItem.rightBarButtonItems = [searchButton, syncButton, spacer, editButtonItem]
+            //editButtonItem.action = #selector(toggleTableViewEditing)
         }
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        tableView.setEditing(editing, animated: false)
+        editButtonItem.title = editing ? "Done" : "Edit"
+    }
     
     func showFilterView(){
         
@@ -387,6 +408,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         let chosenFile = dataManager.currentFile
         
         if chosenFile == nil {
+            print("No file chosen to delete")
             return
         }
         
@@ -405,6 +427,7 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             title: "Delete",
             style: .destructive,
             handler: { (action: UIAlertAction) in
+                print("Deleting \(chosenFile!.filename)")
                 self.dataManager.deleteFile(chosenFile!)
                 self.dataManager.loadLocalFiles()
                 self.reload()
@@ -415,6 +438,11 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         alert.addAction(ok)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func deleteFile(at: IndexPath) {
+        dataManager.currentFile = dataManager.filteredFiles[at.row]
+        deleteChosenFile()
     }
     
     func cancelFileSelection() {
@@ -488,6 +516,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
     //TableView Delegate and DataSource functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //number of cells
+        // filter files to make sure they are filtered
+        dataManager.filterFiles()
         return dataManager.filteredFiles.count
     }
     
@@ -513,9 +543,26 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
     }
     
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        dataManager.moveFile(from: sourceIndexPath, to: destinationIndexPath)
+        reload()
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        return [UITableViewRowAction(style: .default, title: "Delete",
+                                     handler: {(action: UITableViewRowAction, indexPath: IndexPath ) in
+                                  self.deleteFile(at: indexPath)
+        })]
+    }
+    
     // MARK: UICollectionView Delegate & Datasource functions
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //print("FilteredFiles count for number of items: \(dataManager.filteredFiles.count)")
         return dataManager.filteredFiles.count
     }
     
@@ -535,7 +582,15 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SheetThumbCell
         cell.backgroundColor = UIColor.white
         
-        let file = dataManager.filteredFiles[(indexPath as NSIndexPath).row]
+        let index = (indexPath as NSIndexPath).row
+
+        if index >= dataManager.filteredFiles.count {
+            print("IndexOutOfBounds")
+            print("FilteredFiles count: \(dataManager.filteredFiles.count)")
+            return cell
+        }
+        let file = dataManager.filteredFiles[index]
+
         
         if file.thumbnail == nil {
             file.thumbnail = dataManager.getThumbnailForFile(file)
@@ -545,14 +600,13 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         cell.imageView.contentMode = .scaleToFill
         cell.imageView.layer.minificationFilter = kCAFilterTrilinear
         
-        // configure the cell
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // reordering code here
         print("movedFrom: \((sourceIndexPath as NSIndexPath).row) to \((destinationIndexPath as NSIndexPath).row)")
-        
+        /*
         // find the index of the moved cell in the allFiles array
         let file = dataManager.filteredFiles[(sourceIndexPath as NSIndexPath).row]
         let oldIndex = dataManager.allFiles.index(of: file)
@@ -580,7 +634,11 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         reload()
         dataManager.currentFile = nil
-        //selectedCell?.borderEnabled = false
+        //selectedCell?.borderEnabled = false*/
+        
+        dataManager.moveFile(from: sourceIndexPath, to: destinationIndexPath)
+        cancelFileSelection()
+        reload()
         
     }
     

@@ -62,7 +62,7 @@ class SettingsViewController : UIViewController {
     
     @IBAction func deleteAllFiles() {
         // Show safety question
-        let confirmAlert = UIAlertController(title: "Confirm to delete files", message: "Are you sure you want to delete the local files? All of the files will be lost.  If they were synced with the Drive you can download them at any time in the \"sync\" section.", preferredStyle: .alert)
+        let confirmAlert = UIAlertController(title: "Confirm to delete files", message: "Are you sure you want to delete the local files? All of the files will be lost.  If they were synced with the Drive you can download them at any time in the \"Deleted\" section.", preferredStyle: .alert)
         
         confirmAlert.addAction(UIAlertAction(title: "Ok", style: .destructive, handler: { (action: UIAlertAction!) in
             DataManager.sharedInstance.deleteAllFiles()
@@ -89,6 +89,7 @@ class SettingsViewController : UIViewController {
             for file in DataManager.sharedInstance.allFiles {
                 if file.instrument == "" {
                     file.instrument = defaultInstrument as! String
+                    file.status = .CHANGED
                 }
             }
             

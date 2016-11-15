@@ -82,6 +82,9 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func downloadButtonPressed(_ button: UIBarButtonItem) {
         
+        // disable the download button to prevent accidental double click
+        downloadButton.isEnabled = false
+        
         // check if the filename exists locally. If it does, show an alert
         print("Request to download \(selectedFile!.filename)")
         if NamingManager.sharedInstance.filenameAlreadyExists(selectedFile!.filename.stringByDeletingPathExtension()) {
@@ -156,7 +159,9 @@ extension SyncViewController {
         cell.textLabel?.font = UIFont(name: "Futura", size: 25)
         
         if let deletedFiles = dataManager.deletedFiles {
-            cell.textLabel?.text = deletedFiles[(indexPath as NSIndexPath).row].filename
+            let file = deletedFiles[(indexPath as NSIndexPath).row]
+            cell.textLabel?.text = file.filename
+            cell.isUserInteractionEnabled = !file.isDownloading
         }
         
         return cell
