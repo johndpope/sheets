@@ -234,7 +234,7 @@ class RenameViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             
             saveButton.isEnabled = false
             alreadyExistsLabel.isHidden = false
-            alreadyExistsLabel.text = "Alredy exists!"
+            alreadyExistsLabel.text = "Already exists!"
         } else {
             saveButton.isEnabled = true
             alreadyExistsLabel.isHidden = true

@@ -1,8 +1,12 @@
 PODS:
+  - AppAuth (0.4.2)
   - GoogleAPIClient/Core (1.0.4):
     - GTMSessionFetcher (~> 1.1)
   - GoogleAPIClient/Drive (1.0.4):
     - GoogleAPIClient/Core
+    - GTMSessionFetcher (~> 1.1)
+  - GTMAppAuth (0.1.0):
+    - AppAuth (~> 0.4.2)
     - GTMSessionFetcher (~> 1.1)
   - GTMOAuth2 (1.1.1):
     - GTMSessionFetcher (~> 1.1)
@@ -15,24 +19,32 @@ PODS:
 
 DEPENDENCIES:
   - GoogleAPIClient/Drive (~> 1.0.2)
+  - GTMAppAuth (from `https://github.com/google/GTMAppAuth.git`)
   - GTMOAuth2 (~> 1.1.0)
   - vfrReader (from `https://github.com/keiwando/Reader.git`)
 
 EXTERNAL SOURCES:
+  GTMAppAuth:
+    :git: https://github.com/google/GTMAppAuth.git
   vfrReader:
     :git: https://github.com/keiwando/Reader.git
 
 CHECKOUT OPTIONS:
+  GTMAppAuth:
+    :commit: 85f6266622f2a093cab7e4a3fbb20a69a9dc1257
+    :git: https://github.com/google/GTMAppAuth.git
   vfrReader:
     :commit: f69f394d9889a0c2b08b38ca44dbd519d426a22f
     :git: https://github.com/keiwando/Reader.git
 
 SPEC CHECKSUMS:
+  AppAuth: 292151ac22065106b0bee6b80e3be29c95bda0fc
   GoogleAPIClient: 4dedb6af613eb7d171814c343f8a82ee5411e13b
+  GTMAppAuth: 3f57495c702c78d68fa5cf1bced8519eec496963
   GTMOAuth2: bdb12f3e0d2110bfe585f6151230b883beb4d042
   GTMSessionFetcher: 174bc61d5238f81f9ddb807b0b0170420f67de85
   vfrReader: 60aa3b2ac62baaa3c8f9a6e4fb42a1480fc6082e
 
-PODFILE CHECKSUM: 1d5ff0fbb9952d410801cf513884ded9c0efbc87
+PODFILE CHECKSUM: 91a4262b3d1fa1bd9558a1e6e5f8a73db67ea307
 
 COCOAPODS: 1.0.1

@@ -113,15 +113,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         dataManager.collectionView = self.collectionView
         dataManager.tableView = self.tableView
-        
-        // Load Thumbnails
-        //let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        //let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        /*dispatch_async(dispatch_get_main_queue(), {
-        
-            self.dataManager.loadPDFThumbnails(self.collectionView)
-                
-        })*/
     }
     
     // When the view appears, ensure that the Drive API service is authorized
@@ -149,6 +140,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             print("Cannot authenticate, syncing disabled")
             dataManager.syncEnabled = false
         }
+        
+        
         
         //Test
         //dataManager.searchForAllFilesAndParents()
@@ -243,7 +236,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             
             }, completion: { finished in
                 self.searchBar?.becomeFirstResponder()
-                
         })
     }
     
@@ -257,8 +249,8 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
                 self.navigationItem.titleView = self.navTitleView
                 
         })
-        navigationItem.setLeftBarButton(sidebarButton, animated: true)
-        navigationItem.setRightBarButtonItems([searchButton,syncButton], animated: true)
+        navigationItem.setLeftBarButtonItems([sidebarButton, displayTypeButton], animated: true)
+        navigationItem.setRightBarButtonItems([searchButton, syncButton], animated: true)
     }
     
     func showPDFInReader(_ file: File){
@@ -275,7 +267,10 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             // change the barbutton image
             displayTypeButton.image = UIImage(named: "table_icon")
             
-            navigationItem.rightBarButtonItems = [searchButton, syncButton]
+            // only change buttons if user is currently not searching
+            if self.searchBar == nil || self.searchBar?.alpha == 0 {
+                navigationItem.rightBarButtonItems = [searchButton, syncButton]
+            }
             tableView.setEditing(false, animated: false)
         } else {
             // show the table view
@@ -287,7 +282,11 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
             // show editing button
             let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
             spacer.width = 25
-            navigationItem.rightBarButtonItems = [searchButton, syncButton, spacer, editButtonItem]
+            
+            // only change buttons if user is currently not searching
+            if self.searchBar == nil || self.searchBar?.alpha == 0 {
+                navigationItem.rightBarButtonItems = [searchButton, syncButton, spacer, editButtonItem]
+            }
             //editButtonItem.action = #selector(toggleTableViewEditing)
         }
     }
@@ -511,6 +510,16 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         print("Filenames: " + fileNames)
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+        for file in dataManager.allFiles {
+            file.thumbnail = nil
+        }
+        
+        collectionView.reloadData()
+    }
+    
     
     
     //TableView Delegate and DataSource functions
@@ -592,11 +601,18 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         let file = dataManager.filteredFiles[index]
 
         
-        if file.thumbnail == nil {
-            file.thumbnail = dataManager.getThumbnailForFile(file)
+        /*if file.thumbnail == nil {
+            //file.thumbnail = dataManager.getThumbnailForFile(file)
+        }*/
+        var thumb: UIImage!
+        if let thumbnail = dataManager.thumbnailCache.object(forKey: file.filename as NSString) {
+            thumb = thumbnail
+        } else {
+            // create the thumbnail
+            thumb = dataManager.getThumbnailForFile(file)
         }
         
-        cell.imageView.image = file.thumbnail
+        cell.imageView.image = thumb
         cell.imageView.contentMode = .scaleToFill
         cell.imageView.layer.minificationFilter = kCAFilterTrilinear
         
@@ -705,11 +721,6 @@ class MainViewController: UIViewController, UIAlertViewDelegate, UITableViewDele
         
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController{

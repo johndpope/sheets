@@ -8,6 +8,8 @@
 
 import Foundation
 import GTMOAuth2
+import GTMAppAuth
+import AppAuth
 import QuartzCore
 
 class SetupViewController: UIViewController, FolderSearchDelegate {
@@ -391,11 +393,16 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         account and authenticates
     */
     func showGoogleAuthentication(){
+        
+        authenticateWithGoogle()
+        print("Authentication finished")
+        
+        /*
         present(
             createAuthController(),
             animated: true,
             completion: nil
-        )
+        )*/
     }
     
     
@@ -414,6 +421,48 @@ class SetupViewController: UIViewController, FolderSearchDelegate {
         authController?.view.addSubview(createSkipButton())
         
         return authController!
+    }
+    
+    fileprivate func authenticateWithGoogle() {
+        
+        let request = OIDAuthorizationRequest(
+            configuration: dataManager.configuration,
+            clientId: dataManager.kClientID,
+            clientSecret: nil,
+            scopes: dataManager.scopes,
+            redirectURL: dataManager.redirectURI,
+            responseType: OIDResponseTypeCode,
+            additionalParameters: nil)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.currentAuthorizationFlow =
+            OIDAuthState.authState(byPresenting: request, presenting: self,
+            callback: {(authState: OIDAuthState?,error: Error?) in
+                
+                if let authState = authState, authState.isAuthorized {
+                    
+                    let authorization = GTMAppAuthFetcherAuthorization(authState: authState)
+                    self.dataManager.authorization = authorization
+                    self.dataManager.service.fetcherService.authorizer = authorization
+                    self.dataManager.service.authorizer = authorization
+                    
+                    // save the authorization
+                    GTMAppAuthFetcherAuthorization.save(authorization, toKeychainForName: self.dataManager.kNewKeychainItemName)
+                    
+                    print("Got authorization tokens. Access token: \(authState.lastTokenResponse?.accessToken ?? "nil")")
+                    
+                    // continue with the setup
+                    self.showFoldernameInput()
+                } else {
+                    print("Authorization error: \(error?.localizedDescription ?? "")")
+                    self.dataManager.authorization = nil
+                    
+                    // skip the setup
+                    self.dataManager.disableSync()
+                    self.endSetup()
+                }
+        })
+        
     }
     
     /**

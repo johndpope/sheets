@@ -10,11 +10,14 @@ import UIKit
 import Foundation
 import vfrReader
 import GoogleAPIClient
+import AppAuth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
+    
+    var currentAuthorizationFlow: OIDAuthorizationFlowSession?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -36,6 +39,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile!)
         return true
         
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        // Sends the URL to the current authorization flow (if any) which will
+        // process it if it relates to an authorization response.
+        if let flow = currentAuthorizationFlow, flow.resumeAuthorizationFlow(with: url) {
+            currentAuthorizationFlow = nil
+            return true
+        } else {
+            DataManager.sharedInstance.downloadFileFromURL(url)
+            
+            VFRController.sharedInstance.showPDFInReader(DataManager.sharedInstance.currentFile!)
+        }
+        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

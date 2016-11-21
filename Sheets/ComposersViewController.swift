@@ -103,11 +103,19 @@ extension ComposersViewController : UICollectionViewDelegate, UICollectionViewDa
         
         let file = filesByComposer[(indexPath as NSIndexPath).section].1[(indexPath as NSIndexPath).row]
         
-        if file.thumbnail == nil {
+        /*if file.thumbnail == nil {
             file.thumbnail = dataManager.getThumbnailForFile(file)
+        }*/
+        
+        var thumb: UIImage!
+        if let thumbnail = dataManager.thumbnailCache.object(forKey: file.filename as NSString) {
+            thumb = thumbnail
+        } else {
+            // create the thumbnail
+            thumb = dataManager.getThumbnailForFile(file)
         }
         
-        cell.imageView.image = file.thumbnail
+        cell.imageView.image = thumb
         cell.imageView.contentMode = .scaleToFill
         cell.imageView.layer.minificationFilter = kCAFilterTrilinear
         

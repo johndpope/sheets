@@ -8,6 +8,8 @@
 
 import GoogleAPIClient
 import GTMOAuth2
+import GTMAppAuth
+import AppAuth
 import Foundation
 import QuartzCore
 
@@ -43,7 +45,10 @@ class DataManager : FolderSearchDelegate {
     
     // Google Drive variables
     let kKeychainItemName = "Sheets Drive API"
+    let kNewKeychainItemName = "Sheets Drive API New_Keychain"
     let kClientID = "451075181287-dvcikapqk1qkontp8gfs6kohanp44h2t.apps.googleusercontent.com"
+    let redirectURI = URL(string: "com.googleusercontent.apps.451075181287-dvcikapqk1qkontp8gfs6kohanp44h2t:/oauthredirect")!
+    //let redirectURI = URL(string: "Sheets")!
     
     let QUERY_FIELDS = "files(id,name,parents)"
     let NOT_TRASHED = " and trashed = false"
@@ -53,6 +58,10 @@ class DataManager : FolderSearchDelegate {
     let scopes = [kGTLAuthScopeDrive]
     
     let service = GTLServiceDrive()
+    
+    // GTMAppAuth variables
+    let configuration = GTMAppAuthFetcherAuthorization.configurationForGoogle()
+    var authorization: GTMAppAuthFetcherAuthorization?
 
     let userDefaults = UserDefaults()
     
@@ -94,7 +103,10 @@ class DataManager : FolderSearchDelegate {
     var semaphore: DispatchSemaphore
     
     var thumbnailSize = CGSize(width: 150, height: 200)
-    //var retinaThumbnailSize = CGSize(width: 110, height: 146)
+    var defaultThumbnail = UIImage(named: "default_thumb")!
+    
+    var thumbnailCache = NSCache<NSString, UIImage>()
+    var thumbRenderingSemaphore = DispatchSemaphore(value: 2)
     
     var defaultBlue = UIColor(red: 6/255, green: 31/255, blue: 39/255, alpha: 1)
     /** Contains the File objects of all of the files ( incl. locally deleted) */
@@ -130,14 +142,25 @@ class DataManager : FolderSearchDelegate {
     
     func generalSetup() {
         
-        if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychain(
+        /*if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychain(
             forName: kKeychainItemName,
             clientID: kClientID,
             clientSecret: nil) {
             
             service.authorizer = auth
-            print("Can authorize?: \(auth.canAuthorize)")
+            print("Old: GTMOAuth2 _ Can authorize?: \(auth.canAuthorize)")
+        }*/
+        
+        authorization = GTMAppAuthFetcherAuthorization(fromKeychainForName: kNewKeychainItemName)
+        
+        if authorization != nil {
+            print("GTMAppAuth: Could authorize!")
+        } else {
+            print("GTMAppAuth: Could not authorize!")
         }
+        
+        service.fetcherService.authorizer = self.authorization
+        service.authorizer = self.authorization
         
         setupUserDefaults()
         
@@ -149,10 +172,17 @@ class DataManager : FolderSearchDelegate {
         
         // DEBUG
         // change filename of liszt
-        //let file = files.first(where: { $0.filename == "Beethoven - Hammerklavier Sonata Op.106 No.29.pdf" } )!
+        //let file = files.first(where: { $0.filename == "Grieg - Piano Concerto Op.16.pdf" } )!
+        //print("Grieg dataString: \(file.getDataAsString())")
         //file.filename = "Beethoven - Hammerklavier Sonata Op.106 No.28.pdf"
         //writeMetadataFile()
         //clearThumbnailDict()
+        /*getAllDriveFiles(completion: { driveFiles in
+            print("received \(driveFiles.count) files")
+            for file in driveFiles {
+                print("\(file.name!) : \(file.identifier!)")
+            }
+        })*/
         
     }
     
@@ -239,6 +269,7 @@ class DataManager : FolderSearchDelegate {
         Returns the thumbnail for a given file. If the thumbnail doesn't already exist
         it is created and stored in the documents directory. The Url path to that image is
         added to a dictionary in the userDefaults for later access.
+        The thumbnail is also set for the thumbnail property of the file.
     */
     func getThumbnailForFile(_ file: File) -> UIImage {
         var thumbDict = userDefaults.value(forKey: "thumbnailDictionary") as? [String:String]
@@ -260,81 +291,111 @@ class DataManager : FolderSearchDelegate {
         // create thumbnail
         // Draw the first page
         
-        let localURL = CFStringCreateWithCString(nil, file.filename, CFStringBuiltInEncodings.UTF8.rawValue)
-
-        var pdfRefURL = CFURLCreateWithFileSystemPath(nil, localURL, .cfurlposixPathStyle, false)
-        pdfRefURL = file.getUrl() as NSURL
+        // Thumbnail has to be rendered first
+        // Do this in another thread and refresh when done
+        // In the meantime, return defaultThumb
         
-        let pdfRef = CGPDFDocument.init(pdfRefURL!)
-        if pdfRef == nil {
-            print("PDFref for \(file.filename) is nil.")
-            // delete the file entry
-            forceDeleteFileEntry(file: file)
-            tableView?.reloadData()
-            collectionView?.reloadData()
-            return UIImage()
+        DispatchQueue.main.async {
+            
+            self.thumbRenderingSemaphore.wait()
+            
+            let localURL = CFStringCreateWithCString(nil, file.filename, CFStringBuiltInEncodings.UTF8.rawValue)
+            
+            var pdfRefURL = CFURLCreateWithFileSystemPath(nil, localURL, .cfurlposixPathStyle, false)
+            pdfRefURL = file.getUrl() as NSURL
+            
+            let pdfRef = CGPDFDocument.init(pdfRefURL!)
+            if pdfRef == nil {
+                print("PDFref for \(file.filename) is nil.")
+                // delete the file entry
+                self.forceDeleteFileEntry(file: file)
+                DispatchQueue.main.async {
+                    self.tableView?.reloadData()
+                    self.collectionView?.reloadData()
+                }
+            }
+            
+            let pageRef = pdfRef?.page(at: 1)
+            let pdfBox = CGPDFBox.artBox
+            
+            let pdfRect = pageRef?.getBoxRect(pdfBox)
+            
+            let thumbAspect = self.thumbnailSize.height / self.thumbnailSize.width
+            
+            let mainScale: CGFloat = 0.7
+            
+            let thumbWidth = (pdfRect?.width)! * mainScale
+            let thumbHeight = min(pdfRect!.height * mainScale, thumbAspect * pdfRect!.width * mainScale)
+            
+            //UIGraphicsBeginImageContextWithOptions(CGSize(width: thumbWidth, height: thumbHeight), false, 0.0)
+            UIGraphicsBeginImageContext(CGSize(width: thumbWidth, height: thumbHeight))
+            
+            let contextRef = UIGraphicsGetCurrentContext()
+            
+            contextRef?.translateBy(x: 0.0, y: thumbHeight);
+            contextRef?.scaleBy(x: 1, y: -1);
+            
+            let pdfTransform = pageRef?.getDrawingTransform(pdfBox,
+                                                            rect: CGRect(x: 3, y: 0, width: thumbWidth, height: thumbHeight),
+                                                            rotate: 0,
+                                                            preserveAspectRatio: true)
+            
+            // And apply the transform.
+            contextRef?.concatenate(pdfTransform!);
+            
+            contextRef?.drawPDFPage(pageRef!)
+            
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            
+            // clean up
+            UIGraphicsEndImageContext()
+            
+            // save image to documentsdirectory
+            let thumbFilename = file.filename.stringByDeletingPathExtension() + "_thumbnail.png"
+            let thumbURL = self.createDocumentURLFromFilename(thumbFilename)
+            let imageData = UIImagePNGRepresentation(image!)
+            
+            // write the data to the documents directory
+            var success = true
+            
+            do {
+                //print("Thumburl: \(thumbURL)")
+                try imageData!.write(to: thumbURL, options: [.atomic])
+                //let img = UIImage(contentsOfFile: thumbURL.path)
+                //print("Image reloaded after storing: \(img) in \npath: \(thumbURL.path)")
+            } catch {
+                print("Could not store thumbnail \(error)")
+                success = false
+            }
+            
+            if success {
+                // add the entry to the file dictionary
+                //DispatchQueue.main.sync {
+                    
+                    // get the most recent thumbDict
+                    thumbDict = self.userDefaults.value(forKey: "thumbnailDictionary") as? [String:String]
+                    if thumbDict == nil {
+                        thumbDict = [:]
+                    }
+                    thumbDict?[file.filename] = thumbFilename
+                    
+                    self.userDefaults.set(thumbDict, forKey: "thumbnailDictionary")
+                //}
+            }
+            
+            let thumb = UIImage(data: UIImageJPEGRepresentation(image!, 0.7)!)!
+            //file.thumbnail = thumb
+            self.thumbnailCache.setObject(thumb, forKey: file.filename as NSString)
+            
+            self.thumbRenderingSemaphore.signal()
+            // Refresh the collectionview
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
+            
         }
         
-        let pageRef = pdfRef?.page(at: 1)
-        let pdfBox = CGPDFBox.artBox
-        
-        let pdfRect = pageRef?.getBoxRect(pdfBox)
-        
-        let thumbAspect = thumbnailSize.height / thumbnailSize.width
-        
-        let mainScale: CGFloat = 0.7
-        
-        let thumbWidth = (pdfRect?.width)! * mainScale
-        let thumbHeight = min(pdfRect!.height * mainScale, thumbAspect * pdfRect!.width * mainScale)
-        
-        //UIGraphicsBeginImageContextWithOptions(CGSize(width: thumbWidth, height: thumbHeight), false, 0.0)
-        UIGraphicsBeginImageContext(CGSize(width: thumbWidth, height: thumbHeight))
-        
-        let contextRef = UIGraphicsGetCurrentContext()
-        
-        contextRef?.translateBy(x: 0.0, y: thumbHeight);
-        contextRef?.scaleBy(x: 1, y: -1);
-        
-        let pdfTransform = pageRef?.getDrawingTransform(pdfBox,
-            rect: CGRect(x: 3, y: 0, width: thumbWidth, height: thumbHeight),
-            rotate: 0,
-            preserveAspectRatio: true)
-        
-        // And apply the transform.
-        contextRef?.concatenate(pdfTransform!);
-        
-        contextRef?.drawPDFPage(pageRef!)
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        // clean up
-        UIGraphicsEndImageContext()
-        
-        // save image to documentsdirectory
-        let thumbFilename = file.filename.stringByDeletingPathExtension() + "_thumbnail.png"
-        let thumbURL = createDocumentURLFromFilename(thumbFilename)
-        let imageData = UIImagePNGRepresentation(image!)
-        
-        // write the data to the documents directory
-        var success = true
-        
-        do {
-            //print("Thumburl: \(thumbURL)")
-            try imageData!.write(to: thumbURL, options: [.atomic])
-            //let img = UIImage(contentsOfFile: thumbURL.path)
-            //print("Image reloaded after storing: \(img) in \npath: \(thumbURL.path)")
-        } catch {
-            print("Could not store thumbnail \(error)")
-            success = false
-        }
-        
-        if success {
-            // add the entry to the file dictionary
-            thumbDict![file.filename] = thumbFilename
-            userDefaults.set(thumbDict, forKey: "thumbnailDictionary")
-        }
-        
-        return UIImage(data: UIImageJPEGRepresentation(image!, 0.7)!)!
+        return defaultThumbnail
     }
     
     /** 
@@ -579,30 +640,18 @@ class DataManager : FolderSearchDelegate {
         // Download the GTLDriveFiles into the drive files array
         group.enter()
         
-        let query = GTLQueryDrive.queryForFilesList()
-        
-        if let folderID = mainFolderID {
-            query?.q = "\'\(folderID)\' in parents and (mimeType = \'application/pdf\')" + NOT_TRASHED
+        getAllDriveFiles(completion: {(result, error) in
             
-            service.executeQuery(query!, completionHandler: { (ticket: GTLServiceTicket?, response: Any?, error: Error?) in
-                
-                if let error = error {
-                    print("Error while fetching files in folder: \(error.localizedDescription)")
-                    success = false
-                    group.leave()
-                    return
-                }
-                
-                // Store the downloaded Google Drive Files from the response in the driveFiles array
-                if let filesList = response as? GTLDriveFileList, let files = filesList.files , !files.isEmpty {
-                    driveFiles = (files as! [GTLDriveFile])
-                } else {
-                    print("No files in the drive")
-                }
-                
+            if error != nil {
+                success = false
                 group.leave()
-            })
-        }
+            
+            } else {
+                
+                driveFiles = result
+                group.leave()
+            }
+        })
         
         // Wait until both the remoteMetadata file and the Drive files are saved
         print("Waiting on group")
@@ -784,7 +833,7 @@ class DataManager : FolderSearchDelegate {
         }
         
         // order the files
-        if userDefaults.bool(forKey: "localOrderPriority") {
+        if userDefaults.bool(forKey: "localOrderPriority") && !allFiles.isEmpty {
             print("reordered")
             allFiles = reorderFiles(result, ref: allFiles, toDownload: toDownload, toUpload: toUpload)
         } else {
@@ -832,6 +881,54 @@ class DataManager : FolderSearchDelegate {
         
     }
     
+    /* 
+     Fetches all files in the main folder recursively (1000 at a time) and passes a
+     list of GTLDriveFiles to the completion closure.
+    */
+    func getAllDriveFiles(_ driveFiles: [GTLDriveFile] = [], _ token: String! = "",
+                          completion: @escaping (_ result: [GTLDriveFile], _ error: Error?) -> Void ){
+        
+        let query = GTLQueryDrive.queryForFilesList()
+        query?.pageSize = 1000
+        
+        if token != "" {
+            query?.pageToken = token
+        }
+        
+        if let folderID = mainFolderID {
+            query?.q = "\'\(folderID)\' in parents and (mimeType = \'application/pdf\')" + NOT_TRASHED
+            
+            
+            service.executeQuery(query!, completionHandler: { (ticket: GTLServiceTicket?, response: Any?, error: Error?) in
+                
+                if let error = error {
+                    print("Error while fetching files in folder: \(error.localizedDescription)")
+                    completion([], error)
+                    return
+                }
+                
+                // Store the downloaded Google Drive Files from the response in the driveFiles array
+                if let filesList = response as? GTLDriveFileList, let files = filesList.files , !files.isEmpty {
+                    let files = driveFiles + (files as! [GTLDriveFile])
+                    print("Received one Drive file list.")
+                    
+                    // check if more requests are required to receive all drive files
+                    if let token = filesList.nextPageToken, token != "" {
+                        // recursively call self to send more requests
+                        self.getAllDriveFiles(files, token, completion: completion)
+                        
+                    } else {
+                        // all files were received
+                        completion(files, nil)
+                    }
+                } else {
+                    print("No (more) files in the drive")
+                }
+            })
+        }
+    
+    }
+    
     func refreshViews(){
         DispatchQueue.main.async (execute: {
             print("refreshing")
@@ -865,6 +962,16 @@ class DataManager : FolderSearchDelegate {
     }
     
     /** 
+        Returns the currently loaded file object that is equal to the passed argument.
+        ( This will be needed when the file arrays were reloaded from the metadata file 
+        before an async operation completed its execution and therefore still has the 
+        old file object that currently doesn't exist in the file lists. )
+    */
+    func getCurrentFile(_ file: File) -> File? {
+        return allFiles.first(where: { $0 == file })
+    }
+    
+    /** 
         Uploads the file to the main Google Drive folder.
     */
     func uploadFile(_ file: File){
@@ -889,11 +996,11 @@ class DataManager : FolderSearchDelegate {
                 print("Error while uploading file \(file.filename): \(error.localizedDescription)")
             } else {
                 print("\(file.filename) uploaded to Google Drive")
+                
+                
+                // get the current file object
+                let file = self.getCurrentFile(file)!
                 // Set the local file status to synced
-                
-                // synchronize access
-                //self.semaphore.wait()
-                
                 file.status = File.STATUS.SYNCED
                 file.fileID = (updatedFile as! GTLDriveFile).identifier!
                 
@@ -1288,9 +1395,10 @@ class DataManager : FolderSearchDelegate {
                     localFile.isDownloading = false
                     self.writeMetadataFile()
                     self.loadLocalFiles()
-                    self.semaphore.signal()
-                
+                    
                     print("Finished Download of \(localFile.filename)")
+                    
+                    self.semaphore.signal()
                     
                     // refresh table and collection view if needed
                     DispatchQueue.main.async(execute: {
