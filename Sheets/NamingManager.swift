@@ -76,6 +76,13 @@ class NamingManager {
             }
         }
         
+        // also check the currently downloading filenames
+        for name in DataManager.sharedInstance.downloadingFilenames {
+            if filename == name {
+                return true
+            }
+        }
+        
         return false
     }
     

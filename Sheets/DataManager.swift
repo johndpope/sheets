@@ -94,6 +94,8 @@ class DataManager : FolderSearchDelegate {
     //private var syncProgress = Dictionary<GTMSessionFetcher,(CGFloat,CGFloat)>()
     /** String = filename that is being synced. Bool = sync for this file finished or not. */
     fileprivate var syncProgress = Dictionary<String,Bool>()
+    /* The filenames of files that are currently being downloaded. */
+    var downloadingFilenames: [String]!
     
     /** Is true if the app is currently syncing the files with Google Drive. */
     var syncing = false
@@ -167,6 +169,7 @@ class DataManager : FolderSearchDelegate {
         files = [File]()
         allFiles = [File]()
         deletedFiles = [File]()
+        downloadingFilenames = []
         
         loadData()
         
@@ -1370,6 +1373,7 @@ class DataManager : FolderSearchDelegate {
         syncing = true
         
         print("Downloading " + file.name)
+        downloadingFilenames.append(file.name)
         
         let url = "https://www.googleapis.com/drive/v3/files/\(file.identifier!)?alt=media"
         
@@ -1378,6 +1382,10 @@ class DataManager : FolderSearchDelegate {
         let fetcher = service.fetcherService.fetcher(withURLString: url)
         
         fetcher.beginFetch(completionHandler: { (data: Data?, error: Error?) in
+            
+            if let index = self.downloadingFilenames.index(of: file.name) {
+                self.downloadingFilenames.remove(at: index)
+            }
             
             if let error = error {
                 print("Error \(error.localizedDescription)")
@@ -1919,6 +1927,7 @@ class DataManager : FolderSearchDelegate {
         files = []
         filteredFiles = []
         deletedFiles = []
+        downloadingFilenames = []
         currentFile = nil
     }
     

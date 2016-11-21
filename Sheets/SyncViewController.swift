@@ -13,6 +13,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var sidebarButton: UIBarButtonItem!
     @IBOutlet var downloadButton: UIBarButtonItem!
+    var downloadAllButton: UIBarButtonItem!
     
     @IBOutlet var syncButton: UIBarButtonItem! {
         didSet {
@@ -50,6 +51,8 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.view.addGestureRecognizer(revealViewController.panGestureRecognizer())
         }
         
+        
+        
         generalSetup()
     }
     
@@ -76,6 +79,19 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Setup download button
         downloadButton.isEnabled = false
         
+        // setup the download all button
+        downloadAllButton = UIBarButtonItem(title: "Download All",
+                                            style: .plain, target: self,
+                                            action: #selector(downloadAllButtonPressed(_:)))
+        downloadAllButton.tintColor = dataManager.defaultBlue
+        downloadAllButton.isEnabled = dataManager.deletedFiles.count > 0
+        
+        // add a padding item between the two download buttons
+        let paddingButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        
+        self.navigationItem.setRightBarButtonItems([downloadButton, syncButton], animated: false)
+        self.navigationItem.setLeftBarButtonItems([sidebarButton, downloadAllButton], animated: false)
+        
         dataManager.tableView = self.tableView
     }
     
@@ -90,7 +106,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
         if NamingManager.sharedInstance.filenameAlreadyExists(selectedFile!.filename.stringByDeletingPathExtension()) {
             // show the alert asking the user to change the filename of the local file so 
             // that the remote file can be downloaded
-            let alert = UIAlertController(title: "Filename already exists locally.", message: "A file called \(selectedFile!.filename) already exists locally. Change the local filename to be able to donwload the new file from the Drive.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Filename already exists locally.", message: "A file called \(selectedFile!.filename) already exists locally. Change the local filename to be able to download the new file from the Drive.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
@@ -100,6 +116,41 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
             dataManager.downloadFile(selectedFile!)
             startSyncAnimation(.curveEaseIn)
         }
+    }
+    
+    @IBAction func downloadAllButtonPressed(_ button: UIBarButtonItem) {
+        
+        func downloadAllFiles() {
+            print("Requested to download all deleted files.")
+            
+            var count = 0
+            
+            for file in dataManager.deletedFiles {
+                
+                // check to see if the filename already exists locally
+                // if yes, skip the download
+                if !NamingManager.sharedInstance.filenameAlreadyExists(file.filename.stringByDeletingPathExtension()) {
+                    dataManager.downloadFile(file)
+                    count += 1
+                }
+            }
+            
+            if count > 0 {
+                startSyncAnimation(.curveEaseIn)
+            }
+        }
+        
+        // Make sure the user really wants to download all files
+        let alert = UIAlertController(title: "Downloading all files", message: "Are you sure you want to download all of the files?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {
+            action in downloadAllFiles()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+        
     }
     
     func startSyncAnimation(_ options: UIViewAnimationOptions) {
@@ -139,6 +190,7 @@ class SyncViewController: UIViewController, UITableViewDelegate, UITableViewData
 extension SyncViewController {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        downloadAllButton.isEnabled = dataManager.deletedFiles.count > 0
         return dataManager.deletedFiles.count
     }
     
