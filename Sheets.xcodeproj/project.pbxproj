@@ -20,6 +20,7 @@
 		BB4118801D2D1A7100168B76 /* RenameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB41187F1D2D1A7100168B76 /* RenameViewController.swift */; };
 		BB5B07191D5F8BF20036E194 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */; };
 		BB5E09611D7C24F600FB6FFF /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E09601D7C24F600FB6FFF /* SyncViewController.swift */; };
+		BB8A07B41E2ED1F000F9DF7F /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8A07B31E2ED1F000F9DF7F /* Keys.swift */; };
 		BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEFA78A1D2A5863007DA3A7 /* File.swift */; };
 		BBF0A2CE1D67771B00D65ECB /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF0A2CD1D67771B00D65ECB /* SetupViewController.swift */; };
 		BBF0FEBF1D7628C40076F59E /* NamingPresets.txt in Resources */ = {isa = PBXBuildFile; fileRef = BBF0FEBE1D7628C40076F59E /* NamingPresets.txt */; };
@@ -67,6 +68,7 @@
 		BB41187F1D2D1A7100168B76 /* RenameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenameViewController.swift; sourceTree = "<group>"; };
 		BB5B07181D5F8BF20036E194 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BB5E09601D7C24F600FB6FFF /* SyncViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncViewController.swift; sourceTree = "<group>"; };
+		BB8A07B31E2ED1F000F9DF7F /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		BBEFA78A1D2A5863007DA3A7 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BBF0A2CD1D67771B00D65ECB /* SetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		BBF0FEBE1D7628C40076F59E /* NamingPresets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NamingPresets.txt; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				BBF6DBF71D7A1834005DC2E9 /* SheetThumbCell.swift */,
 				BB40ED871D848912006A49A1 /* SheetSectionHeader.swift */,
 				BBFBB3C01DA447D300C6372D /* Extensions */,
+				BB8A07B31E2ED1F000F9DF7F /* Keys.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				BB00B9501D213948008B1135 /* MainViewController.swift in Sources */,
 				BBEFA78B1D2A5863007DA3A7 /* File.swift in Sources */,
 				BBF397261D63B26B0023C298 /* DownloadViewController.swift in Sources */,
+				BB8A07B41E2ED1F000F9DF7F /* Keys.swift in Sources */,
 				BB3F49E11D6A148E005C9F48 /* Extensions.swift in Sources */,
 				BB00B94E1D213948008B1135 /* AppDelegate.swift in Sources */,
 				BBF467F91D5E683A00913CAD /* SidebarViewController.swift in Sources */,

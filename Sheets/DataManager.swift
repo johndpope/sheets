@@ -44,11 +44,10 @@ class DataManager : FolderSearchDelegate {
     fileprivate let keysFilename = "Keys"
     
     // Google Drive variables
-    let kKeychainItemName = "Sheets Drive API"
-    let kNewKeychainItemName = "Sheets Drive API New_Keychain"
-    let kClientID = "451075181287-dvcikapqk1qkontp8gfs6kohanp44h2t.apps.googleusercontent.com"
-    let redirectURI = URL(string: "com.googleusercontent.apps.451075181287-dvcikapqk1qkontp8gfs6kohanp44h2t:/oauthredirect")!
-    //let redirectURI = URL(string: "Sheets")!
+    let kKeychainItemName = Keys.kKeychainItemName
+    let kNewKeychainItemName = Keys.kNewKeychainItemName
+    let kClientID = Keys.kClientID
+    let redirectURI = Keys.redirectURI
     
     let QUERY_FIELDS = "files(id,name,parents)"
     let NOT_TRASHED = " and trashed = false"
